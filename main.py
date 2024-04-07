@@ -13,12 +13,17 @@ compact = (2229, 176)
 take_all = (2615, 1025)
 
 rune_crafter = (481, 287)
+rune_crafter_salvage_green = (503, 378) 
 rune_crafter_confirm_button = (1811, 1415)
 
 silver_fed = (566, 285)
+silver_fed_salvage_rare = (588, 417) 
 silver_fed_confirm_button = (1811, 1247)
 silver_fed_confirm_button_2 = (1811, 1219)
 silver_fed_confirm_button_3 = (1811, 1286)
+silver_fed_salvage_stack = (587, 453)
+silver_fed_salvage_stack_accept = (1900, 1155) 
+
 
 
 def capture_game_screen():
@@ -100,19 +105,19 @@ def use_salvage_kits():
     # 1/5) Use Runecrafter for salvaging greens
     pyautogui.moveTo(rune_crafter[0], rune_crafter[1])
     pyautogui.rightClick() 
-    pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1]) #! Click on salvage Greens, add Coordinates
-    pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1]) # Press confirm button
-    time.sleep(30)  # Wait for salvaging process to complete
+    pyautogui.click(rune_crafter_salvage_green[0], rune_crafter_salvage_green[1])
+    pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1])
+    time.sleep(30)
 
     # 2/5) Use Silver Fed for salvaging rares
     pyautogui.moveTo(silver_fed[0], silver_fed[1])
     pyautogui.rightClick()
-    pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1]) #! Click on salvage Rares, add Coordinates
+    pyautogui.click(silver_fed_salvage_rare[0], silver_fed_salvage_rare[1])
     # Press confirm button using 3 coordinates for tackling possible placements
     pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1])
     pyautogui.click(silver_fed_confirm_button_2[0], silver_fed_confirm_button_2[1])
     pyautogui.click(silver_fed_confirm_button_3[0], silver_fed_confirm_button_3[1])
-    time.sleep(5)  # Wait for salvaging process to complete
+    time.sleep(6)
     
 
 
@@ -120,7 +125,7 @@ def manage_ectos():
     # Salvage ectos using Silver Fed (Assuming coordinates are for salvaging ectos)
     pyautogui.moveTo(silver_fed[0], silver_fed[1])
     pyautogui.rightClick()
-    pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1]) #! Add Coordinates, Click on Salvage Stack
+    pyautogui.click(silver_fed_salvage_stack[0], silver_fed_salvage_stack[1]) 
     time.sleep(1) 
 
     # Identify ectos by image 
@@ -129,8 +134,8 @@ def manage_ectos():
     if loc is not None:
         for pt in zip(*loc[::-1]):
             pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified ecto
-            pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1]) #! Add Coordinates. Confirm button when salvaging ectos
-            time.sleep(1) #! Adjust ecto time
+            pyautogui.click(silver_fed_salvage_stack_accept[0], silver_fed_salvage_stack_accept[1])
+            time.sleep(12) #! Adjust ecto time
             break  
 
     
