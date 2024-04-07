@@ -7,7 +7,7 @@ import time
 inventory_area = (0, 0, 2350, 2160)
 bank_area = (2840, 1125, 3840, 2160)
 tp_area = (2430, 60, 3840, 1090)
-tp_price_area = () # Little square of silver and gold price area
+tp_price_area = () # Rectangle of silver and gold price area
 
 compact = (2229, 176)
 take_all = (2615, 1025)
@@ -92,12 +92,59 @@ def manage_unidentified_gear():
             if not find_and_click(step=3):
                 pass
             
+# ---------------------------------------------------------------------------- #
+#                                    Part 2                                    #
+# ---------------------------------------------------------------------------- #
+            
+def use_salvage_kits():
+    # 1/5) Use Runecrafter for salvaging greens
+    pyautogui.moveTo(rune_crafter[0], rune_crafter[1])
+    pyautogui.rightClick() 
+    pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1]) #! Click on salvage Greens, add Coordinates
+    pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1]) # Press confirm button
+    time.sleep(30)  # Wait for salvaging process to complete
 
+    # 2/5) Use Silver Fed for salvaging rares
+    pyautogui.moveTo(silver_fed[0], silver_fed[1])
+    pyautogui.rightClick()
+    pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1]) #! Click on salvage Rares, add Coordinates
+    # Press confirm button using 3 coordinates for tackling possible placements
+    pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1])
+    pyautogui.click(silver_fed_confirm_button_2[0], silver_fed_confirm_button_2[1])
+    pyautogui.click(silver_fed_confirm_button_3[0], silver_fed_confirm_button_3[1])
+    time.sleep(5)  # Wait for salvaging process to complete
+    
+
+
+def manage_ectos():
+    # Salvage ectos using Silver Fed (Assuming coordinates are for salvaging ectos)
+    pyautogui.moveTo(silver_fed[0], silver_fed[1])
+    pyautogui.rightClick()
+    pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1]) #! Add Coordinates, Click on Salvage Stack
+    time.sleep(1) 
+
+    # Identify ectos by image 
+    image_path = './items-to-sell/globs_of_ectoplasm.png'  
+    loc, w, h = search_for_item(image_path, 0.7)
+    if loc is not None:
+        for pt in zip(*loc[::-1]):
+            pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified ecto
+            pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1]) #! Add Coordinates. Confirm button when salvaging ectos
+            time.sleep(1) #! Adjust ecto time
+            break  
+
+    
+
+
+def process_and_sell_items():
+    use_salvage_kits()  
+    manage_ectos() 
 
 def main():
-    
+    # Add loop
     manage_unidentified_gear()
     time.sleep(13)
+    process_and_sell_items()  
 
 if __name__ == "__main__":
     main()
