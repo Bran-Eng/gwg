@@ -13,7 +13,12 @@ compact = (2229, 176)
 take_all = (2615, 1025)
 
 rune_crafter = (481, 287)
+rune_crafter_confirm_button = (1811, 1415)
+
 silver_fed = (566, 285)
+silver_fed_confirm_button = (1811, 1247)
+silver_fed_confirm_button_2 = (1811, 1219)
+silver_fed_confirm_button_3 = (1811, 1286)
 
 
 def capture_game_screen():
