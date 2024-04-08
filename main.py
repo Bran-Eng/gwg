@@ -158,7 +158,7 @@ def manage_cristallyne_dust():
             time.sleep(0.25)
             pyautogui.move(15, 127) 
             pyautogui.click()
-            time.sleep(1) 
+            time.sleep(2) 
 
             pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
             time.sleep(0.25)
