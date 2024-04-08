@@ -24,6 +24,8 @@ silver_fed_confirm_button_3 = (1811, 1286)
 silver_fed_salvage_stack = (587, 453)
 silver_fed_salvage_stack_accept = (1900, 1155) 
 
+delete_dark_matter_coor = (0, 0)
+
 
 
 def capture_game_screen():
@@ -102,14 +104,14 @@ def manage_unidentified_gear():
 # ---------------------------------------------------------------------------- #
             
 def use_salvage_kits():
-    # 1/5) Use Runecrafter for salvaging greens
+    # Use Runecrafter for salvaging greens
     pyautogui.moveTo(rune_crafter[0], rune_crafter[1])
     pyautogui.rightClick() 
     pyautogui.click(rune_crafter_salvage_green[0], rune_crafter_salvage_green[1])
     pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1])
     time.sleep(30)
 
-    # 2/5) Use Silver Fed for salvaging rares
+    # Use Silver Fed for salvaging rares
     pyautogui.moveTo(silver_fed[0], silver_fed[1])
     pyautogui.rightClick()
     pyautogui.click(silver_fed_salvage_rare[0], silver_fed_salvage_rare[1])
@@ -122,34 +124,60 @@ def use_salvage_kits():
 
 
 def manage_ectos():
-    # Salvage ectos using Silver Fed (Assuming coordinates are for salvaging ectos)
     pyautogui.moveTo(silver_fed[0], silver_fed[1])
     pyautogui.rightClick()
     pyautogui.click(silver_fed_salvage_stack[0], silver_fed_salvage_stack[1]) 
     time.sleep(1) 
 
-    # Identify ectos by image 
+    # Identify ectos by image to salvage
     image_path = './items-to-sell/globs_of_ectoplasm.png'  
     loc, w, h = search_for_item(image_path, 0.7)
     if loc is not None:
         for pt in zip(*loc[::-1]):
             pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified ecto
             pyautogui.click(silver_fed_salvage_stack_accept[0], silver_fed_salvage_stack_accept[1])
-            time.sleep(12) #! Adjust ecto time
+            time.sleep(10) #! Adjust ecto time
             break  
 
-    
+def consume_luck():
+    # Consume All Luck 
+    consume_luck_coords = (0, 0)  
+    pyautogui.moveTo(consume_luck_coords[0], consume_luck_coords[1])
+    pyautogui.rightClick()  
+    time.sleep(1) 
+    pyautogui.move(0, 20)  #! Move to "Consume All" option
+    pyautogui.click()
 
+def sell_items():
+    sell_items_coords = (0, 0) 
+    pyautogui.moveTo(sell_items_coords[0], sell_items_coords[1])
+    pyautogui.click()  
+    time.sleep(1)  #! Adjust based on how long it takes to sell items
+    #! If you have a confirmation button or need to perform additional steps, include them here.
 
-def process_and_sell_items():
-    use_salvage_kits()  
-    manage_ectos() 
+def delete_dark_matter():
+    # Identify dark matter
+    image_path = './items-to-sell/globs_of_dark_matter.png'  
+    loc, w, h = search_for_item(image_path, 0.7)
+    if loc is not None:
+        for pt in zip(*loc[::-1]):
+            pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified dark matter
+            pyautogui.rightClick()
+            pyautogui.click(delete_dark_matter_coor[0], delete_dark_matter_coor[1])
+            time.sleep(1) 
+            break  
+ 
 
 def main():
     # Add loop
     manage_unidentified_gear()
     time.sleep(13)
-    process_and_sell_items()  
+
+    use_salvage_kits()  
+    manage_ectos()
+    consume_luck()
+    sell_items()
+    delete_dark_matter() #! Check
 
 if __name__ == "__main__":
     main()
