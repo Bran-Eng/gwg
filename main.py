@@ -179,16 +179,25 @@ def consume_purple_luck():
             time.sleep(0.6)
             pyautogui.move(16, 167)
             pyautogui.click()
+            time.sleep(1)
+            pyautogui.click(1947, 1155)
+            # pyautogui.click(1947, 1155) Click the other button place?
             break
         
+def consume_purple_luck_2():
+    # Identify purple_luck
+    image_path = './items-to-sell/purple_luck.png'  
     loc, w, h = search_for_item(image_path, 0.8)
     if loc is not None:
         for pt in zip(*loc[::-1]):
             pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified purple luck
             pyautogui.rightClick()
-            time.sleep(0.8)
+            time.sleep(0.6)
             pyautogui.move(16, 167)
-            pyautogui.click()            
+            pyautogui.click()
+            time.sleep(1)
+            pyautogui.click(1947, 1155)
+            # pyautogui.click(1947, 1155) Click the other button place?
             break
 
 def consume_luck():
@@ -369,7 +378,7 @@ def sell_silk_scraps():
             break
 
 def main():
-    for i in range(1, 91):  # Start the range at 1 to make the modulus operation intuitive
+    for i in range(1, 181):  # Start the range at 1 to make the modulus operation intuitive
         # These run every instance
         manage_unidentified_gear()
         time.sleep(11)
@@ -383,6 +392,7 @@ def main():
         if i % 2 == 0:  # Check if 'i' is divisible by 2
             
             consume_purple_luck()
+            consume_purple_luck_2()
             consume_luck()
             sell_mithril_ore()
             sell_elder_wood_logs()
@@ -396,6 +406,7 @@ def main():
         if i % 10 == 0:  # Check if 'i' is divisible by 10
             manage_ectos()
             consume_purple_luck()  
+            consume_purple_luck_2()
             consume_luck()         
             manage_cristallyne_dust()
             delete_dark_matter()
