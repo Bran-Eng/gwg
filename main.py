@@ -177,7 +177,7 @@ def consume_purple_luck():
             pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified purple luck
             pyautogui.rightClick()
             time.sleep(0.6)
-            pyautogui.move(16, 162) #! Destroy purple luck
+            pyautogui.move(16, 167)
             pyautogui.click()
             break
         
@@ -187,7 +187,7 @@ def consume_purple_luck():
             pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified purple luck
             pyautogui.rightClick()
             time.sleep(0.8)
-            pyautogui.move(16, 162) #! Destroy purple luck
+            pyautogui.move(16, 167)
             pyautogui.click()            
             break
 
