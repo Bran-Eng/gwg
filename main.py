@@ -155,8 +155,8 @@ def manage_cristallyne_dust():
     if loc is not None:
         for pt in zip(*loc[::-1]):
             pyautogui.rightClick(pt[0] + w/2, pt[1] + h/2)  # Click on the identified crystallyne
-            time.sleep(0.5)
-            pyautogui.move(15, 127) 
+            time.sleep(0.25)
+            pyautogui.move(16, 126) 
             pyautogui.click()
             time.sleep(2.2) 
 
@@ -375,6 +375,9 @@ def main():
         time.sleep(11)
         use_salvage_kits()
         sell_lucent_motes()
+
+        # manage_cristallyne_dust()
+
         
         # Every 2 instances
         if i % 2 == 0:  # Check if 'i' is divisible by 2
@@ -384,17 +387,17 @@ def main():
             sell_mithril_ore()
             sell_elder_wood_logs()
 
-        # Every 3 instances
+        # # Every 3 instances
         if i % 3 == 0:  # Check if 'i' is divisible by 3
             sell_silk_scraps()
             sell_thick_leather_sections()
 
-        # Every 10 instances
+        # # Every 10 instances
         if i % 10 == 0:  # Check if 'i' is divisible by 10
             manage_ectos()
-            manage_cristallyne_dust()
             consume_purple_luck()  
             consume_luck()         
+            manage_cristallyne_dust()
             delete_dark_matter()
             sell_all_items()
         
