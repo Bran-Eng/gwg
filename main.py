@@ -59,24 +59,24 @@ def use_all_green_gear(center_x, center_y):
 
 def find_and_click(step=0):
     image_path = './items-to-sell/green.png'
-    threshold=0.7
+    threshold=0.5
     
     if step == 1 or step == 2:
         loc, w, h = search_for_item(image_path, threshold)
-        # if loc is not None:
-        for pt in zip(*loc[::-1]):
-            center_x, center_y = pt[0] + w/2, pt[1] + h/2
+        if loc is not None:
+            for pt in zip(*loc[::-1]):
+                center_x, center_y = pt[0] + w/2, pt[1] + h/2
                 
-            if step == 1 and inventory_area[0] <= center_x <= inventory_area[0] + inventory_area[2] and inventory_area[1] <= center_y <= inventory_area[1] + inventory_area[3]:
-                use_all_green_gear(center_x, center_y)
-                return True
+                if step == 1 and inventory_area[0] <= center_x <= inventory_area[0] + inventory_area[2] and inventory_area[1] <= center_y <= inventory_area[1] + inventory_area[3]:
+                    use_all_green_gear(center_x, center_y)
+                    return True
                 
-            elif step == 2 and bank_area[0] <= center_x <= bank_area[0] + bank_area[2] and bank_area[1] <= center_y <= bank_area[1] + bank_area[3]:
-                pyautogui.moveTo(center_x, center_y)
-                pyautogui.doubleClick()
-                time.sleep(0.25)
-                find_and_click(step=1)
-                return True
+                elif step == 2 and bank_area[0] <= center_x <= bank_area[0] + bank_area[2] and bank_area[1] <= center_y <= bank_area[1] + bank_area[3]:
+                    pyautogui.moveTo(center_x, center_y)
+                    pyautogui.doubleClick()
+                    time.sleep(0.25)
+                    find_and_click(step=1)
+                    return True
                 
     elif step == 3:        
         pyautogui.moveTo(3280, 1800)        
@@ -378,8 +378,9 @@ def sell_silk_scraps():
             break
 
 def main():
-    for i in range(1, 181):  # Start the range at 1 to make the modulus operation intuitive
-        # These run every instance
+    for i in range(1, 181):  # Start the range at 1 to make the modulus operation intuitive        
+        print(f"Starting iteration {i}")
+
         manage_unidentified_gear()
         time.sleep(11)
         use_salvage_kits()
