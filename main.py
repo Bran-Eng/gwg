@@ -151,11 +151,12 @@ def manage_ectos():
 def manage_cristallyne_dust():   
     # Identify drystalline dust by image to sell
     image_path = './items-to-sell/pile_of_cristallyne_dust.png'  
-    loc, w, h = search_for_item(image_path, 0.7)
+    loc, w, h = search_for_item(image_path, 0.85)
     if loc is not None:
         for pt in zip(*loc[::-1]):
-            pyautogui.rightClick(pt[0] + w/2, pt[1] + h/2)  # Click on the identified crystallyne
-            time.sleep(0.25)
+            pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified crystallyne
+            pyautogui.rightClick()
+            time.sleep(0.5)
             pyautogui.move(53, 125) 
             pyautogui.click()
             time.sleep(4) 
