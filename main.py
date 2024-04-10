@@ -59,7 +59,7 @@ def use_all_green_gear(center_x, center_y):
 
 def find_and_click(step=0):
     image_path = './items-to-sell/green.png'
-    threshold=0.5
+    threshold=0.55
     
     if step == 1 or step == 2:
         loc, w, h = search_for_item(image_path, threshold)
@@ -145,7 +145,7 @@ def manage_ectos():
             pyautogui.click()
             time.sleep(0.5)
             pyautogui.click(silver_fed_salvage_stack_accept[0], silver_fed_salvage_stack_accept[1])
-            time.sleep(1.3)
+            time.sleep(7)
             break  
         
 def manage_cristallyne_dust():   
@@ -156,9 +156,9 @@ def manage_cristallyne_dust():
         for pt in zip(*loc[::-1]):
             pyautogui.rightClick(pt[0] + w/2, pt[1] + h/2)  # Click on the identified crystallyne
             time.sleep(0.25)
-            pyautogui.move(16, 126) 
+            pyautogui.move(53, 125) 
             pyautogui.click()
-            time.sleep(2.2) 
+            time.sleep(4) 
 
             pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
             time.sleep(0.25)
@@ -171,34 +171,36 @@ def manage_cristallyne_dust():
 def consume_purple_luck():
     # Identify purple_luck
     image_path = './items-to-sell/purple_luck.png'  
-    loc, w, h = search_for_item(image_path, 0.8)
+    loc, w, h = search_for_item(image_path, 0.85)
     if loc is not None:
         for pt in zip(*loc[::-1]):
             pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified purple luck
-            pyautogui.rightClick()
-            time.sleep(0.6)
-            pyautogui.move(16, 167)
-            pyautogui.click()
-            time.sleep(1)
-            pyautogui.click(1947, 1155)
-            # pyautogui.click(1947, 1155) Click the other button place?
+            pyautogui.rightClick()   
+            break         
+        
+def consume_purple_luck_click_button():
+    image_path = './items-to-sell/consume_all.png'  
+    loc, w, h = search_for_item(image_path, 0.8)
+    if loc is not None:
+        for pt in zip(*loc[::-1]):
+            pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the consume all
             break
         
-def consume_purple_luck_2():
-    # Identify purple_luck
-    image_path = './items-to-sell/purple_luck.png'  
-    loc, w, h = search_for_item(image_path, 0.8)
-    if loc is not None:
-        for pt in zip(*loc[::-1]):
-            pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified purple luck
-            pyautogui.rightClick()
-            time.sleep(0.6)
-            pyautogui.move(16, 167)
-            pyautogui.click()
-            time.sleep(1)
-            pyautogui.click(1947, 1155)
-            # pyautogui.click(1947, 1155) Click the other button place?
-            break
+# def consume_purple_luck_2():
+#     # Identify purple_luck
+#     image_path = './items-to-sell/purple_luck.png'  
+#     loc, w, h = search_for_item(image_path, 0.8)
+#     if loc is not None:
+#         for pt in zip(*loc[::-1]):
+#             pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified purple luck
+#             pyautogui.rightClick()
+#             time.sleep(0.6)
+#             pyautogui.move(16, 167)
+#             pyautogui.click()
+#             time.sleep(1)
+#             pyautogui.click(1947, 1155)
+#             # pyautogui.click(1947, 1155) Click the other button place?
+#             break
 
 def consume_luck():
     # Consume All Luck from multiple locations
@@ -248,7 +250,7 @@ def sell_all_items():
         time.sleep(0.25)
         pyautogui.move(16, 88) 
         pyautogui.click()
-        time.sleep(2)        
+        time.sleep(3)        
 
         pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
         time.sleep(0.25)
@@ -286,7 +288,7 @@ def sell_lucent_motes():
             time.sleep(0.25)
             pyautogui.move(16, 88)
             pyautogui.click()
-            time.sleep(2) 
+            time.sleep(2.6) 
 
             pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
             time.sleep(0.25)
@@ -300,14 +302,14 @@ def sell_lucent_motes():
 def sell_mithril_ore():
     # Identify mithril ore by image to sell
     image_path = './items-to-sell/mithril_ore.png'
-    loc, w, h = search_for_item(image_path, 0.7)
+    loc, w, h = search_for_item(image_path, 0.85)
     if loc is not None:
         for pt in zip(*loc[::-1]):
             pyautogui.rightClick(pt[0] + w/2, pt[1] + h/2)  # Click on the identified crystallyne
             time.sleep(0.25)
             pyautogui.move(16, 88)
             pyautogui.click()
-            time.sleep(2) 
+            time.sleep(2.6) 
 
             pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
             time.sleep(0.25)
@@ -327,7 +329,7 @@ def sell_elder_wood_logs():
             time.sleep(0.25)
             pyautogui.move(16, 88)
             pyautogui.click()
-            time.sleep(2) 
+            time.sleep(2.6) 
 
             pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
             time.sleep(0.25)
@@ -347,7 +349,7 @@ def sell_thick_leather_sections():
             time.sleep(0.25)
             pyautogui.move(16, 88)
             pyautogui.click()
-            time.sleep(2) 
+            time.sleep(2.6) 
 
             pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
             time.sleep(0.25)
@@ -367,7 +369,7 @@ def sell_silk_scraps():
             time.sleep(0.25)
             pyautogui.move(16, 88)
             pyautogui.click()
-            time.sleep(2) 
+            time.sleep(2.6) 
 
             pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
             time.sleep(0.25)
@@ -378,7 +380,7 @@ def sell_silk_scraps():
             break
 
 def main():
-    for i in range(1, 181):  # Start the range at 1 to make the modulus operation intuitive        
+    for i in range(1, 91):  # Start the range at 1 to make the modulus operation intuitive        
         print(f"Starting iteration {i}")
 
         manage_unidentified_gear()
@@ -392,8 +394,8 @@ def main():
         # Every 2 instances
         if i % 2 == 0:  # Check if 'i' is divisible by 2
             
-            consume_purple_luck()
-            consume_purple_luck_2()
+            # consume_purple_luck()
+            # consume_purple_luck_click_button()
             consume_luck()
             sell_mithril_ore()
             sell_elder_wood_logs()
@@ -406,11 +408,11 @@ def main():
         # # Every 10 instances
         if i % 10 == 0:  # Check if 'i' is divisible by 10
             manage_ectos()
-            consume_purple_luck()  
-            consume_purple_luck_2()
+            # consume_purple_luck()  
+            # consume_purple_luck_click_button()
             consume_luck()         
-            manage_cristallyne_dust()
             delete_dark_matter()
+            manage_cristallyne_dust()
             sell_all_items()
         
         # Add a short sleep time if needed between iterations to avoid overwhelming the application
