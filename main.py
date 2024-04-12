@@ -172,7 +172,7 @@ def manage_cristallyne_dust():
 def consume_purple_luck():
     # Identify purple_luck
     image_path = './items-to-sell/purple_luck.png'  
-    loc, w, h = search_for_item(image_path, 0.85)
+    loc, w, h = search_for_item(image_path, 0.9)
     if loc is not None:
         for pt in zip(*loc[::-1]):
             pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified purple luck
@@ -181,27 +181,11 @@ def consume_purple_luck():
         
 def consume_purple_luck_click_button():
     image_path = './items-to-sell/consume_all.png'  
-    loc, w, h = search_for_item(image_path, 0.8)
+    loc, w, h = search_for_item(image_path, 0.95)
     if loc is not None:
         for pt in zip(*loc[::-1]):
             pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the consume all
             break
-        
-# def consume_purple_luck_2():
-#     # Identify purple_luck
-#     image_path = './items-to-sell/purple_luck.png'  
-#     loc, w, h = search_for_item(image_path, 0.8)
-#     if loc is not None:
-#         for pt in zip(*loc[::-1]):
-#             pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified purple luck
-#             pyautogui.rightClick()
-#             time.sleep(0.6)
-#             pyautogui.move(16, 167)
-#             pyautogui.click()
-#             time.sleep(1)
-#             pyautogui.click(1947, 1155)
-#             # pyautogui.click(1947, 1155) Click the other button place?
-#             break
 
 def consume_luck():
     # Consume All Luck from multiple locations
@@ -274,10 +258,7 @@ def delete_dark_matter():
             time.sleep(0.25)
             pyautogui.click(1939, 1153) # Accept
             time.sleep(0.25) 
-            break  
- 
-def sell_metal_plates():
-    pyautogui.click()      
+            break    
 
 def sell_lucent_motes():
     # Identify lucent motes by image to sell
@@ -379,26 +360,44 @@ def sell_silk_scraps():
             pyautogui.click(list_item[0], list_item[1]) # List
             time.sleep(5) #! Time after sell
             break
+        
+def handle_errors():
+    # Press cancel buttons
+    err_buttons_coords_list = [
+        (2119, 1156),  
+        
+    ]
+
+    for coords in err_buttons_coords_list:
+        time.sleep(0.25)
+        pyautogui.click(coords[0], coords[1])
 
 def main():
     for i in range(1, 91):  # Start the range at 1 to make the modulus operation intuitive        
         print(f"Starting iteration {i}")
 
+        handle_errors()
         manage_unidentified_gear()
         time.sleep(11)
         use_salvage_kits()
         sell_lucent_motes()
 
-        # manage_cristallyne_dust()
+        manage_cristallyne_dust()
 
         
         # Every 2 instances
         if i % 2 == 0:  # Check if 'i' is divisible by 2
             
-            # consume_purple_luck()
-            # consume_purple_luck_click_button()
+            consume_purple_luck()
+            consume_purple_luck_click_button()
+            handle_errors()
+
             consume_luck()
+            handle_errors()
+
             sell_mithril_ore()
+            handle_errors()
+
             sell_elder_wood_logs()
 
         # # Every 3 instances
@@ -409,12 +408,19 @@ def main():
         # # Every 10 instances
         if i % 10 == 0:  # Check if 'i' is divisible by 10
             manage_ectos()
-            # consume_purple_luck()  
-            # consume_purple_luck_click_button()
-            consume_luck()         
+            consume_purple_luck()  
+            consume_purple_luck_click_button()
+            handle_errors()
+
+            consume_luck()
+            handle_errors()
+
             delete_dark_matter()
             manage_cristallyne_dust()
+            handle_errors()
+
             sell_all_items()
+            handle_errors()
         
         # Add a short sleep time if needed between iterations to avoid overwhelming the application
         time.sleep(2)
