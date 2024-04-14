@@ -372,6 +372,37 @@ def handle_errors():
         time.sleep(0.25)
         pyautogui.click(coords[0], coords[1])
 
+def restart_game():
+    # Close the game by pressing F4 twice
+    pyautogui.hotkey('f4')
+    time.sleep(0.5)  # Short delay to ensure the first press is registered
+    pyautogui.hotkey('f4')
+    time.sleep(2)  # Wait for the game to close
+
+    # Coordinates for game icon, login, start game, and character selection
+    game_icon_coords = (100, 200)  # Update these with the actual coordinates
+    login_button_coords = (300, 400)  # Update these with the actual coordinates
+    start_game_coords = (500, 600)  # Update these with the actual coordinates
+    character_coords = (700, 800)  # Update these with the actual coordinates
+
+    # Click on the game icon to start the game
+    pyautogui.click(game_icon_coords[0], game_icon_coords[1])
+    time.sleep(10)  # Wait for the game to load. Adjust time based on your game's load time
+
+    # Click on the login button
+    pyautogui.click(login_button_coords[0], login_button_coords[1])
+    time.sleep(5)  # Wait for login to process
+
+    # Click on the start game button
+    pyautogui.click(start_game_coords[0], start_game_coords[1])
+    time.sleep(5)  # Wait for game start options to load
+
+    # Double-click on the character to start playing
+    pyautogui.doubleClick(character_coords[0], character_coords[1])
+    time.sleep(5)  # Wait for the game to enter into playing mode
+
+
+
 def main():
     for i in range(1, 91):  # Start the range at 1 to make the modulus operation intuitive        
         print(f"Starting iteration {i}")
@@ -384,10 +415,7 @@ def main():
 
         manage_cristallyne_dust()
 
-        
-        # Every 2 instances
-        if i % 2 == 0:  # Check if 'i' is divisible by 2
-            
+        if i % 2 == 0: 
             consume_purple_luck()
             consume_purple_luck_click_button()
             handle_errors()
@@ -400,13 +428,11 @@ def main():
 
             sell_elder_wood_logs()
 
-        # # Every 3 instances
-        if i % 3 == 0:  # Check if 'i' is divisible by 3
+        if i % 3 == 0:  
             sell_silk_scraps()
             sell_thick_leather_sections()
 
-        # # Every 10 instances
-        if i % 10 == 0:  # Check if 'i' is divisible by 10
+        if i % 10 == 0:  
             manage_ectos()
             consume_purple_luck()  
             consume_purple_luck_click_button()
@@ -421,6 +447,9 @@ def main():
 
             sell_all_items()
             handle_errors()
+        
+        if i % 30 == 0:  
+            restart_game()
         
         # Add a short sleep time if needed between iterations to avoid overwhelming the application
         time.sleep(2)
