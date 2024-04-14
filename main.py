@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import pyautogui
 import time
+import keyboard
 
 # Areas Coordinates
 inventory_area = (0, 0, 2350, 2160)
@@ -373,86 +374,128 @@ def handle_errors():
         pyautogui.click(coords[0], coords[1])
 
 def restart_game():
-    # Close the game by pressing F4 twice
-    pyautogui.hotkey('f4')
+    pyautogui.click(1800, 500)
+    pyautogui.hotkey('alt', 'f4')
     time.sleep(0.5)  # Short delay to ensure the first press is registered
-    pyautogui.hotkey('f4')
+    pyautogui.hotkey('alt', 'f4')
     time.sleep(2)  # Wait for the game to close
 
     # Coordinates for game icon, login, start game, and character selection
-    game_icon_coords = (100, 200)  # Update these with the actual coordinates
-    login_button_coords = (300, 400)  # Update these with the actual coordinates
-    start_game_coords = (500, 600)  # Update these with the actual coordinates
-    character_coords = (700, 800)  # Update these with the actual coordinates
+    game_icon_coords = (180, 2122)
+    login_button_coords = (1203, 1327)
+    character_coords = (1600, 2015)
 
     # Click on the game icon to start the game
     pyautogui.click(game_icon_coords[0], game_icon_coords[1])
-    time.sleep(10)  # Wait for the game to load. Adjust time based on your game's load time
+    time.sleep(10)  # Wait for the game to load.
 
     # Click on the login button
     pyautogui.click(login_button_coords[0], login_button_coords[1])
-    time.sleep(5)  # Wait for login to process
-
-    # Click on the start game button
-    pyautogui.click(start_game_coords[0], start_game_coords[1])
-    time.sleep(5)  # Wait for game start options to load
+    time.sleep(14)  # Wait for login to process and auto start game
 
     # Double-click on the character to start playing
     pyautogui.doubleClick(character_coords[0], character_coords[1])
-    time.sleep(5)  # Wait for the game to enter into playing mode
+    time.sleep(18)  # Wait for the game to enter into playing mode
+
+def press_and_hold(key, hold_time=0.1):
+    keyboard.press(key)
+    time.sleep(hold_time)
+    keyboard.release(key)
+
+def drag_window(start_coords, end_coords):
+    pyautogui.moveTo(start_coords[0], start_coords[1])
+    pyautogui.mouseDown()
+    time.sleep(0.5)  # Short delay to ensure the drag is registered
+    pyautogui.moveTo(end_coords[0], end_coords[1], duration=1)
+    pyautogui.mouseUp()
+
+def open_menus():
+    # Ensure the game window is active by clicking into the game area
+    pyautogui.click(1800, 1050)
+
+    # Open inventory with Ctrl + Z
+    # keyboard.press_and_release('ctrl+z')
+    # time.sleep(1)e
+
+    # Open Trading Post with Tab (assuming the NPC is in front)
+    keyboard.press_and_release('tab')
+    time.sleep(1)
+
+    # Walk slightly to the right to the bank NPC and open it
+    press_and_hold('e', hold_time=0.7)  # Adjust hold_time as needed for walking duration
+    keyboard.press_and_release('tab')
+    time.sleep(1)
+
+    # Drag Bank tab to a specific coordinate
+    start_coords = (1960, 544)
+    end_coords = (3141, 1086)
+    drag_window(start_coords, end_coords)
+
+    # Walk back to the initial place
+    press_and_hold('q', hold_time=0.7)  # Match the hold time with 'e' to walk back
+
+    # Open map for a white background using Shift + Z
+    keyboard.press_and_release('shift+z')
+    time.sleep(1)
 
 
 
 def main():
-    for i in range(1, 91):  # Start the range at 1 to make the modulus operation intuitive        
+    # open_menus()
+    
+    for i in range(1, 2):  # Start the range at 1 to make the modulus operation intuitive        
         print(f"Starting iteration {i}")
-
-        handle_errors()
-        manage_unidentified_gear()
-        time.sleep(11)
-        use_salvage_kits()
-        sell_lucent_motes()
-
-        manage_cristallyne_dust()
-
-        if i % 2 == 0: 
-            consume_purple_luck()
-            consume_purple_luck_click_button()
-            handle_errors()
-
-            consume_luck()
-            handle_errors()
-
-            sell_mithril_ore()
-            handle_errors()
-
-            sell_elder_wood_logs()
-
-        if i % 3 == 0:  
-            sell_silk_scraps()
-            sell_thick_leather_sections()
-
-        if i % 10 == 0:  
-            manage_ectos()
-            consume_purple_luck()  
-            consume_purple_luck_click_button()
-            handle_errors()
-
-            consume_luck()
-            handle_errors()
-
-            delete_dark_matter()
-            manage_cristallyne_dust()
-            handle_errors()
-
-            sell_all_items()
-            handle_errors()
         
-        if i % 30 == 0:  
-            restart_game()
+        #? Test
+        open_menus()
+
+        # handle_errors()
+        # manage_unidentified_gear()
+        # time.sleep(11)
+        # use_salvage_kits()
+        # sell_lucent_motes()
+
+        # manage_cristallyne_dust()
+
+        # if i % 2 == 0: 
+        #     consume_purple_luck()
+        #     consume_purple_luck_click_button()
+        #     handle_errors()
+
+        #     consume_luck()
+        #     handle_errors()
+
+        #     sell_mithril_ore()
+        #     handle_errors()
+
+        #     sell_elder_wood_logs()
+
+        # if i % 3 == 0:  
+        #     sell_silk_scraps()
+        #     sell_thick_leather_sections()
+
+        # if i % 10 == 0:  
+        #     manage_ectos()
+        #     consume_purple_luck()  
+        #     consume_purple_luck_click_button()
+        #     handle_errors()
+
+        #     consume_luck()
+        #     handle_errors()
+
+        #     delete_dark_matter()
+        #     manage_cristallyne_dust()
+        #     handle_errors()
+
+        #     sell_all_items()
+        #     handle_errors()
         
-        # Add a short sleep time if needed between iterations to avoid overwhelming the application
-        time.sleep(2)
+        # if i % 30 == 0:  
+        #     restart_game()
+        #     open_menus()
+        
+        # # Add a short sleep time if needed between iterations to avoid overwhelming the application
+        # time.sleep(2)
 
 if __name__ == "__main__":
     main()
