@@ -366,7 +366,7 @@ def handle_errors():
     # Press cancel buttons
     err_buttons_coords_list = [
         (2119, 1156),  
-        
+        (2129, 1181)
     ]
 
     for coords in err_buttons_coords_list:
@@ -441,61 +441,61 @@ def open_menus():
 
 
 def main():
-    # open_menus()
+    open_menus()
     
-    for i in range(1, 2):  # Start the range at 1 to make the modulus operation intuitive        
+    for i in range(1, 31):  
         print(f"Starting iteration {i}")
         
         #? Test
-        open_menus()
+        # open_menus()
 
-        # handle_errors()
-        # manage_unidentified_gear()
-        # time.sleep(11)
-        # use_salvage_kits()
-        # sell_lucent_motes()
+        handle_errors()
+        manage_unidentified_gear()
+        time.sleep(11)
+        use_salvage_kits()
+        sell_lucent_motes()
 
-        # manage_cristallyne_dust()
+        manage_cristallyne_dust()
 
-        # if i % 2 == 0: 
-        #     consume_purple_luck()
-        #     consume_purple_luck_click_button()
-        #     handle_errors()
+        if i % 2 == 0: 
+            consume_purple_luck()
+            consume_purple_luck_click_button()
+            handle_errors()
 
-        #     consume_luck()
-        #     handle_errors()
+            consume_luck()
+            handle_errors()
 
-        #     sell_mithril_ore()
-        #     handle_errors()
+            sell_mithril_ore()
+            handle_errors()
 
-        #     sell_elder_wood_logs()
+            sell_elder_wood_logs()
 
-        # if i % 3 == 0:  
-        #     sell_silk_scraps()
-        #     sell_thick_leather_sections()
+        if i % 3 == 0:  
+            sell_silk_scraps()
+            sell_thick_leather_sections()
 
-        # if i % 10 == 0:  
-        #     manage_ectos()
-        #     consume_purple_luck()  
-        #     consume_purple_luck_click_button()
-        #     handle_errors()
+        if i % 10 == 0:  
+            manage_ectos()
+            consume_purple_luck()  
+            consume_purple_luck_click_button()
+            handle_errors()
 
-        #     consume_luck()
-        #     handle_errors()
+            consume_luck()
+            handle_errors()
 
-        #     delete_dark_matter()
-        #     manage_cristallyne_dust()
-        #     handle_errors()
+            delete_dark_matter()
+            manage_cristallyne_dust()
+            handle_errors()
 
-        #     sell_all_items()
-        #     handle_errors()
+            sell_all_items()
+            handle_errors()
         
-        # if i % 30 == 0:  
-        #     restart_game()
-        #     open_menus()
+        if i % 30 == 0:  
+            restart_game()
+            open_menus()
         
-        # # Add a short sleep time if needed between iterations to avoid overwhelming the application
-        # time.sleep(2)
+        # Add a short sleep time if needed between iterations to avoid overwhelming the application
+        time.sleep(2)
 
 if __name__ == "__main__":
     main()
