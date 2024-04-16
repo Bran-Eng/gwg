@@ -4,6 +4,9 @@ import pyautogui
 import time
 import keyboard
 
+# Disable the fail-safe
+pyautogui.FAILSAFE = False
+
 # Areas Coordinates
 inventory_area = (0, 0, 2350, 2160)
 bank_area = (2840, 1125, 3840, 2160)
@@ -439,17 +442,21 @@ def open_menus():
     # Ensure the game window is active by clicking into the game area
     pyautogui.click(1800, 1050)
 
-    mistlock = (126, 281)
+    # mistlock = (126, 281)
 
-    # Restart Position
-    pyautogui.click(mistlock[0], mistlock[1])
-    time.sleep(15)
+    # # Restart Position
+    # pyautogui.doubleClick(mistlock[0], mistlock[1])
+    # time.sleep(11)
+    
+    # pyautogui.doubleClick(mistlock[0], mistlock[1])
+    # time.sleep(11)
+
+    # # Walk to NPC's
+    #! if check here to compare images and walk correctly based on spawn
+    # press_and_hold('3', hold_time=4)
+
     keyboard.press_and_release('ctrl+z')
-    pyautogui.click(mistlock[0], mistlock[1])
-    time.sleep(15)
-
-    # Walk to NPC's
-    press_and_hold('3', hold_time=4)
+    time.sleep(1)
 
     # Open Trading Post with Tab (assuming the NPC is in front)
     keyboard.press_and_release('tab')
@@ -553,12 +560,13 @@ def does_it_match(image_path, similarity_threshold=0.7):
         return False
 
 def main():
-    # open_menus()
+    # restart_game()
+    open_menus()
     # delete_dark_matter()
     # salvage_restant_exotics()
     # sell_all_items()
 
-    for i in range(1, 31):  
+    for i in range(1, 51):  
         print(f"Starting iteration {i}")
         
         #? Test
