@@ -22,6 +22,7 @@ silver_fed_salvage_rare = (588, 417)
 silver_fed_confirm_button = (1811, 1247)
 silver_fed_confirm_button_2 = (1811, 1219)
 silver_fed_confirm_button_3 = (1811, 1286)
+silver_fed_confirm_button_4 = (1811, 1327)
 silver_fed_salvage_stack = (587, 453)
 silver_fed_salvage_stack_accept = (1900, 1155) 
 
@@ -85,8 +86,14 @@ def find_and_click(step=0):
             pyautogui.scroll(-500)  
             pyautogui.scroll(-500)
             pyautogui.scroll(-500)
-            pyautogui.scroll(-500)            
-            time.sleep(0.25)  
+            pyautogui.scroll(-500)    
+            time.sleep(0.25)
+
+            pyautogui.scroll(-500)  
+            pyautogui.scroll(-500)
+            pyautogui.scroll(-500)
+            pyautogui.scroll(-500)
+            time.sleep(0.25) 
 
             find_and_click(step=2)                                
                     
@@ -127,6 +134,7 @@ def use_salvage_kits():
     pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1])
     pyautogui.click(silver_fed_confirm_button_2[0], silver_fed_confirm_button_2[1])
     pyautogui.click(silver_fed_confirm_button_3[0], silver_fed_confirm_button_3[1])
+    pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_4[1])
     pyautogui.moveTo(1200, 170)
     time.sleep(2.2)    
     
@@ -146,7 +154,7 @@ def manage_ectos():
             pyautogui.click()
             time.sleep(0.5)
             pyautogui.click(silver_fed_salvage_stack_accept[0], silver_fed_salvage_stack_accept[1])
-            time.sleep(7)
+            time.sleep(9)
             break  
         
 def manage_cristallyne_dust():   
@@ -366,7 +374,8 @@ def handle_errors():
     # Press cancel buttons
     err_buttons_coords_list = [
         (2119, 1156),  
-        (2129, 1181)
+        (2129, 1181),
+        (2118, 1154)
     ]
 
     for coords in err_buttons_coords_list:
@@ -375,15 +384,21 @@ def handle_errors():
 
 def restart_game():
     pyautogui.click(1800, 500)
-    pyautogui.hotkey('alt', 'f4')
-    time.sleep(0.5)  # Short delay to ensure the first press is registered
-    pyautogui.hotkey('alt', 'f4')
-    time.sleep(2)  # Wait for the game to close
 
-    # Coordinates for game icon, login, start game, and character selection
+     # Coordinates for game icon, login, start game, and character selection
     game_icon_coords = (180, 2122)
     login_button_coords = (1203, 1327)
     character_coords = (1600, 2015)
+    volunteer = (78, 1176)
+
+    pyautogui.click(volunteer[0], volunteer[1])
+
+    pyautogui.hotkey('alt', 'f4')
+    time.sleep(0.5)  # Short delay to ensure the first press is registered
+    pyautogui.hotkey('alt', 'f4')
+    time.sleep(3)  # Wait for the game to close
+
+   
 
     # Click on the game icon to start the game
     pyautogui.click(game_icon_coords[0], game_icon_coords[1])
@@ -395,7 +410,7 @@ def restart_game():
 
     # Double-click on the character to start playing
     pyautogui.doubleClick(character_coords[0], character_coords[1])
-    time.sleep(18)  # Wait for the game to enter into playing mode
+    time.sleep(22)  # Wait for the game to enter into playing mode
 
 def press_and_hold(key, hold_time=0.1):
     keyboard.press(key)
@@ -413,37 +428,96 @@ def open_menus():
     # Ensure the game window is active by clicking into the game area
     pyautogui.click(1800, 1050)
 
+    mistlock = (126, 281)
+
     # Open inventory with Ctrl + Z
     # keyboard.press_and_release('ctrl+z')
-    # time.sleep(1)e
+    # time.sleep(1)
 
     # Open Trading Post with Tab (assuming the NPC is in front)
     keyboard.press_and_release('tab')
     time.sleep(1)
 
     # Walk slightly to the right to the bank NPC and open it
-    press_and_hold('e', hold_time=0.7)  # Adjust hold_time as needed for walking duration
+    press_and_hold('e', hold_time=1)  # Adjust hold_time as needed for walking duration
     keyboard.press_and_release('tab')
     time.sleep(1)
+
+    # Walk back to the initial place
+    press_and_hold('q', hold_time=1)  # Match the hold time with 'e' to walk back
 
     # Drag Bank tab to a specific coordinate
     start_coords = (1960, 544)
     end_coords = (3141, 1086)
     drag_window(start_coords, end_coords)
 
-    # Walk back to the initial place
-    press_and_hold('q', hold_time=0.7)  # Match the hold time with 'e' to walk back
+    
 
     # Open map for a white background using Shift + Z
     keyboard.press_and_release('shift+z')
     time.sleep(1)
 
 
+def salvage_restant_exotics():    
+    pyautogui.click(1800, 1050)
+    # Compact Inventory
+    pyautogui.click(compact[0], compact[1])
+    time.sleep(0.25)
+
+    silver_fed_use = (587, 304)
+    accept_button = (1896, 1156)
+
+    # Setup Silver Fed
+    pyautogui.moveTo(silver_fed[0], silver_fed[1])
+    pyautogui.rightClick()
+    time.sleep(0.25)
+    pyautogui.click(silver_fed_use[0], silver_fed_use[1]) 
+    time.sleep(0.5)
+
+    # Consume All Luck from multiple locations
+    salvage_exotics_coords_list = [
+        (126, 385),  
+        (216, 385),  
+        (305, 385),
+        (391, 385),
+        (482, 385),
+        (569, 385),
+        (657, 385),
+        (746, 385),
+        (837, 385),
+        (918, 385),
+        (1011, 385),
+        (1100, 385),
+        (1188, 385),
+        (1279, 385),
+        (1368, 385),
+        (1451, 385),
+        (1542, 385),
+        (1631, 385),
+        (1720, 385),
+        (1806, 385),
+        (1896, 385),
+        (1982, 385),
+        (2073, 385),
+        (2155, 385),
+        (2248, 385),
+
+    ]
+
+    for coords in salvage_exotics_coords_list:
+        pyautogui.moveTo(coords[0], coords[1])
+        pyautogui.click()
+        time.sleep(0.25)
+        pyautogui.click(accept_button[0], accept_button[1]) # Accept salvage
+        time.sleep(0.25)
 
 def main():
     open_menus()
-    
-    for i in range(1, 31):  
+    # delete_dark_matter()
+    # salvage_restant_exotics()
+    # sell_all_items()
+
+    for i in range(1, 91):  
         print(f"Starting iteration {i}")
         
         #? Test
@@ -453,7 +527,7 @@ def main():
         manage_unidentified_gear()
         time.sleep(11)
         use_salvage_kits()
-        sell_lucent_motes()
+        sell_lucent_motes() 
 
         manage_cristallyne_dust()
 
