@@ -528,6 +528,30 @@ def salvage_restant_exotics():
         pyautogui.click(accept_button[0], accept_button[1]) # Accept salvage
         time.sleep(0.25)
 
+def does_it_match(image_path, similarity_threshold=0.7):
+    """
+    Check if the current screen contains a region that matches the given image.
+    
+    :param image_path: Path to the image file to compare against the current screen.
+    :param similarity_threshold: The threshold for considering the images as matching.
+    :return: True if a match is found with a score above the threshold, False otherwise.
+    """
+    screen = capture_game_screen()
+    template = cv2.imread(image_path, cv2.IMREAD_COLOR)
+
+    if template is None:
+        raise FileNotFoundError(f"No image found at the specified path: {image_path}")
+
+    # Perform template matching
+    result = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+
+    # Check if the maximum match value is greater than the similarity threshold
+    if max_val >= similarity_threshold:
+        return True
+    else:
+        return False
+
 def main():
     # open_menus()
     # delete_dark_matter()
