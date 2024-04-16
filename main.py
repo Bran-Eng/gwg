@@ -395,6 +395,16 @@ def restart_game():
     character_coords = (1600, 2015)
     volunteer = (78, 1176)
 
+    # Close windows to volunteer
+    pyautogui.hotkey('esc')
+    time.sleep(0.25)
+    pyautogui.hotkey('esc')
+    time.sleep(0.25)
+    pyautogui.hotkey('esc')
+    time.sleep(0.25)
+    pyautogui.hotkey('esc')
+    time.sleep(0.25)
+
     pyautogui.click(volunteer[0], volunteer[1])
 
     pyautogui.hotkey('alt', 'f4')
@@ -434,9 +444,15 @@ def open_menus():
 
     mistlock = (126, 281)
 
-    # Open inventory with Ctrl + Z
-    # keyboard.press_and_release('ctrl+z')
-    # time.sleep(1)
+    # Restart Position
+    pyautogui.click(mistlock[0], mistlock[1])
+    time.sleep(15)
+    keyboard.press_and_release('ctrl+z')
+    pyautogui.click(mistlock[0], mistlock[1])
+    time.sleep(15)
+
+    # Walk to NPC's
+    press_and_hold('3', hold_time=4)
 
     # Open Trading Post with Tab (assuming the NPC is in front)
     keyboard.press_and_release('tab')
