@@ -503,6 +503,10 @@ def open_menus():
     # Ensure the game window is active by clicking into the game area
     pyautogui.click(1800, 1050)
 
+    # Close Inventory in case is open
+    pyautogui.click(2288, 109)
+    time.sleep(.5)
+
     keyboard.press_and_release('ctrl+z')
     time.sleep(1)
 
