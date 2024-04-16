@@ -404,7 +404,7 @@ def restart_game():
     time.sleep(0.25)
     pyautogui.hotkey('esc')
     time.sleep(0.25)
-
+    # Volunteer before closing
     pyautogui.click(volunteer[0], volunteer[1])
 
     pyautogui.hotkey('alt', 'f4')
@@ -438,22 +438,70 @@ def drag_window(start_coords, end_coords):
     pyautogui.moveTo(end_coords[0], end_coords[1], duration=1)
     pyautogui.mouseUp()
 
+def does_it_match(image_path, similarity_threshold=0.7):
+    screen = capture_game_screen()
+    template = cv2.imread(image_path, cv2.IMREAD_COLOR)
+
+    # Perform template matching
+    result = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+
+    # Check if the maximum match value is greater than the similarity threshold
+    if max_val >= similarity_threshold:
+        return True
+    else:
+        return False
+
+def walk_and_center_npc():
+    # Reset Position
+    mistlock = (126, 281)
+    pyautogui.doubleClick(mistlock[0], mistlock[1])
+    time.sleep(11)
+    pyautogui.doubleClick(mistlock[0], mistlock[1])
+    time.sleep(11)
+
+    # Paths to images for each direction
+    direction_images = [
+        './directions/top.png',
+        './directions/right.png',
+        './directions/left.png',
+        './directions/bot.png'
+    ]
+
+    # Descriptions for each direction (for logging purposes)
+    directions = ['top', 'right', 'left', 'bot']
+
+    # Iterate through each direction image and check for a match
+    for idx, image_path in enumerate(direction_images):
+        if does_it_match(image_path):
+
+            if directions[idx] == 'top':
+                press_and_hold('3', hold_time=4)
+                pass
+
+            elif directions[idx] == 'right':
+                #! Move screen like when ordering bank
+                press_and_hold('3', hold_time=4) #! Center character
+                press_and_hold('3', hold_time=4) #! Move infront of NPC's
+                pass
+
+            elif directions[idx] == 'left':
+                press_and_hold('3', hold_time=4)
+                pass
+
+            elif directions[idx] == 'bot':
+                press_and_hold('3', hold_time=4)
+                pass
+
+            break  # Stop the loop after finding a match
+        else:
+            print(f"No match facing {directions[idx]}.")
+
+
+
 def open_menus():
     # Ensure the game window is active by clicking into the game area
     pyautogui.click(1800, 1050)
-
-    # mistlock = (126, 281)
-
-    # # Restart Position
-    # pyautogui.doubleClick(mistlock[0], mistlock[1])
-    # time.sleep(11)
-    
-    # pyautogui.doubleClick(mistlock[0], mistlock[1])
-    # time.sleep(11)
-
-    # # Walk to NPC's
-    #! if check here to compare images and walk correctly based on spawn
-    # press_and_hold('3', hold_time=4)
 
     keyboard.press_and_release('ctrl+z')
     time.sleep(1)
@@ -535,29 +583,7 @@ def salvage_restant_exotics():
         pyautogui.click(accept_button[0], accept_button[1]) # Accept salvage
         time.sleep(0.25)
 
-def does_it_match(image_path, similarity_threshold=0.7):
-    """
-    Check if the current screen contains a region that matches the given image.
-    
-    :param image_path: Path to the image file to compare against the current screen.
-    :param similarity_threshold: The threshold for considering the images as matching.
-    :return: True if a match is found with a score above the threshold, False otherwise.
-    """
-    screen = capture_game_screen()
-    template = cv2.imread(image_path, cv2.IMREAD_COLOR)
 
-    if template is None:
-        raise FileNotFoundError(f"No image found at the specified path: {image_path}")
-
-    # Perform template matching
-    result = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
-    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
-
-    # Check if the maximum match value is greater than the similarity threshold
-    if max_val >= similarity_threshold:
-        return True
-    else:
-        return False
 
 def main():
     # restart_game()
@@ -566,11 +592,12 @@ def main():
     # salvage_restant_exotics()
     # sell_all_items()
 
+    #? Test
+    walk_and_center_npc()
+    # open_menus()
+
     for i in range(1, 51):  
         print(f"Starting iteration {i}")
-        
-        #? Test
-        # open_menus()
 
         handle_errors()
         manage_unidentified_gear()
@@ -616,6 +643,7 @@ def main():
         if i % 30 == 0:  
             restart_game()
             open_menus()
+            walk_and_center_npc()
         
         # Add a short sleep time if needed between iterations to avoid overwhelming the application
         time.sleep(2)
