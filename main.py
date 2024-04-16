@@ -137,6 +137,7 @@ def use_salvage_kits():
     pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_4[1])
     pyautogui.moveTo(1200, 170)
     time.sleep(2.2)    
+    pyautogui.click(compact[0], compact[1])
     
 def manage_ectos():
     pyautogui.moveTo(silver_fed[0], silver_fed[1])
@@ -512,12 +513,12 @@ def salvage_restant_exotics():
         time.sleep(0.25)
 
 def main():
-    open_menus()
+    # open_menus()
     # delete_dark_matter()
     # salvage_restant_exotics()
     # sell_all_items()
 
-    for i in range(1, 91):  
+    for i in range(1, 31):  
         print(f"Starting iteration {i}")
         
         #? Test
