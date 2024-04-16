@@ -4,6 +4,9 @@ import pyautogui
 import time
 import keyboard
 
+# Disable the fail-safe
+pyautogui.FAILSAFE = False
+
 # Areas Coordinates
 inventory_area = (0, 0, 2350, 2160)
 bank_area = (2840, 1125, 3840, 2160)
@@ -513,12 +516,12 @@ def salvage_restant_exotics():
         time.sleep(0.25)
 
 def main():
-    # open_menus()
+    open_menus()
     # delete_dark_matter()
     # salvage_restant_exotics()
-    # sell_all_items()
+    sell_all_items()
 
-    for i in range(1, 31):  
+    for i in range(1, 93):  
         print(f"Starting iteration {i}")
         
         #? Test
