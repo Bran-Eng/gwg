@@ -391,7 +391,7 @@ def handle_errors():
 def restart_game():
     pyautogui.click(1800, 500)
 
-     # Coordinates for game icon, login, start game, and character selection
+    # Coordinates for game icon, login, start game, and character selection
     game_icon_coords = (180, 2122)
     login_button_coords = (1203, 1327)
     character_coords = (1600, 2015)
@@ -456,13 +456,20 @@ def does_it_match(image_path, similarity_threshold=0.7):
     return max_val >= similarity_threshold   
 
 def reset_position():
+    # Make sure Inventory is Open
+    inventory_close = (2289, 110)
+    pyautogui.click(inventory_close[0], inventory_close[1])
+    keyboard.press_and_release('ctrl+z')
+    time.sleep(1)
+  
     mistlock = (126, 281)
     pyautogui.doubleClick(mistlock[0], mistlock[1])
-    time.sleep(11)
+    time.sleep(17)
+
     keyboard.press_and_release('ctrl+z')
     time.sleep(1)
     pyautogui.doubleClick(mistlock[0], mistlock[1])
-    time.sleep(11)
+    time.sleep(17)
 
 def walk_and_center_npc():
     # Reset Position by clicking Mistlock pass
@@ -491,7 +498,7 @@ def walk_and_center_npc():
 
             elif directions[idx] == 'right':
                 press_and_hold('w', hold_time=1)
-                press_and_hold('k', hold_time=.79)                
+                press_and_hold('k', hold_time=.78)                
                 
                 # Move to NPC's
                 press_and_hold('3', hold_time=4.5)
@@ -499,10 +506,11 @@ def walk_and_center_npc():
 
             elif directions[idx] == 'left':
                 press_and_hold('w', hold_time=1)
-                press_and_hold('l', hold_time=.79)
+                press_and_hold('l', hold_time=.75)
                 
                 # Move to NPC's
                 press_and_hold('3', hold_time=4.5) 
+                press_and_hold('q', hold_time=.2)
                 pass
 
             elif directions[idx] == 'bot':
@@ -616,17 +624,13 @@ def main():
     click_game()
 
     # restart_game()
-    # open_menus()
+    walk_and_center_npc()
+    open_menus()
     # delete_dark_matter()
     # salvage_restant_exotics()
     # sell_all_items()
 
-    # ? Test
-    restart_game()
-    walk_and_center_npc()
-    open_menus()
-
-    for i in range(1, 61):  
+    for i in range(1, 81):  
         print(f"Starting iteration {i}")
 
         handle_errors()
