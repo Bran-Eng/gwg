@@ -459,6 +459,8 @@ def reset_position():
     mistlock = (126, 281)
     pyautogui.doubleClick(mistlock[0], mistlock[1])
     time.sleep(11)
+    keyboard.press_and_release('ctrl+z')
+    time.sleep(1)
     pyautogui.doubleClick(mistlock[0], mistlock[1])
     time.sleep(11)
 
@@ -480,7 +482,7 @@ def walk_and_center_npc():
 
     # Iterate through each direction image and check for a match
     for idx, image_path in enumerate(direction_images):
-        if does_it_match(image_path, 0.6):
+        if does_it_match(image_path, 0.55):
 
             if directions[idx] == 'top':
                 # Move to NPC's
@@ -614,13 +616,15 @@ def main():
     click_game()
 
     # restart_game()
-    open_menus()
+    # open_menus()
     # delete_dark_matter()
     # salvage_restant_exotics()
     # sell_all_items()
 
     # ? Test
-    
+    restart_game()
+    walk_and_center_npc()
+    open_menus()
 
     for i in range(1, 61):  
         print(f"Starting iteration {i}")
