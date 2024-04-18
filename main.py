@@ -3,6 +3,8 @@ import numpy as np
 import pyautogui
 import time
 import keyboard
+from pynput.mouse import Controller, Button
+import pyautogui
 
 # Disable the fail-safe
 pyautogui.FAILSAFE = False
@@ -396,16 +398,19 @@ def restart_game():
     volunteer = (78, 1176)
 
     # Close windows to volunteer
-    pyautogui.hotkey('esc')
+    keyboard.press_and_release('esc')
     time.sleep(0.25)
-    pyautogui.hotkey('esc')
+    keyboard.press_and_release('esc')
     time.sleep(0.25)
-    pyautogui.hotkey('esc')
+    keyboard.press_and_release('esc')
     time.sleep(0.25)
-    pyautogui.hotkey('esc')
-    time.sleep(0.25)
+    keyboard.press_and_release('esc')
+    time.sleep(0.7)
     # Volunteer before closing
     pyautogui.click(volunteer[0], volunteer[1])
+    time.sleep(0.25)
+    pyautogui.click(volunteer[0], volunteer[1])
+
 
     pyautogui.hotkey('alt', 'f4')
     time.sleep(0.5)  # Short delay to ensure the first press is registered
@@ -440,32 +445,34 @@ def drag_window(start_coords, end_coords):
 
 def does_it_match(image_path, similarity_threshold=0.7):
     screen = capture_game_screen()
-    template = cv2.imread(image_path, cv2.IMREAD_COLOR)
+    template_color = cv2.imread(image_path)  # Read the image in color
+    template = cv2.cvtColor(template_color, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
 
     # Perform template matching
     result = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
-    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+    _, max_val, _, _ = cv2.minMaxLoc(result)
 
     # Check if the maximum match value is greater than the similarity threshold
-    if max_val >= similarity_threshold:
-        return True
-    else:
-        return False
+    return max_val >= similarity_threshold   
 
-def walk_and_center_npc():
-    # Reset Position
+def reset_position():
     mistlock = (126, 281)
     pyautogui.doubleClick(mistlock[0], mistlock[1])
     time.sleep(11)
     pyautogui.doubleClick(mistlock[0], mistlock[1])
     time.sleep(11)
 
+def walk_and_center_npc():
+    # Reset Position by clicking Mistlock pass
+    reset_position() 
+   
+
     # Paths to images for each direction
     direction_images = [
-        './directions/top.png',
-        './directions/right.png',
-        './directions/left.png',
-        './directions/bot.png'
+        './center_character/Top-1.png',
+        './center_character/Right-1.png',
+        './center_character/Left-1.png',
+        './center_character/Bot-1.png'
     ]
 
     # Descriptions for each direction (for logging purposes)
@@ -473,29 +480,41 @@ def walk_and_center_npc():
 
     # Iterate through each direction image and check for a match
     for idx, image_path in enumerate(direction_images):
-        if does_it_match(image_path):
+        if does_it_match(image_path, 0.6):
 
             if directions[idx] == 'top':
-                press_and_hold('3', hold_time=4)
+                # Move to NPC's
+                press_and_hold('3', hold_time=4.5)
                 pass
 
             elif directions[idx] == 'right':
-                #! Move screen like when ordering bank
-                press_and_hold('3', hold_time=4) #! Center character
-                press_and_hold('3', hold_time=4) #! Move infront of NPC's
+                press_and_hold('w', hold_time=1)
+                press_and_hold('k', hold_time=.79)                
+                
+                # Move to NPC's
+                press_and_hold('3', hold_time=4.5)
                 pass
 
             elif directions[idx] == 'left':
-                press_and_hold('3', hold_time=4)
+                press_and_hold('w', hold_time=1)
+                press_and_hold('l', hold_time=.79)
+                
+                # Move to NPC's
+                press_and_hold('3', hold_time=4.5) 
                 pass
 
             elif directions[idx] == 'bot':
-                press_and_hold('3', hold_time=4)
+                press_and_hold('w', hold_time=1.1)
+                press_and_hold('o')
+                
+                # Move to NPC's
+                press_and_hold('3', hold_time=4.5) 
                 pass
-
-            break  # Stop the loop after finding a match
+            
+            break  
         else:
             print(f"No match facing {directions[idx]}.")
+            
 
 
 
@@ -587,20 +606,23 @@ def salvage_restant_exotics():
         pyautogui.click(accept_button[0], accept_button[1]) # Accept salvage
         time.sleep(0.25)
 
-
+def click_game():
+    pyautogui.click(78, 700)
+    time.sleep(0.5)
 
 def main():
+    click_game()
+
     # restart_game()
     open_menus()
     # delete_dark_matter()
     # salvage_restant_exotics()
     # sell_all_items()
 
-    #? Test
-    walk_and_center_npc()
-    # open_menus()
+    # ? Test
+    
 
-    for i in range(1, 51):  
+    for i in range(1, 61):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -646,8 +668,8 @@ def main():
         
         if i % 30 == 0:  
             restart_game()
-            open_menus()
             walk_and_center_npc()
+            open_menus()
         
         # Add a short sleep time if needed between iterations to avoid overwhelming the application
         time.sleep(2)
