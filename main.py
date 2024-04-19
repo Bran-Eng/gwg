@@ -37,6 +37,7 @@ maximum_amount = (3280, 358)
 list_item = (3002, 556)
 
 mistlock = (126, 281)
+dragon_fall = (216, 281)
 
 
 def capture_game_screen():
@@ -457,21 +458,6 @@ def does_it_match(image_path, similarity_threshold=0.7):
     # Check if the maximum match value is greater than the similarity threshold
     return max_val >= similarity_threshold   
 
-def reset_position():
-    # Make sure Inventory is Open
-    inventory_close = (2289, 110)
-    pyautogui.click(inventory_close[0], inventory_close[1])
-    keyboard.press_and_release('ctrl+z')
-    time.sleep(1)
-  
-    pyautogui.doubleClick(mistlock[0], mistlock[1])
-    time.sleep(17)
-
-    keyboard.press_and_release('ctrl+z')
-    time.sleep(1)
-    pyautogui.doubleClick(mistlock[0], mistlock[1])
-    time.sleep(17)
-
 def handle_direction(direction):
     if direction == 'top':
         press_and_hold('3', hold_time=4.5)
@@ -494,6 +480,22 @@ def handle_direction(direction):
         press_and_hold('o')
 
         press_and_hold('3', hold_time=4.5)
+
+def reset_position():
+    # Make sure Inventory is Open
+    inventory_close = (2289, 110)
+    pyautogui.click(inventory_close[0], inventory_close[1])
+    time.sleep(1)
+    keyboard.press_and_release('ctrl+z')
+    time.sleep(1)
+  
+    pyautogui.doubleClick(dragon_fall[0], dragon_fall[1])
+    time.sleep(25)
+
+    keyboard.press_and_release('ctrl+z')
+    time.sleep(1)
+    pyautogui.doubleClick(mistlock[0], mistlock[1])
+    time.sleep(20)
 
 def walk_and_center_npc():
     # Reset Position by clicking Mistlock pass
@@ -522,64 +524,12 @@ def walk_and_center_npc():
 
         # If no matches found after trying all directions, reset and try again
         print("No directions matched, resetting...")
+        reset_position()
+
         keyboard.press_and_release('ctrl+z')
         time.sleep(1)
         pyautogui.doubleClick(mistlock[0], mistlock[1])
-        time.sleep(17)
-
-# def walk_and_center_npc():
-#     # Reset Position by clicking Mistlock pass
-#     reset_position() 
-   
-
-#     # Paths to images for each direction
-#     direction_images = [
-#         './center_character/Top-1.png',
-#         './center_character/Right-1.png',
-#         './center_character/Left-1.png',
-#         './center_character/Bot-1.png'
-#     ]
-
-#     # Descriptions for each direction (for logging purposes)
-#     directions = ['top', 'right', 'left', 'bot']
-
-#     # Iterate through each direction image and check for a match
-#     for idx, image_path in enumerate(direction_images):
-#         if does_it_match(image_path, 0.55):
-
-#             if directions[idx] == 'top':
-#                 # Move to NPC's
-#                 press_and_hold('3', hold_time=4.5)
-#                 pass
-
-#             elif directions[idx] == 'right':
-#                 press_and_hold('w', hold_time=1)
-#                 press_and_hold('k', hold_time=.78)                
-                
-#                 # Move to NPC's
-#                 press_and_hold('3', hold_time=4.5)
-#                 pass
-
-#             elif directions[idx] == 'left':
-#                 press_and_hold('w', hold_time=1)
-#                 press_and_hold('l', hold_time=.75)
-                
-#                 # Move to NPC's
-#                 press_and_hold('3', hold_time=4.5) 
-#                 press_and_hold('q', hold_time=.07)
-#                 pass
-
-#             elif directions[idx] == 'bot':
-#                 press_and_hold('w', hold_time=1.1)
-#                 press_and_hold('o')
-                
-#                 # Move to NPC's
-#                 press_and_hold('3', hold_time=4.5) 
-#                 pass
-            
-#             break  
-#         else:
-#             print(f"No match facing {directions[idx]}.")
+        time.sleep(20)
             
 
 
@@ -686,57 +636,57 @@ def main():
     # salvage_restant_exotics()
     # sell_all_items()
 
-    for i in range(1, 81):  
-        print(f"Starting iteration {i}")
+    # for i in range(1, 81):  
+    #     print(f"Starting iteration {i}")
 
-        handle_errors()
-        manage_unidentified_gear()
-        time.sleep(11)
-        use_salvage_kits()
-        sell_lucent_motes() 
+    #     handle_errors()
+    #     manage_unidentified_gear()
+    #     time.sleep(11)
+    #     use_salvage_kits()
+    #     sell_lucent_motes() 
 
-        manage_cristallyne_dust()
+    #     manage_cristallyne_dust()
 
-        if i % 2 == 0: 
-            consume_purple_luck()
-            consume_purple_luck_click_button()
-            handle_errors()
+    #     if i % 2 == 0: 
+    #         consume_purple_luck()
+    #         consume_purple_luck_click_button()
+    #         handle_errors()
 
-            consume_luck()
-            handle_errors()
+    #         consume_luck()
+    #         handle_errors()
 
-            sell_mithril_ore()
-            handle_errors()
+    #         sell_mithril_ore()
+    #         handle_errors()
 
-            sell_elder_wood_logs()
+    #         sell_elder_wood_logs()
 
-        if i % 3 == 0:  
-            sell_silk_scraps()
-            sell_thick_leather_sections()
+    #     if i % 3 == 0:  
+    #         sell_silk_scraps()
+    #         sell_thick_leather_sections()
 
-        if i % 10 == 0:  
-            manage_ectos()
-            consume_purple_luck()  
-            consume_purple_luck_click_button()
-            handle_errors()
+    #     if i % 10 == 0:  
+    #         manage_ectos()
+    #         consume_purple_luck()  
+    #         consume_purple_luck_click_button()
+    #         handle_errors()
 
-            consume_luck()
-            handle_errors()
+    #         consume_luck()
+    #         handle_errors()
 
-            delete_dark_matter()
-            manage_cristallyne_dust()
-            handle_errors()
+    #         delete_dark_matter()
+    #         manage_cristallyne_dust()
+    #         handle_errors()
 
-            sell_all_items()
-            handle_errors()
+    #         sell_all_items()
+    #         handle_errors()
         
-        if i % 30 == 0:  
-            restart_game()
-            walk_and_center_npc()
-            open_menus()
+    #     if i % 30 == 0:  
+    #         restart_game()
+    #         walk_and_center_npc()
+    #         open_menus()
         
-        # Add a short sleep time if needed between iterations to avoid overwhelming the application
-        time.sleep(2)
+    #     # Add a short sleep time if needed between iterations to avoid overwhelming the application
+    #     time.sleep(2)
 
 if __name__ == "__main__":
     main()
