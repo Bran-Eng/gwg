@@ -538,19 +538,27 @@ def walk_and_center_npc():
         reset_position()
             
 
-def does_it_match_menus(image_path, similarity_threshold=0.7):
-    screen = capture_game_screen()
-    template_color = cv2.imread(image_path)  # Read the image in color
-    template = cv2.cvtColor(template_color, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
+def does_it_match_menus(image_paths, similarity_threshold=0.7):
+    screen = capture_game_screen()  # Capture a screenshot of the current game screen
+    matches_found = 0  # Counter for the number of matches found
 
-    # Perform template matching
-    result = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
-    _, max_val, _, _ = cv2.minMaxLoc(result)
+    for image_path in image_paths:
+        template_color = cv2.imread(image_path)  # Read the image in color
+        template = cv2.cvtColor(template_color, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
 
-    # Check if the maximum match value is greater than the similarity threshold
-    return max_val >= similarity_threshold   
+        # Perform template matching
+        result = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
+        _, max_val, _, _ = cv2.minMaxLoc(result)
+
+        # Check if the maximum match value is greater than the similarity threshold
+        if max_val >= similarity_threshold:
+            matches_found += 1
+
+    # Return True only if all provided images are matched successfully
+    return matches_found == len(image_paths)   
 
 def open_menus():
+    menus_confirm = ['./center_character/correct_inventory.png', './center_character/correct_tpbank.png']
     # Ensure the game window is active by clicking into the game area
     pyautogui.click(1800, 1050)
 
@@ -583,7 +591,7 @@ def open_menus():
     time.sleep(1)
 
     # Check if the menus are set up correctly
-    while not does_it_match_menus('./center_character/correct_menus.png', 0.8):
+    while not does_it_match_menus(menus_confirm, 0.8):
         print("Menus are not correctly set up, re-centering NPC...")
         restart_game()
         walk_and_center_npc()
