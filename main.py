@@ -36,6 +36,8 @@ sellers_list = (3163, 746)
 maximum_amount = (3280, 358)
 list_item = (3002, 556)
 
+mistlock = (126, 281)
+
 
 def capture_game_screen():
     monitor_1_region = (0, 0, 3840, 2160)
@@ -462,7 +464,6 @@ def reset_position():
     keyboard.press_and_release('ctrl+z')
     time.sleep(1)
   
-    mistlock = (126, 281)
     pyautogui.doubleClick(mistlock[0], mistlock[1])
     time.sleep(17)
 
@@ -471,10 +472,32 @@ def reset_position():
     pyautogui.doubleClick(mistlock[0], mistlock[1])
     time.sleep(17)
 
+def handle_direction(direction):
+    if direction == 'top':
+        press_and_hold('3', hold_time=4.5)
+
+    elif direction == 'right':
+        press_and_hold('w', hold_time=1)
+        press_and_hold('k', hold_time=.78)   
+
+        press_and_hold('3', hold_time=4.5)
+
+    elif direction == 'left':
+        press_and_hold('w', hold_time=1)
+        press_and_hold('l', hold_time=.75)
+
+        press_and_hold('3', hold_time=4.5) 
+        press_and_hold('q', hold_time=.07)
+
+    elif direction == 'bot':
+        press_and_hold('w', hold_time=1.1)
+        press_and_hold('o')
+
+        press_and_hold('3', hold_time=4.5)
+
 def walk_and_center_npc():
     # Reset Position by clicking Mistlock pass
     reset_position() 
-   
 
     # Paths to images for each direction
     direction_images = [
@@ -487,43 +510,76 @@ def walk_and_center_npc():
     # Descriptions for each direction (for logging purposes)
     directions = ['top', 'right', 'left', 'bot']
 
-    # Iterate through each direction image and check for a match
-    for idx, image_path in enumerate(direction_images):
-        if does_it_match(image_path, 0.55):
+    # Continue trying until a match is found
+    while True:
+        for idx, image_path in enumerate(direction_images):
+            if does_it_match(image_path, 0.55):
+                # Execute direction-specific actions
+                handle_direction(directions[idx])
+                return  # Exit after successful handling
+            else:
+                print(f"No match facing {directions[idx]}.")
 
-            if directions[idx] == 'top':
-                # Move to NPC's
-                press_and_hold('3', hold_time=4.5)
-                pass
+        # If no matches found after trying all directions, reset and try again
+        print("No directions matched, resetting...")
+        keyboard.press_and_release('ctrl+z')
+        time.sleep(1)
+        pyautogui.doubleClick(mistlock[0], mistlock[1])
+        time.sleep(17)
 
-            elif directions[idx] == 'right':
-                press_and_hold('w', hold_time=1)
-                press_and_hold('k', hold_time=.78)                
+# def walk_and_center_npc():
+#     # Reset Position by clicking Mistlock pass
+#     reset_position() 
+   
+
+#     # Paths to images for each direction
+#     direction_images = [
+#         './center_character/Top-1.png',
+#         './center_character/Right-1.png',
+#         './center_character/Left-1.png',
+#         './center_character/Bot-1.png'
+#     ]
+
+#     # Descriptions for each direction (for logging purposes)
+#     directions = ['top', 'right', 'left', 'bot']
+
+#     # Iterate through each direction image and check for a match
+#     for idx, image_path in enumerate(direction_images):
+#         if does_it_match(image_path, 0.55):
+
+#             if directions[idx] == 'top':
+#                 # Move to NPC's
+#                 press_and_hold('3', hold_time=4.5)
+#                 pass
+
+#             elif directions[idx] == 'right':
+#                 press_and_hold('w', hold_time=1)
+#                 press_and_hold('k', hold_time=.78)                
                 
-                # Move to NPC's
-                press_and_hold('3', hold_time=4.5)
-                pass
+#                 # Move to NPC's
+#                 press_and_hold('3', hold_time=4.5)
+#                 pass
 
-            elif directions[idx] == 'left':
-                press_and_hold('w', hold_time=1)
-                press_and_hold('l', hold_time=.75)
+#             elif directions[idx] == 'left':
+#                 press_and_hold('w', hold_time=1)
+#                 press_and_hold('l', hold_time=.75)
                 
-                # Move to NPC's
-                press_and_hold('3', hold_time=4.5) 
-                press_and_hold('q', hold_time=.2)
-                pass
+#                 # Move to NPC's
+#                 press_and_hold('3', hold_time=4.5) 
+#                 press_and_hold('q', hold_time=.07)
+#                 pass
 
-            elif directions[idx] == 'bot':
-                press_and_hold('w', hold_time=1.1)
-                press_and_hold('o')
+#             elif directions[idx] == 'bot':
+#                 press_and_hold('w', hold_time=1.1)
+#                 press_and_hold('o')
                 
-                # Move to NPC's
-                press_and_hold('3', hold_time=4.5) 
-                pass
+#                 # Move to NPC's
+#                 press_and_hold('3', hold_time=4.5) 
+#                 pass
             
-            break  
-        else:
-            print(f"No match facing {directions[idx]}.")
+#             break  
+#         else:
+#             print(f"No match facing {directions[idx]}.")
             
 
 
