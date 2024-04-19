@@ -103,6 +103,11 @@ def find_and_click(step=0):
             pyautogui.scroll(-500)
             time.sleep(0.25) 
 
+            pyautogui.scroll(-500)
+            pyautogui.scroll(-500)
+            pyautogui.scroll(-500)
+            time.sleep(0.25) 
+
             find_and_click(step=2)                                
                     
             return False        
@@ -384,12 +389,17 @@ def handle_errors():
     err_buttons_coords_list = [
         (2119, 1156),  
         (2129, 1181),
-        (2118, 1154)
+        (2129, 1181),
+        (2129, 1181),
+        (2129, 1181),
+        (2129, 1181),
+        (2118, 1154),
+        (2120, 1157)
     ]
 
     for coords in err_buttons_coords_list:
-        time.sleep(0.25)
         pyautogui.click(coords[0], coords[1])
+        time.sleep(0.25)
 
 def restart_game():
     pyautogui.click(1800, 500)
@@ -525,11 +535,6 @@ def walk_and_center_npc():
         # If no matches found after trying all directions, reset and try again
         print("No directions matched, resetting...")
         reset_position()
-
-        keyboard.press_and_release('ctrl+z')
-        time.sleep(1)
-        pyautogui.doubleClick(mistlock[0], mistlock[1])
-        time.sleep(20)
             
 
 
@@ -630,63 +635,63 @@ def main():
     click_game()
 
     # restart_game()
-    walk_and_center_npc()
-    open_menus()
+    # walk_and_center_npc()
+    # open_menus()
     # delete_dark_matter()
     # salvage_restant_exotics()
     # sell_all_items()
 
-    # for i in range(1, 81):  
-    #     print(f"Starting iteration {i}")
+    for i in range(1, 71):  
+        print(f"Starting iteration {i}")
 
-    #     handle_errors()
-    #     manage_unidentified_gear()
-    #     time.sleep(11)
-    #     use_salvage_kits()
-    #     sell_lucent_motes() 
+        handle_errors()
+        manage_unidentified_gear()
+        time.sleep(11)
+        use_salvage_kits()
+        sell_lucent_motes() 
 
-    #     manage_cristallyne_dust()
+        manage_cristallyne_dust()
 
-    #     if i % 2 == 0: 
-    #         consume_purple_luck()
-    #         consume_purple_luck_click_button()
-    #         handle_errors()
+        if i % 2 == 0: 
+            consume_purple_luck()
+            consume_purple_luck_click_button()
+            handle_errors()
 
-    #         consume_luck()
-    #         handle_errors()
+            consume_luck()
+            handle_errors()
 
-    #         sell_mithril_ore()
-    #         handle_errors()
+            sell_mithril_ore()
+            handle_errors()
 
-    #         sell_elder_wood_logs()
+            sell_elder_wood_logs()
 
-    #     if i % 3 == 0:  
-    #         sell_silk_scraps()
-    #         sell_thick_leather_sections()
+        if i % 3 == 0:  
+            sell_silk_scraps()
+            sell_thick_leather_sections()
 
-    #     if i % 10 == 0:  
-    #         manage_ectos()
-    #         consume_purple_luck()  
-    #         consume_purple_luck_click_button()
-    #         handle_errors()
+        if i % 10 == 0:  
+            manage_ectos()
+            consume_purple_luck()  
+            consume_purple_luck_click_button()
+            handle_errors()
 
-    #         consume_luck()
-    #         handle_errors()
+            consume_luck()
+            handle_errors()
 
-    #         delete_dark_matter()
-    #         manage_cristallyne_dust()
-    #         handle_errors()
+            delete_dark_matter()
+            manage_cristallyne_dust()
+            handle_errors()
 
-    #         sell_all_items()
-    #         handle_errors()
+            sell_all_items()
+            handle_errors()
         
-    #     if i % 30 == 0:  
-    #         restart_game()
-    #         walk_and_center_npc()
-    #         open_menus()
+        if i % 30 == 0:  
+            restart_game()
+            walk_and_center_npc()
+            open_menus()
         
-    #     # Add a short sleep time if needed between iterations to avoid overwhelming the application
-    #     time.sleep(2)
+        # Add a short sleep time if needed between iterations to avoid overwhelming the application
+        time.sleep(2)
 
 if __name__ == "__main__":
     main()
