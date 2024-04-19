@@ -199,7 +199,8 @@ def consume_purple_luck():
     if loc is not None:
         for pt in zip(*loc[::-1]):
             pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified purple luck
-            pyautogui.rightClick()   
+            pyautogui.rightClick()
+            time.sleep(0.35)   
             break         
         
 def consume_purple_luck_click_button():
@@ -537,7 +538,17 @@ def walk_and_center_npc():
         reset_position()
             
 
+def does_it_match_menus(image_path, similarity_threshold=0.7):
+    screen = capture_game_screen()
+    template_color = cv2.imread(image_path)  # Read the image in color
+    template = cv2.cvtColor(template_color, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
 
+    # Perform template matching
+    result = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
+    _, max_val, _, _ = cv2.minMaxLoc(result)
+
+    # Check if the maximum match value is greater than the similarity threshold
+    return max_val >= similarity_threshold   
 
 def open_menus():
     # Ensure the game window is active by clicking into the game area
@@ -567,11 +578,17 @@ def open_menus():
     end_coords = (3141, 1086)
     drag_window(start_coords, end_coords)
 
-    
-
     # Open map for a white background using Shift + Z
     keyboard.press_and_release('shift+z')
     time.sleep(1)
+
+    # Check if the menus are set up correctly
+    while not does_it_match_menus('./center_character/correct_menus.png', 0.8):
+        print("Menus are not correctly set up, re-centering NPC...")
+        restart_game()
+        walk_and_center_npc()
+        open_menus()
+    print("Menus are correctly set up.")
 
 
 def salvage_restant_exotics():    
@@ -641,7 +658,7 @@ def main():
     # salvage_restant_exotics()
     # sell_all_items()
 
-    for i in range(1, 71):  
+    for i in range(1, 121):  
         print(f"Starting iteration {i}")
 
         handle_errors()
