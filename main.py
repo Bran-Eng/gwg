@@ -710,9 +710,9 @@ def click_game():
 def main():
     click_game()
 
-    # restart_game()
-    # walk_and_center_npc()
-    # open_menus()
+    restart_game()
+    walk_and_center_npc()
+    open_menus()
     # delete_dark_matter()
     # salvage_restant_exotics()
     # sell_all_items()
