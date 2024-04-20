@@ -617,23 +617,69 @@ def salvage_restant_exotics():
         pyautogui.click(accept_button[0], accept_button[1]) # Accept salvage
         time.sleep(0.25)
 
+def take_all_and_storage(storage_number):    
+    for _ in range(storage_number):
+        # Take all
+        pyautogui.click(2619, 1025) 
+        time.sleep(1)    
+
+        # Greens Coords
+        greens_coords_list = [
+            (2491, 1273),  
+            (2575, 1273),  
+            (2669, 1273),
+            (2756, 1273),
+
+            (2491, 1360),
+            (2575, 1360),
+            (2669, 1360),
+            (2756, 1360),
+
+            (2491, 1450),  
+            (2575, 1450),  
+            (2669, 1450),
+            (2756, 1450),
+
+            (2491, 1537),  
+            (2575, 1537),  
+            (2669, 1537),
+            (2756, 1537),
+
+            (2491, 1623),  
+            (2575, 1623),  
+            (2669, 1623),
+            (2756, 1623),
+
+            (2491, 1715),  
+            (2575, 1715),  
+            (2669, 1715),
+            (2756, 1715),
+        ]
+
+        for coords in greens_coords_list:
+            pyautogui.moveTo(coords[0], coords[1])
+            pyautogui.doubleClick()
+            time.sleep(0.25)
+
 def click_game():
     pyautogui.click(78, 700)
 
 def main():
     click_game()
 
+    take_all_and_storage(3)    
+
     # restart_game()
     # open_menus()
     # walk_and_center_npc()
 
-    salvage_restant_exotics()
-    manage_ectos()
-    manage_cristallyne_dust()
-    consume_purple_luck()
-    consume_luck()
-    handle_errors()
-    sell_all_items()
+    # salvage_restant_exotics()
+    # manage_ectos()
+    # manage_cristallyne_dust()
+    # consume_purple_luck()
+    # consume_luck()
+    # handle_errors()
+    # sell_all_items()
 
     
 
