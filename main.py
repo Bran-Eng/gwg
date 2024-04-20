@@ -395,7 +395,8 @@ def handle_errors():
         (2129, 1181),
         (2129, 1181),
         (2118, 1154),
-        (2120, 1157)
+        (2120, 1157),
+        # (1919, 1156) graphgics error, maybe just wait till the game restarts
     ]
 
     for coords in err_buttons_coords_list:
@@ -435,7 +436,7 @@ def restart_game():
     # pyautogui.hotkey('alt', 'f4')
     # time.sleep(0.5)  # Short delay to ensure the first press is registered
     # pyautogui.hotkey('alt', 'f4')
-    time.sleep(4)  # Wait for the game to close
+    # time.sleep(4)  # Wait for the game to close
 
     # Click on the game icon to start the game
     pyautogui.click(game_icon_coords[0], game_icon_coords[1])
