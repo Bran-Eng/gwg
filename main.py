@@ -411,7 +411,7 @@ def restart_game():
     character_coords = (1600, 2015)
     volunteer = (78, 1176)
 
-    # Close windows to volunteer
+    # Close windows to volunteer    
     keyboard.press_and_release('esc')
     time.sleep(0.25)
     keyboard.press_and_release('esc')
@@ -425,13 +425,17 @@ def restart_game():
     time.sleep(0.25)
     pyautogui.click(volunteer[0], volunteer[1])
 
+    # Close the game through icon
+    keyboard.press_and_release('win')
+    time.sleep(1.5)
+    pyautogui.rightClick(180, 2123)
+    time.sleep(1)
+    pyautogui.click(141, 2040)
 
-    pyautogui.hotkey('alt', 'f4')
-    time.sleep(0.5)  # Short delay to ensure the first press is registered
-    pyautogui.hotkey('alt', 'f4')
-    time.sleep(3)  # Wait for the game to close
-
-   
+    # pyautogui.hotkey('alt', 'f4')
+    # time.sleep(0.5)  # Short delay to ensure the first press is registered
+    # pyautogui.hotkey('alt', 'f4')
+    time.sleep(4)  # Wait for the game to close
 
     # Click on the game icon to start the game
     pyautogui.click(game_icon_coords[0], game_icon_coords[1])
@@ -711,63 +715,63 @@ def main():
     click_game()
 
     restart_game()
-    walk_and_center_npc()
-    open_menus()
+    # walk_and_center_npc()
+    # open_menus()
     # delete_dark_matter()
     # salvage_restant_exotics()
     # sell_all_items()
 
-    for i in range(1, 121):  
-        print(f"Starting iteration {i}")
+    # for i in range(1, 121):  
+    #     print(f"Starting iteration {i}")
 
-        handle_errors()
-        manage_unidentified_gear()
-        time.sleep(11)
-        use_salvage_kits()
-        sell_lucent_motes() 
+    #     handle_errors()
+    #     manage_unidentified_gear()
+    #     time.sleep(11)
+    #     use_salvage_kits()
+    #     sell_lucent_motes() 
 
-        manage_cristallyne_dust()
+    #     manage_cristallyne_dust()
 
-        if i % 2 == 0: 
-            consume_purple_luck()
-            consume_purple_luck_click_button()
-            handle_errors()
+    #     if i % 2 == 0: 
+    #         consume_purple_luck()
+    #         consume_purple_luck_click_button()
+    #         handle_errors()
 
-            consume_luck()
-            handle_errors()
+    #         consume_luck()
+    #         handle_errors()
 
-            sell_mithril_ore()
-            handle_errors()
+    #         sell_mithril_ore()
+    #         handle_errors()
 
-            sell_elder_wood_logs()
+    #         sell_elder_wood_logs()
 
-        if i % 3 == 0:  
-            sell_silk_scraps()
-            sell_thick_leather_sections()
+    #     if i % 3 == 0:  
+    #         sell_silk_scraps()
+    #         sell_thick_leather_sections()
 
-        if i % 10 == 0:  
-            manage_ectos()
-            consume_purple_luck()  
-            consume_purple_luck_click_button()
-            handle_errors()
+    #     if i % 10 == 0:  
+    #         manage_ectos()
+    #         consume_purple_luck()  
+    #         consume_purple_luck_click_button()
+    #         handle_errors()
 
-            consume_luck()
-            handle_errors()
+    #         consume_luck()
+    #         handle_errors()
 
-            delete_dark_matter()
-            manage_cristallyne_dust()
-            handle_errors()
+    #         delete_dark_matter()
+    #         manage_cristallyne_dust()
+    #         handle_errors()
 
-            sell_all_items()
-            handle_errors()
+    #         sell_all_items()
+    #         handle_errors()
         
-        if i % 30 == 0:  
-            restart_game()
-            walk_and_center_npc()
-            open_menus()
+    #     if i % 30 == 0:  
+    #         restart_game()
+    #         walk_and_center_npc()
+    #         open_menus()
         
-        # Add a short sleep time if needed between iterations to avoid overwhelming the application
-        time.sleep(2)
+    #     # Add a short sleep time if needed between iterations to avoid overwhelming the application
+    #     time.sleep(2)
 
 if __name__ == "__main__":
     main()
