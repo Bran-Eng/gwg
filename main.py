@@ -590,6 +590,57 @@ def open_menus():
     keyboard.press_and_release('shift+z')
     time.sleep(1)
 
+    # Scroll completely for better image recognition
+    pyautogui.moveTo(2622, 1640)        
+    
+    pyautogui.scroll(-500)  
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)   
+    time.sleep(0.25)
+
+    pyautogui.scroll(-500)  
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    time.sleep(0.25) 
+
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    time.sleep(0.25)
+
+    pyautogui.scroll(-500)  
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)   
+    time.sleep(0.25)
+
+    pyautogui.scroll(-500)  
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    time.sleep(0.25) 
+
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    time.sleep(0.25)
+
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    time.sleep(0.25)
+
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    time.sleep(0.25)
+
     # Check if the menus are set up correctly
     while not does_it_match_menus(menus_confirm, 0.8):
         print("Menus are not correctly set up, re-centering NPC...")
