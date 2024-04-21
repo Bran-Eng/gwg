@@ -352,7 +352,7 @@ def sell_thick_leather_sections():
             pyautogui.click(maximum_amount[0], maximum_amount[1]) # Maximum Amount
             time.sleep(0.25)
             pyautogui.click(list_item[0], list_item[1]) # List
-            time.sleep(5) #! Time after sell
+            time.sleep(5) # Time after sell
             break
 
 def sell_silk_scraps():
@@ -372,7 +372,7 @@ def sell_silk_scraps():
             pyautogui.click(maximum_amount[0], maximum_amount[1]) # Maximum Amount
             time.sleep(0.25)
             pyautogui.click(list_item[0], list_item[1]) # List
-            time.sleep(5) #! Time after sell
+            time.sleep(5) # Time after sell
             break
         
 def handle_errors():
@@ -390,13 +390,13 @@ def handle_errors():
 def restart_game():
     pyautogui.click(1800, 500)
 
-     # Coordinates for game icon, login, start game, and character selection
+    # Coordinates for game icon, login, start game, and character selection
     game_icon_coords = (180, 2122)
     login_button_coords = (1203, 1327)
     character_coords = (1600, 2015)
     volunteer = (78, 1176)
 
-    # Close windows to volunteer
+    # Close windows to volunteer    
     keyboard.press_and_release('esc')
     time.sleep(0.25)
     keyboard.press_and_release('esc')
@@ -410,15 +410,20 @@ def restart_game():
     time.sleep(0.25)
     pyautogui.click(volunteer[0], volunteer[1])
 
+    # Close the game through icon
+    keyboard.press_and_release('win')
+    time.sleep(1.5)
+    pyautogui.rightClick(180, 2123)
+    time.sleep(1)
+    pyautogui.click(141, 2040)
 
-    pyautogui.hotkey('alt', 'f4')
-    time.sleep(0.5)  # Short delay to ensure the first press is registered
-    pyautogui.hotkey('alt', 'f4')
-    time.sleep(3)  # Wait for the game to close
-
-   
+    # pyautogui.hotkey('alt', 'f4')
+    # time.sleep(0.5)  # Short delay to ensure the first press is registered
+    # pyautogui.hotkey('alt', 'f4')
+    # time.sleep(3)  # Wait for the game to close
 
     # Click on the game icon to start the game
+    time.sleep(2)
     pyautogui.click(game_icon_coords[0], game_icon_coords[1])
     time.sleep(10)  # Wait for the game to load.
 
@@ -624,7 +629,26 @@ def take_all_and_storage(storage_number):
         pyautogui.click(2619, 1025) 
         time.sleep(1)    
 
-        # Greens Coords
+        pyautogui.moveTo(2491, 1273)
+        pyautogui.scroll(500)
+        time.sleep(.25)
+        pyautogui.scroll(500)
+        time.sleep(.25)
+        pyautogui.scroll(500)  
+        time.sleep(.25)
+        pyautogui.scroll(500)  
+        time.sleep(.25)
+
+        pyautogui.scroll(500)
+        time.sleep(.25)
+        pyautogui.scroll(500)
+        time.sleep(.25)
+        pyautogui.scroll(500)  
+        time.sleep(.25)
+        pyautogui.scroll(500)  
+        time.sleep(.25)
+
+        #! Greens Coords, re order
         greens_coords_list = [
             (2491, 1273),  
             (2575, 1273),  
@@ -662,19 +686,66 @@ def take_all_and_storage(storage_number):
             pyautogui.doubleClick()
             time.sleep(0.25)
 
+        pyautogui.scroll(-500)
+        time.sleep(.25)
+        pyautogui.scroll(-500)
+        time.sleep(.25)
+        pyautogui.scroll(-500)  
+        time.sleep(.25)
+        pyautogui.scroll(-500)  
+        time.sleep(.25)
+
+        pyautogui.scroll(-500)
+        time.sleep(.25)
+        pyautogui.scroll(-500)
+        time.sleep(.25)
+        pyautogui.scroll(-500)
+        time.sleep(.25)
+        pyautogui.scroll(-500)
+        time.sleep(.25)
+
+def place_10_orders():
+    # Click search
+    pyautogui.click(2498, 242)
+    time.sleep(0.5)
+
+    # Type piece of unidentified gear
+    pyautogui.write('piece of unidentified gear', interval=0.1)
+    time.sleep(1)
+
+    # Click gear
+    pyautogui.click(2873, 356)
+    time.sleep(1)
+
+    # Click on order
+    pyautogui.click(2733, 746)
+    time.sleep(0.5)
+    # 250
+    pyautogui.click(3284, 356)
+    time.sleep(0.5)
+    
+    # Place order
+    for _ in range(10):
+        pyautogui.click(3007, 555)
+        time.sleep(1.5)
+        pyautogui.click(3007, 555)  
+        time.sleep(5)
+
+
 def click_game():
     pyautogui.click(78, 700)
 
 def main():
     click_game()
 
-    take_all_and_storage(4)
+    # place_10_orders()
+    # take_all_and_storage(1)
 
     # restart_game()
     # open_menus()
     # walk_and_center_npc()
 
-    # salvage_restant_exotics()
+    salvage_restant_exotics()
     # manage_ectos()
     # manage_cristallyne_dust()
     # consume_purple_luck()
