@@ -705,6 +705,13 @@ def take_all_and_storage(storage_number):
         time.sleep(.25)
 
 def place_10_orders():
+    # Click Okay to close sell  
+    pyautogui.click(3007, 555)
+    time.sleep(1.5)
+    # Close last sell
+    pyautogui.click(3517, 186)
+    time.sleep(1.5)
+  
     # Click search
     pyautogui.click(2498, 242)
     time.sleep(0.5)
@@ -738,14 +745,14 @@ def click_game():
 def main():
     click_game()
 
-    # place_10_orders()
+    place_10_orders()
     # take_all_and_storage(1)
 
     # restart_game()
     # open_menus()
     # walk_and_center_npc()
 
-    salvage_restant_exotics()
+    # salvage_restant_exotics()
     # manage_ectos()
     # manage_cristallyne_dust()
     # consume_purple_luck()

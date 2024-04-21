@@ -799,32 +799,38 @@ def take_all_and_storage(storage_number):
         time.sleep(.25)  
 
 def place_10_orders():
-    pyautogui.moveTo(2600, 500)
+    # Click Okay to close sell  
+    pyautogui.click(3007, 555)
+    time.sleep(1.5)
+    # Close last sell
+    pyautogui.click(3517, 186)
+    time.sleep(1.5)
+  
+    # Click search
+    pyautogui.click(2498, 242)
     time.sleep(0.5)
 
-    pyautogui.scroll(-500)  
-    pyautogui.scroll(-500)  
-    time.sleep(0.5)
+    # Type piece of unidentified gear
+    pyautogui.write('piece of unidentified gear', interval=0.1)
+    time.sleep(1)
 
-    # Click favorites
-    pyautogui.click(2520, 607)
-    time.sleep(0.5)
-
-    # Click Green
-    pyautogui.click(2876, 630)
-    time.sleep(0.5)
+    # Click gear
+    pyautogui.click(2873, 356)
+    time.sleep(1)
 
     # Click on order
     pyautogui.click(2733, 746)
-    time.sleep(0.25)
+    time.sleep(0.5)
     # 250
     pyautogui.click(3284, 356)
-    time.sleep(0.25)
+    time.sleep(0.5)
     
     # Place order
     for _ in range(10):
+        pyautogui.click(3007, 555)
+        time.sleep(1.5)
         pyautogui.click(3007, 555)  
-        time.sleep(5)  
+        time.sleep(5)
 
 def click_game():
     pyautogui.click(78, 700)
@@ -835,7 +841,6 @@ def main():
 
     # place_10_orders()
     # take_all_and_storage(1)
-    #? If there are excedents remaining I will need plenty of bak tabs 
 
     # restart_game()
     # walk_and_center_npc()
