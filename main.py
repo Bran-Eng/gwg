@@ -535,7 +535,23 @@ def walk_and_center_npc():
 
         # If no matches found after trying all directions, reset and try again
         print("No directions matched, resetting...")
-        restart_game() #! Added for better debugging        
+
+        # Logic if game is actually closed, just 46s added
+        game_icon_coords = (180, 2122)
+        login_button_coords = (1203, 1327)
+        character_coords = (1600, 2015)
+        # Click on the game icon to start the game
+        pyautogui.click(game_icon_coords[0], game_icon_coords[1])
+        time.sleep(10)  # Wait for the game to load.
+
+        # Click on the login button
+        pyautogui.click(login_button_coords[0], login_button_coords[1])
+        time.sleep(14)  # Wait for login to process and auto start game
+
+        # Double-click on the character to start playing
+        pyautogui.doubleClick(character_coords[0], character_coords[1])
+        time.sleep(22)  # Wait for the game to enter into playing mode
+              
         reset_position()
             
 

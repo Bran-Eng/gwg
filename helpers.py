@@ -668,7 +668,7 @@ def click_game():
 def main():
     click_game()
 
-    take_all_and_storage(1)
+    take_all_and_storage(4)
 
     # restart_game()
     # open_menus()
