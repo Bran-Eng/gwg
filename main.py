@@ -550,6 +550,7 @@ def walk_and_center_npc():
         # pyautogui.doubleClick(character_coords[0], character_coords[1])
         # time.sleep(22)  # Wait for the game to enter into playing mode
               
+        restart_game()
         reset_position()
             
 
