@@ -482,7 +482,7 @@ def handle_direction(direction):
         press_and_hold('l', hold_time=.75)
 
         press_and_hold('3', hold_time=4.5) 
-        press_and_hold('q', hold_time=.07)
+        press_and_hold('q', hold_time=.15)
 
     elif direction == 'bot':
         press_and_hold('w', hold_time=1.1)
@@ -719,6 +719,13 @@ def salvage_restant_exotics():
 
 def take_all_and_storage(storage_number):    
     for _ in range(storage_number):
+        # Click Okay to close sell  
+        pyautogui.click(3007, 555)
+        time.sleep(1.5)
+        # Close last sell
+        pyautogui.click(3517, 186)
+        time.sleep(1.5)
+
         # Take all
         pyautogui.click(2619, 1025) 
         time.sleep(1)    
@@ -799,12 +806,18 @@ def take_all_and_storage(storage_number):
         time.sleep(.25)  
 
 def place_10_orders():
+    time.sleep(5)
+
     # Click Okay to close sell  
     pyautogui.click(3007, 555)
     time.sleep(1.5)
     # Close last sell
     pyautogui.click(3517, 186)
     time.sleep(1.5)
+
+    # Click Home
+    pyautogui.click(2948, 136)
+    time.sleep(2)
   
     # Click search
     pyautogui.click(2498, 242)
@@ -812,18 +825,18 @@ def place_10_orders():
 
     # Type piece of unidentified gear
     pyautogui.write('piece of unidentified gear', interval=0.1)
-    time.sleep(1)
+    time.sleep(2)
 
     # Click gear
     pyautogui.click(2873, 356)
-    time.sleep(1)
+    time.sleep(3)
 
     # Click on order
     pyautogui.click(2733, 746)
-    time.sleep(0.5)
+    time.sleep(1)
     # 250
     pyautogui.click(3284, 356)
-    time.sleep(0.5)
+    time.sleep(1)
     
     # Place order
     for _ in range(10):
@@ -849,7 +862,7 @@ def main():
     # salvage_restant_exotics()
     # sell_all_items()
 
-    for i in range(1, 91):  
+    for i in range(1, 211):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -895,10 +908,11 @@ def main():
 
             place_10_orders()
 
-        if i % 20 == 0:
-            take_all_and_storage(1)
+        # if i % 20 == 0:
+        #     take_all_and_storage(1)
         
         if i % 30 == 0:  
+            take_all_and_storage(1)
             restart_game()
             walk_and_center_npc()
             open_menus()

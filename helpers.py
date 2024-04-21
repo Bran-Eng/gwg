@@ -625,6 +625,13 @@ def salvage_restant_exotics():
 
 def take_all_and_storage(storage_number):    
     for _ in range(storage_number):
+        # Click Okay to close sell  
+        pyautogui.click(3007, 555)
+        time.sleep(1.5)
+        # Close last sell
+        pyautogui.click(3517, 186)
+        time.sleep(1.5)
+        
         # Take all
         pyautogui.click(2619, 1025) 
         time.sleep(1)    
@@ -648,7 +655,7 @@ def take_all_and_storage(storage_number):
         pyautogui.scroll(500)  
         time.sleep(.25)
 
-        #! Greens Coords, re order
+        # Greens Coords
         greens_coords_list = [
             (2491, 1273),  
             (2575, 1273),  
@@ -702,15 +709,21 @@ def take_all_and_storage(storage_number):
         pyautogui.scroll(-500)
         time.sleep(.25)
         pyautogui.scroll(-500)
-        time.sleep(.25)
+        time.sleep(.25)  
 
 def place_10_orders():
+    time.sleep(5)
+
     # Click Okay to close sell  
     pyautogui.click(3007, 555)
     time.sleep(1.5)
     # Close last sell
     pyautogui.click(3517, 186)
     time.sleep(1.5)
+
+    # Click Home
+    pyautogui.click(2948, 136)
+    time.sleep(2)
   
     # Click search
     pyautogui.click(2498, 242)
@@ -718,7 +731,7 @@ def place_10_orders():
 
     # Type piece of unidentified gear
     pyautogui.write('piece of unidentified gear', interval=0.1)
-    time.sleep(1)
+    time.sleep(2)
 
     # Click gear
     pyautogui.click(2873, 356)
@@ -726,10 +739,10 @@ def place_10_orders():
 
     # Click on order
     pyautogui.click(2733, 746)
-    time.sleep(0.5)
+    time.sleep(2)
     # 250
     pyautogui.click(3284, 356)
-    time.sleep(0.5)
+    time.sleep(1)
     
     # Place order
     for _ in range(10):
@@ -746,7 +759,7 @@ def main():
     click_game()
 
     place_10_orders()
-    # take_all_and_storage(1)
+    take_all_and_storage(1)
 
     # restart_game()
     # open_menus()
@@ -757,7 +770,7 @@ def main():
     # manage_cristallyne_dust()
     # consume_purple_luck()
     # consume_purple_luck_click_button()
-    # consume_luck()
+    # consume_luck()e
     # handle_errors()
     # sell_all_items()
 
