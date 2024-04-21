@@ -535,7 +535,7 @@ def walk_and_center_npc():
 
         # If no matches found after trying all directions, reset and try again
         print("No directions matched, resetting...")
-        restart_game()        
+        restart_game() #! Added for better debugging        
         reset_position()
             
 
