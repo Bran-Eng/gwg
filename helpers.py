@@ -188,8 +188,9 @@ def consume_purple_luck():
     loc, w, h = search_for_item(image_path, 0.9)
     if loc is not None:
         for pt in zip(*loc[::-1]):
-            pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified purple luck
-            pyautogui.rightClick()   
+            pyautogui.rightClick(pt[0] + w/2, pt[1] + h/2)  # Click on the identified purple luck
+            # pyautogui.rightClick()
+            time.sleep(0.35)
             break         
         
 def consume_purple_luck_click_button():
@@ -667,7 +668,7 @@ def click_game():
 def main():
     click_game()
 
-    take_all_and_storage(3)    
+    take_all_and_storage(1)
 
     # restart_game()
     # open_menus()
@@ -677,6 +678,7 @@ def main():
     # manage_ectos()
     # manage_cristallyne_dust()
     # consume_purple_luck()
+    # consume_purple_luck_click_button()
     # consume_luck()
     # handle_errors()
     # sell_all_items()
