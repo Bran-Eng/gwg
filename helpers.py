@@ -758,8 +758,8 @@ def click_game():
 def main():
     click_game()
 
-    place_10_orders()
-    take_all_and_storage(1)
+    # place_10_orders()
+    # take_all_and_storage(2)
 
     # restart_game()
     # open_menus()
@@ -767,12 +767,12 @@ def main():
 
     # salvage_restant_exotics()
     # manage_ectos()
-    # manage_cristallyne_dust()
-    # consume_purple_luck()
-    # consume_purple_luck_click_button()
-    # consume_luck()e
-    # handle_errors()
-    # sell_all_items()
+    manage_cristallyne_dust()
+    consume_purple_luck()
+    consume_purple_luck_click_button()
+    consume_luck()
+    handle_errors()
+    sell_all_items()
 
     
 
