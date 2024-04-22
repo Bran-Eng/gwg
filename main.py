@@ -240,10 +240,10 @@ def sell_all_items():
         (392, 1712),
         (482, 1712),
         (570, 1712),
-        # (658, 1712),
-        # (744, 1712),
-        # (833, 1712),
-        # (924, 1712)
+        (658, 1712),
+        (744, 1712),
+        (833, 1712),
+        (924, 1712)
     ]
 
     for coords in sell_items_coords_list:
@@ -811,6 +811,16 @@ def take_all_and_storage(storage_number):
             (2575, 1715),  
             (2669, 1715),
             (2756, 1715),
+
+            (2491, 1804),  
+            (2575, 1804),  
+            (2669, 1804),
+            (2756, 1804),
+
+            (2491, 1895),  
+            (2575, 1895),  
+            (2669, 1895),
+            (2756, 1895),
         ]
 
         for coords in greens_coords_list:
@@ -908,8 +918,8 @@ def manage_charms():
                     time.sleep(0.25)
                     pyautogui.click(maximum_amount[0], maximum_amount[1])  # Set Maximum Amount
                     time.sleep(0.25)
-                    pyautogui.click(minus_one[0], minus_one[1])  # Minus One
-                    time.sleep(0.25)
+                    # pyautogui.click(minus_one[0], minus_one[1])  # Minus One
+                    # time.sleep(0.25)
                     pyautogui.click(list_item[0], list_item[1])  # List the item for sale
                     time.sleep(5)  # Wait for the transaction to process
                     break  # Break after processing the first valid charm
@@ -987,7 +997,7 @@ def main():
 
             place_10_orders()
 
-        if i % 25 == 0:
+        if i % 24 == 0:
             consume_purple_luck()  
             consume_purple_luck_click_button()
             handle_errors()
