@@ -665,12 +665,12 @@ def open_menus():
     print("Menus are correctly set up.")
 
 def sell_most_2_expensive_exotics(): 
-    # Sell items section
-    pyautogui.click(3450, 125)
-    time.sleep(1.5)
-  
     # Close last sell
     pyautogui.click(3517, 186)
+    time.sleep(1.5)
+
+    # Sell items section
+    pyautogui.click(3450, 125)
     time.sleep(1.5)
 
     # Sort by Quantity
@@ -695,6 +695,7 @@ def sell_most_2_expensive_exotics():
     time.sleep(1)
     # Sell
     pyautogui.click(3007, 555)
+    pyautogui.click(3007, 595)
     time.sleep(1)
 
 
