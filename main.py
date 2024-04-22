@@ -13,7 +13,7 @@ pyautogui.FAILSAFE = False
 inventory_area = (0, 0, 2350, 2160)
 bank_area = (2840, 1125, 3840, 2160)
 tp_area = (2430, 60, 3840, 1090)
-tp_price_area = () # Rectangle of silver and gold price area
+sell_search_area = (76, 1219, 2829, 2075)
 
 compact = (2229, 176)
 take_all = (2615, 1025)
@@ -34,6 +34,7 @@ silver_fed_salvage_stack_accept = (1900, 1155)
 # Trading Post Sell Areas
 sellers_list = (3163, 746)
 maximum_amount = (3280, 358)
+minus_one = (2986, 361)
 list_item = (3002, 556)
 
 mistlock = (126, 281)
@@ -226,8 +227,8 @@ def consume_luck():
 
 def sell_all_items():
     sell_items_coords_list = [
-        (1717, 1620),  
-        (1812, 1620),  
+        (1717, 1620),
+        (1812, 1620),
         (1897, 1620),
         (1985, 1620),
         (2077, 1620),
@@ -239,10 +240,10 @@ def sell_all_items():
         (392, 1712),
         (482, 1712),
         (570, 1712),
-        (658, 1712),
-        (744, 1712),
-        (833, 1712),
-        (924, 1712)
+        # (658, 1712),
+        # (744, 1712),
+        # (833, 1712),
+        # (924, 1712)
     ]
 
     for coords in sell_items_coords_list:
@@ -664,7 +665,7 @@ def open_menus():
         open_menus()
     print("Menus are correctly set up.")
 
-def sell_most_2_expensive_exotics(): 
+def sell_most_expensive_exotics(iterations): 
     # Close last sell
     pyautogui.click(3517, 186)
     time.sleep(1.5)
@@ -673,30 +674,24 @@ def sell_most_2_expensive_exotics():
     pyautogui.click(3450, 125)
     time.sleep(1.5)
 
-    # Sort by Quantity
-    quantity = (2851, 234)
-    pyautogui.click(quantity[0], quantity[1])
-    time.sleep(1)
-
-    # Click on item 1
-    pyautogui.click(2871, 304)
-    time.sleep(2)
-    # Sell
-    pyautogui.click(3007, 555)
-    pyautogui.click(3007, 595)
-    time.sleep(7)
-
-    # Close last sell
-    pyautogui.click(3517, 186)
+    # Sort by Price
+    price = (3714, 236)
+    pyautogui.click(price[0], price[1])
+    time.sleep(.5)
+    pyautogui.click(price[0], price[1])
     time.sleep(1.5)
 
-    # Click on item 2
-    pyautogui.click(2871, 304)
-    time.sleep(1)
-    # Sell
-    pyautogui.click(3007, 555)
-    pyautogui.click(3007, 595)
-    time.sleep(1)
+    # Sell Exotics
+    for _ in range(iterations):
+        pyautogui.click(2871, 304)
+        time.sleep(2)
+        # Sell
+        pyautogui.click(3007, 555)
+        pyautogui.click(3007, 595)
+        time.sleep(7)
+        # Close last sell
+        pyautogui.click(3517, 186)
+        time.sleep(1.5)
 
 
 def salvage_restant_exotics():    
@@ -722,7 +717,28 @@ def salvage_restant_exotics():
         (391, 385),
         (482, 385),
         (569, 385),
-        (657, 385)
+        (657, 385),
+        (746, 385),
+        (837, 385),
+        (918, 385),
+
+        (1011, 385),
+        (1100, 385),
+        (1188, 385),
+        (1279, 385),
+        (1368, 385),
+        (1451, 385),
+        (1542, 385),
+        (1631, 385),
+        (1720, 385),
+        (1806, 385),
+
+        (1896, 385),
+        (1982, 385),
+        (2073, 385),
+        (2155, 385),
+        (2248, 385)
+        
     ]
 
     for coords in salvage_exotics_coords_list:
@@ -859,6 +875,48 @@ def place_10_orders():
         time.sleep(1.5)
         pyautogui.click(3007, 555)  
         time.sleep(5)
+            
+def manage_charms():   
+    #! Maybe just do this by coordinates
+    # List of image paths for different charms
+    charm_images = [
+        './items-to-sell/little_charms_of_skill.png',
+        './items-to-sell/little_symbols_of_control.png', 
+        './items-to-sell/little_charms_of_potence.png',
+        './items-to-sell/little_charms_of_briliance.png',
+        './items-to-sell/little_symbols_of_pain.png',
+        './items-to-sell/little_symbols_of_enhancement.png'
+    ]
+
+    sell_search_area = (76, 1219, 2829, 2075)  # Define the search area
+
+    for image_path in charm_images:
+        loc, w, h = search_for_item(image_path, 0.91)
+        if loc is not None:
+            for pt in zip(*loc[::-1]):
+                center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
+                
+                # Check if the center of the found item is within the defined area
+                if sell_search_area[0] <= center_x <= sell_search_area[0] + sell_search_area[2] and sell_search_area[1] <= center_y <= sell_search_area[1] + sell_search_area[3]:
+                    pyautogui.rightClick(center_x, center_y)  # Click on the identified charm
+                    time.sleep(0.5)
+                    pyautogui.move(16, 88)  # Move to "Sell" option
+                    pyautogui.click()
+                    time.sleep(4) 
+
+                    pyautogui.click(sellers_list[0], sellers_list[1])  # Add to sell list
+                    time.sleep(0.25)
+                    pyautogui.click(maximum_amount[0], maximum_amount[1])  # Set Maximum Amount
+                    time.sleep(0.25)
+                    pyautogui.click(minus_one[0], minus_one[1])  # Minus One
+                    time.sleep(0.25)
+                    pyautogui.click(list_item[0], list_item[1])  # List the item for sale
+                    time.sleep(5)  # Wait for the transaction to process
+                    break  # Break after processing the first valid charm
+
+            time.sleep(1)  # Sleep between processing different charms to manage screen updates and avoid rapid-fire actions
+
+
 
 def click_game():
     pyautogui.click(78, 700)
@@ -866,9 +924,6 @@ def click_game():
 
 def main():
     click_game()
-
-    # sell_most_2_expensive_exotics()
-    # salvage_restant_exotics()
 
     # place_10_orders()
     # take_all_and_storage(1)
@@ -885,9 +940,8 @@ def main():
     # consume_purple_luck_click_button()
     # consume_luck()
     # handle_errors()
-    # sell_all_items()
 
-    for i in range(1, 11):  
+    for i in range(1, 240):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -933,9 +987,6 @@ def main():
 
             place_10_orders()
 
-            sell_most_2_expensive_exotics()
-            salvage_restant_exotics()
-
         if i % 25 == 0:
             consume_purple_luck()  
             consume_purple_luck_click_button()
@@ -946,7 +997,10 @@ def main():
             take_all_and_storage(1)
         
         if i % 30 == 0:  
-            # take_all_and_storage(1)
+            manage_charms()
+            sell_most_expensive_exotics(5)
+            salvage_restant_exotics()
+
             restart_game()
             walk_and_center_npc()
             open_menus()
