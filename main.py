@@ -665,6 +665,10 @@ def open_menus():
     print("Menus are correctly set up.")
 
 def sell_most_2_expensive_exotics(): 
+    # Sell items section
+    pyautogui.click(3450, 125)
+    time.sleep(1.5)
+  
     # Close last sell
     pyautogui.click(3517, 186)
     time.sleep(1.5)
@@ -862,8 +866,8 @@ def click_game():
 def main():
     click_game()
 
-    sell_most_2_expensive_exotics()
-    salvage_restant_exotics()
+    # sell_most_2_expensive_exotics()
+    # salvage_restant_exotics()
 
     # place_10_orders()
     # take_all_and_storage(1)
@@ -882,72 +886,72 @@ def main():
     # handle_errors()
     # sell_all_items()
 
-    # for i in range(1, 11):  
-    #     print(f"Starting iteration {i}")
+    for i in range(1, 11):  
+        print(f"Starting iteration {i}")
 
-    #     handle_errors()
-    #     manage_unidentified_gear()
-    #     time.sleep(11)
-    #     use_salvage_kits()
-    #     sell_lucent_motes() 
+        handle_errors()
+        manage_unidentified_gear()
+        time.sleep(11)
+        use_salvage_kits()
+        sell_lucent_motes() 
 
-    #     manage_cristallyne_dust()
+        manage_cristallyne_dust()
 
-    #     if i % 2 == 0: 
-    #         consume_purple_luck()
-    #         consume_purple_luck_click_button()
-    #         handle_errors()
+        if i % 2 == 0: 
+            consume_purple_luck()
+            consume_purple_luck_click_button()
+            handle_errors()
 
-    #         consume_luck()
-    #         handle_errors()
+            consume_luck()
+            handle_errors()
 
-    #         sell_mithril_ore()
-    #         handle_errors()
+            sell_mithril_ore()
+            handle_errors()
 
-    #         sell_elder_wood_logs()
+            sell_elder_wood_logs()
 
-    #     if i % 3 == 0:  
-    #         sell_silk_scraps()
-    #         sell_thick_leather_sections()
+        if i % 3 == 0:  
+            sell_silk_scraps()
+            sell_thick_leather_sections()
 
-    #     if i % 10 == 0:  
-    #         manage_ectos()
-    #         consume_purple_luck()  
-    #         consume_purple_luck_click_button()
-    #         handle_errors()
+        if i % 10 == 0:  
+            manage_ectos()
+            consume_purple_luck()  
+            consume_purple_luck_click_button()
+            handle_errors()
 
-    #         consume_luck()
-    #         handle_errors()
+            consume_luck()
+            handle_errors()
 
-    #         delete_dark_matter()
-    #         manage_cristallyne_dust()
-    #         handle_errors()
+            delete_dark_matter()
+            manage_cristallyne_dust()
+            handle_errors()
 
-    #         sell_all_items()
-    #         handle_errors()
+            sell_all_items()
+            handle_errors()
 
-    #         place_10_orders()
+            place_10_orders()
 
-    #         sell_most_2_expensive_exotics()
-    #         salvage_restant_exotics()
+            sell_most_2_expensive_exotics()
+            salvage_restant_exotics()
 
-    #     if i % 25 == 0:
-    #         consume_purple_luck()  
-    #         consume_purple_luck_click_button()
-    #         handle_errors()
+        if i % 25 == 0:
+            consume_purple_luck()  
+            consume_purple_luck_click_button()
+            handle_errors()
 
-    #         consume_luck()
-    #         handle_errors()
-    #         take_all_and_storage(1)
+            consume_luck()
+            handle_errors()
+            take_all_and_storage(1)
         
-    #     if i % 30 == 0:  
-    #         # take_all_and_storage(1)
-    #         restart_game()
-    #         walk_and_center_npc()
-    #         open_menus()
+        if i % 30 == 0:  
+            # take_all_and_storage(1)
+            restart_game()
+            walk_and_center_npc()
+            open_menus()
         
         # Add a short sleep time if needed between iterations to avoid overwhelming the application
-        # time.sleep(2)
+        time.sleep(2)
 
 if __name__ == "__main__":
     main()
