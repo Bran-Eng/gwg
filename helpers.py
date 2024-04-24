@@ -937,31 +937,28 @@ def main():
 
     # manage_charms()
     # sell_most_expensive_exotics(5)
-    # salvage_restant_exotics()
+    salvage_restant_exotics()
+    # delete_dark_matter()
 
     # sell_all_items()
     # handle_errors()
 
     # manage_ectos()
+    # manage_cristallyne_dust()
     # consume_purple_luck()  
     # consume_purple_luck_click_button()
     # handle_errors()
+    # consume_luck()
+    # handle_errors(
 
     # place_10_orders()
-    take_all_and_storage(3)
+    # take_all_and_storage(1)
 
     # restart_game()
     # walk_and_center_npc()
     # open_menus()
-    # delete_dark_matter()
-    # salvage_restant_exotics()
-    # sell_all_items()
 
-    # manage_cristallyne_dust()
-    # consume_purple_luck()
-    # consume_purple_luck_click_button()
-    # consume_luck()
-    # handle_errors()
+    
 
 if __name__ == "__main__":
     main()
