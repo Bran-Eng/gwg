@@ -20,7 +20,14 @@ take_all = (2615, 1025)
 
 rune_crafter = (932, 1540)
 rune_crafter_salvage_green = (949, 1624) 
-rune_crafter_confirm_button = (1811, 1415)
+rune_crafter_confirm_button = (1811, 1415) # 
+rune_crafter_confirm_button_1 = (1811, 1221) # Row 1
+rune_crafter_confirm_button_2 = (1811, 1247) # Row 2
+rune_crafter_confirm_button_3 = (1811, 1286) # Row 3
+rune_crafter_confirm_button_4 = (1811, 1326) # Row 4
+rune_crafter_confirm_button_5 = (1811, 1363) # Row 5
+rune_crafter_confirm_button_6 = (1811, 1400) # Row 6
+
 
 silver_fed = (1015, 1538)
 silver_fed_use = (1032, 1551)
@@ -125,12 +132,18 @@ def use_salvage_kits():
     # Use Runecrafter for salvaging greens
     pyautogui.moveTo(rune_crafter[0], rune_crafter[1])
     pyautogui.rightClick() 
-    time.sleep(0.25)
+    time.sleep(0.5)
     pyautogui.click(rune_crafter_salvage_green[0], rune_crafter_salvage_green[1])
     time.sleep(0.5)
     pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1])
+    pyautogui.click(rune_crafter_confirm_button_1[0], rune_crafter_confirm_button_1[1])
+    pyautogui.click(rune_crafter_confirm_button_2[0], rune_crafter_confirm_button_2[1])
+    pyautogui.click(rune_crafter_confirm_button_3[0], rune_crafter_confirm_button_3[1])
+    pyautogui.click(rune_crafter_confirm_button_4[0], rune_crafter_confirm_button_4[1])
+    pyautogui.click(rune_crafter_confirm_button_5[0], rune_crafter_confirm_button_5[1])
+    pyautogui.click(rune_crafter_confirm_button_6[0], rune_crafter_confirm_button_6[1])
     pyautogui.moveTo(1200, 170)
-    time.sleep(25.5)
+    time.sleep(24)
 
     # Use Silver Fed for salvaging rares
     pyautogui.moveTo(silver_fed[0], silver_fed[1])
@@ -474,6 +487,8 @@ def restart_game():
     time.sleep(10)  # Wait for the game to load.
 
     # Click on the login button
+    pyautogui.click(login_button_coords[0], login_button_coords[1])
+    time.sleep(.5)
     pyautogui.click(login_button_coords[0], login_button_coords[1])
     time.sleep(14)  # Wait for login to process and auto start game
 
@@ -965,75 +980,74 @@ def main():
     click_game()
     # manage_charms()
     # sell_all_items()
+    # salvage_restant_exotics()
 
-    place_10_orders()
+    for i in range(1, 121):  
+        print(f"Starting iteration {i}")
 
-    # for i in range(1, 121):  
-    #     print(f"Starting iteration {i}")
+        handle_errors()
+        manage_unidentified_gear()
+        time.sleep(11)
+        use_salvage_kits()
+        sell_lucent_motes()
 
-    #     handle_errors()
-    #     manage_unidentified_gear()
-    #     time.sleep(11)
-    #     use_salvage_kits()
-    #     sell_lucent_motes()
+        manage_cristallyne_dust()
 
-    #     manage_cristallyne_dust()
+        if i % 2 == 0: 
+            consume_purple_luck()
+            consume_purple_luck_click_button()
+            handle_errors()
 
-    #     if i % 2 == 0: 
-    #         consume_purple_luck()
-    #         consume_purple_luck_click_button()
-    #         handle_errors()
+            consume_luck()
+            handle_errors()
 
-    #         consume_luck()
-    #         handle_errors()
+            sell_mithril_ore() 
+            handle_errors() 
 
-    #         sell_mithril_ore() 
-    #         handle_errors() 
+            sell_elder_wood_logs() 
 
-    #         sell_elder_wood_logs() 
+        if i % 3 == 0:  
+            sell_silk_scraps() 
+            sell_thick_leather_sections() 
 
-    #     if i % 3 == 0:  
-    #         sell_silk_scraps() 
-    #         sell_thick_leather_sections() 
+        if i % 10 == 0:  
+            manage_ectos() 
+            consume_purple_luck()  
+            consume_purple_luck_click_button()
+            handle_errors()
 
-    #     if i % 10 == 0:  
-    #         manage_ectos() 
-    #         consume_purple_luck()  
-    #         consume_purple_luck_click_button()
-    #         handle_errors()
+            consume_luck()
+            handle_errors()
 
-    #         consume_luck()
-    #         handle_errors()
+            delete_dark_matter()
+            manage_cristallyne_dust()
+            handle_errors()
 
-    #         delete_dark_matter()
-    #         manage_cristallyne_dust()
-    #         handle_errors()
+            manage_charms()
+            sell_all_items()
+            handle_errors()
 
-    #         manage_charms()
-    #         sell_all_items()
-    #         handle_errors()
+            place_10_orders()
 
-    #         place_10_orders()
+        if i % 24 == 0:
+            consume_purple_luck()  
+            consume_purple_luck_click_button()
+            handle_errors()
 
-    #     if i % 24 == 0:
-    #         consume_purple_luck()  
-    #         consume_purple_luck_click_button()
-    #         handle_errors()
-
-    #         consume_luck()
-    #         handle_errors()
-    #         take_all_and_storage(1)
+            consume_luck()
+            handle_errors()
+            take_all_and_storage(1)
         
-    #     if i % 30 == 0:  
-    #         sell_most_expensive_exotics(5)
-    #         salvage_restant_exotics()
+        if i % 30 == 0:  
+            sell_most_expensive_exotics(5)
+            salvage_restant_exotics()
 
-    #         restart_game()
-    #         walk_and_center_npc()
-    #         open_menus()
+            restart_game()
+            walk_and_center_npc()
+            open_menus()
         
-    #     # Add a short sleep time if needed between iterations to avoid overwhelming the application
-    #     time.sleep(2)
+        # Add a short sleep time if needed between iterations to avoid overwhelming the application
+        time.sleep(2)
 
 if __name__ == "__main__":
     main()
