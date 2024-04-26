@@ -811,6 +811,12 @@ def take_all_and_storage(storage_number = 1):
         pyautogui.click(2619, 1025) 
         time.sleep(1)
 
+        # Make Sure is Scrolled Down by clicking
+        pyautogui.click(2817, 1991)
+        time.sleep(1)
+        pyautogui.click(2817, 1991)  
+        time.sleep(1)
+
         # Scroll Up by Clicking
         pyautogui.click(2816, 1725)
         time.sleep(1)
