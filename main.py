@@ -15,11 +15,12 @@ bank_area = (2840, 1125, 3840, 2160)
 tp_area = (2430, 60, 3840, 1090)
 sell_search_area = (76, 1219, 2829, 2075)
 
-compact = (2229, 176)
+compact = (2240, 184)
 take_all = (2615, 1025)
 
-rune_crafter = (932, 1540)
-rune_crafter_salvage_green = (949, 1624) 
+rune_crafter = (937, 1540)
+rune_crafter_salvage_green = (959, 1631) 
+
 rune_crafter_confirm_button = (1811, 1415) # 
 rune_crafter_confirm_button_1 = (1811, 1221) # Row 1
 rune_crafter_confirm_button_2 = (1811, 1247) # Row 2
@@ -29,21 +30,22 @@ rune_crafter_confirm_button_5 = (1811, 1363) # Row 5
 rune_crafter_confirm_button_6 = (1811, 1400) # Row 6
 
 
-silver_fed = (1015, 1538)
-silver_fed_use = (1032, 1551)
-silver_fed_salvage_rare = (1032, 1663) 
+silver_fed = (1017, 1542)
+silver_fed_use = (1040, 1558)
+silver_fed_salvage_rare = (1040, 1670) 
+silver_fed_salvage_stack = (1040, 1706)
+
 silver_fed_confirm_button = (1811, 1247)
 silver_fed_confirm_button_2 = (1811, 1219)
 silver_fed_confirm_button_3 = (1811, 1286)
 silver_fed_confirm_button_4 = (1811, 1327)
-silver_fed_salvage_stack = (1032, 1700)
 silver_fed_salvage_stack_accept = (1900, 1155) 
 
 # Trading Post Sell Areas
 sellers_list = (3163, 746)
 maximum_amount = (3280, 358)
-minus_one = (2986, 361)
-minus_one_copper = (3241, 423)
+minus_one = (2986, 362)
+minus_one_copper = (3240, 423)
 list_item = (3002, 556)
 
 mistlock = (744, 1535)
@@ -799,79 +801,62 @@ def salvage_restant_exotics():
         pyautogui.click(accept_button[0], accept_button[1]) # Accept salvage
         time.sleep(0.25)
 
-def take_all_and_storage(storage_number):    
+def take_all_and_storage(storage_number = 1):    
     for _ in range(storage_number):
-        # Click Okay to close sell  
-        pyautogui.click(3007, 555)
-        time.sleep(1.5)
         # Close last sell
         pyautogui.click(3517, 186)
         time.sleep(1.5)
 
         # Take all
         pyautogui.click(2619, 1025) 
-        time.sleep(1)    
+        time.sleep(1)
 
-        pyautogui.moveTo(2491, 1273)
-        pyautogui.scroll(500)
-        time.sleep(.25)
-        pyautogui.scroll(500)
-        time.sleep(.25)
-        pyautogui.scroll(500)  
-        time.sleep(.25)
-        pyautogui.scroll(500)  
-        time.sleep(.25)
-
-        pyautogui.scroll(500)
-        time.sleep(.25)
-        pyautogui.scroll(500)
-        time.sleep(.25)
-        pyautogui.scroll(500)  
-        time.sleep(.25)
-        pyautogui.scroll(500)  
-        time.sleep(.25)
+        # Scroll Up by Clicking
+        pyautogui.click(2816, 1725)
+        time.sleep(1)
+        pyautogui.click(2816, 1725)
 
         # Greens Coords
         greens_coords_list = [
-            (2491, 1273),  
-            (2575, 1273),  
-            (2669, 1273),
-            (2756, 1273),
+            (2491, 1340),  
+            (2575, 1340),  
+            (2669, 1340),
+            (2756, 1340),
 
-            (2491, 1360),
-            (2575, 1360),
-            (2669, 1360),
-            (2756, 1360),
+            (2491, 1430),
+            (2575, 1430),
+            (2669, 1430),
+            (2756, 1430),
 
-            (2491, 1450),  
-            (2575, 1450),  
-            (2669, 1450),
-            (2756, 1450),
+            (2491, 1520),  
+            (2575, 1520),  
+            (2669, 1520),
+            (2756, 1520),
 
-            (2491, 1537),  
-            (2575, 1537),  
-            (2669, 1537),
-            (2756, 1537),
+            (2491, 1610),  
+            (2575, 1610),  
+            (2669, 1610),
+            (2756, 1610),
 
-            (2491, 1623),  
-            (2575, 1623),  
-            (2669, 1623),
-            (2756, 1623),
+            (2491, 1700),  
+            (2575, 1700),  
+            (2669, 1700),
+            (2756, 1700),
 
-            (2491, 1715),  
-            (2575, 1715),  
-            (2669, 1715),
-            (2756, 1715),
+            (2491, 1790),  
+            (2575, 1790),  
+            (2669, 1790),
+            (2756, 1790),
 
-            (2491, 1804),  
-            (2575, 1804),  
-            (2669, 1804),
-            (2756, 1804),
+            (2491, 1880),  
+            (2575, 1880),  
+            (2669, 1880),
+            (2756, 1880),
 
-            (2491, 1895),  
-            (2575, 1895),  
-            (2669, 1895),
-            (2756, 1895),
+            (2491, 1970),  
+            (2575, 1970),  
+            (2669, 1970),
+            (2756, 1970),
         ]
 
         for coords in greens_coords_list:
@@ -879,23 +864,10 @@ def take_all_and_storage(storage_number):
             pyautogui.doubleClick()
             time.sleep(0.25)
 
-        pyautogui.scroll(-500)
-        time.sleep(.25)
-        pyautogui.scroll(-500)
-        time.sleep(.25)
-        pyautogui.scroll(-500)  
-        time.sleep(.25)
-        pyautogui.scroll(-500)  
-        time.sleep(.25)
-
-        pyautogui.scroll(-500)
-        time.sleep(.25)
-        pyautogui.scroll(-500)
-        time.sleep(.25)
-        pyautogui.scroll(-500)
-        time.sleep(.25)
-        pyautogui.scroll(-500)
-        time.sleep(.25)  
+        # Scroll Down by Clicking
+        pyautogui.click(2817, 1991)
+        time.sleep(1)
+        pyautogui.click(2817, 1991)  
 
 def place_10_orders():
     # Close last sell
@@ -970,8 +942,6 @@ def manage_charms():
 
             time.sleep(1)  # Sleep between processing different charms to manage screen updates and avoid rapid-fire actions
 
-
-
 def click_game():
     pyautogui.click(78, 700)
     time.sleep(0.5)
@@ -981,6 +951,7 @@ def main():
     # manage_charms()
     # sell_all_items()
     # salvage_restant_exotics()
+    # take_all_and_storage(2)
 
     for i in range(1, 121):  
         print(f"Starting iteration {i}")
@@ -1011,7 +982,7 @@ def main():
             sell_thick_leather_sections() 
 
         if i % 10 == 0:  
-            manage_ectos() 
+            # manage_ectos() 
             consume_purple_luck()  
             consume_purple_luck_click_button()
             handle_errors()
