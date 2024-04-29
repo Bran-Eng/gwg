@@ -231,6 +231,8 @@ def consume_purple_luck_click_button():
     if loc is not None:
         for pt in zip(*loc[::-1]):
             pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the consume all
+            time.sleep(0.25)
+            pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the consume all
             break
 
 def consume_luck():
@@ -348,7 +350,7 @@ def sell_mithril_ore():
             # Check if the center of the found item is within the defined area
             if sell_search_area[0] <= center_x <= sell_search_area[0] + sell_search_area[2] and sell_search_area[1] <= center_y <= sell_search_area[1] + sell_search_area[3]:
                 pyautogui.rightClick(pt[0] + w/2, pt[1] + h/2)  # Click on the identified crystallyne
-                time.sleep(0.25)
+                time.sleep(0.4)
                 pyautogui.move(16, 88)
                 pyautogui.click()
                 time.sleep(2.6) 
@@ -358,6 +360,7 @@ def sell_mithril_ore():
                 pyautogui.click(maximum_amount[0], maximum_amount[1]) # Maximum Amount
                 time.sleep(0.25)
                 pyautogui.click(list_item[0], list_item[1]) # List
+                handle_errors()
                 time.sleep(5) # Time after sell
                 break
 
@@ -579,7 +582,7 @@ def walk_and_center_npc():
     # Continue trying until a match is found
     while True:
         for idx, image_path in enumerate(direction_images):
-            if does_it_match(image_path, 0.55):
+            if does_it_match(image_path, 0.65):
                 # Execute direction-specific actions
                 handle_direction(directions[idx])
                 return  # Exit after successful handling
@@ -588,48 +591,33 @@ def walk_and_center_npc():
 
         # If no matches found after trying all directions, reset and try again
         print("No directions matched, resetting...")
-
-        # Logic if game is actually closed, 46s added
-        # game_icon_coords = (180, 2122)
-        # login_button_coords = (1203, 1327)
-        # character_coords = (1600, 2015)
-        # # Click on the game icon to start the game
-        # pyautogui.click(game_icon_coords[0], game_icon_coords[1])
-        # time.sleep(10)  # Wait for the game to load.
-
-        # # Click on the login button
-        # pyautogui.click(login_button_coords[0], login_button_coords[1])
-        # time.sleep(14)  # Wait for login to process and auto start game
-
-        # # Double-click on the character to start playing
-        # pyautogui.doubleClick(character_coords[0], character_coords[1])
-        # time.sleep(22)  # Wait for the game to enter into playing mode
               
         restart_game()
         reset_position()
             
 
-def does_it_match_menus(image_paths, similarity_threshold=0.7):
-    screen = capture_game_screen()  # Capture a screenshot of the current game screen
-    matches_found = 0  # Counter for the number of matches found
+# def does_it_match_menus(image_paths, similarity_threshold=0.7):
+#     screen = capture_game_screen()  # Capture a screenshot of the current game screen
+#     matches_found = 0  # Counter for the number of matches found
 
-    for image_path in image_paths:
-        template_color = cv2.imread(image_path)  # Read the image in color
-        template = cv2.cvtColor(template_color, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
+#     for image_path in image_paths:
+#         template_color = cv2.imread(image_path)  # Read the image in color
+#         template = cv2.cvtColor(template_color, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
 
-        # Perform template matching
-        result = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
-        _, max_val, _, _ = cv2.minMaxLoc(result)
+#         # Perform template matching
+#         result = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
+#         _, max_val, _, _ = cv2.minMaxLoc(result)
 
-        # Check if the maximum match value is greater than the similarity threshold
-        if max_val >= similarity_threshold:
-            matches_found += 1
+#         # Check if the maximum match value is greater than the similarity threshold
+#         if max_val >= similarity_threshold:
+#             matches_found += 1
 
-    # Return True only if all provided images are matched successfully
-    return matches_found == len(image_paths)   
+#     # Return True only if all provided images are matched successfully
+#     return matches_found == len(image_paths)   
 
 def open_menus():
-    menus_confirm = ['./center_character/correct_inventory.png', './center_character/correct_tpbank.png']
+    # menus_confirm = ['./center_character/correct_inventory.png', './center_character/correct_tpbank.png']
+
     # Ensure the game window is active by clicking into the game area
     pyautogui.click(1800, 1050)
 
@@ -712,7 +700,7 @@ def open_menus():
     time.sleep(0.25)
 
     # Check if the menus are set up correctly
-    while not does_it_match_menus(menus_confirm, 0.8):
+    while not does_it_match('./center_character/correct_tpbank.png', 0.8):
         print("Menus are not correctly set up, re-centering NPC...")
         restart_game()
         walk_and_center_npc()
@@ -813,13 +801,13 @@ def take_all_and_storage(storage_number = 1):
 
         # Make Sure is Scrolled Down by clicking
         pyautogui.click(2817, 1991)
-        time.sleep(1)
+        time.sleep(3)
         pyautogui.click(2817, 1991)  
         time.sleep(1)
 
         # Scroll Up by Clicking
         pyautogui.click(2816, 1725)
-        time.sleep(1)
+        time.sleep(3)
         pyautogui.click(2816, 1725)
 
         # Greens Coords
@@ -872,7 +860,7 @@ def take_all_and_storage(storage_number = 1):
 
         # Scroll Down by Clicking
         pyautogui.click(2817, 1991)
-        time.sleep(1)
+        time.sleep(3)
         pyautogui.click(2817, 1991)  
 
 def place_10_orders():
@@ -910,6 +898,38 @@ def place_10_orders():
         time.sleep(1.5)
         pyautogui.click(3007, 555)  
         time.sleep(5)
+
+def buy_10_orders():
+    # Close last sell
+    pyautogui.click(3517, 186)
+    time.sleep(2.5)
+
+    # Click Home
+    pyautogui.click(2948, 136)
+    time.sleep(2)
+  
+    # Click search
+    pyautogui.click(2498, 242)
+    time.sleep(0.5)
+
+    # Type piece of unidentified gear
+    pyautogui.write('piece of unidentified gear', interval=0.1)
+    time.sleep(2)
+
+    # Click gear
+    pyautogui.click(2873, 356)
+    time.sleep(5)
+
+    # 250
+    pyautogui.click(3284, 356)
+    time.sleep(1)
+    
+    # Place order
+    for _ in range(10):
+        pyautogui.click(3007, 555)
+        time.sleep(1.5)
+        pyautogui.click(3007, 555)  
+        time.sleep(5)
             
 def manage_charms(): 
     # List of image paths for different charms
@@ -936,12 +956,12 @@ def manage_charms():
                     pyautogui.click()
                     time.sleep(4) 
 
-                    pyautogui.click(sellers_list[0], sellers_list[1])  # Add to sell list
-                    time.sleep(0.25)
+                    # pyautogui.click(sellers_list[0], sellers_list[1])  # Add to sell list
+                    # time.sleep(0.25)
                     pyautogui.click(maximum_amount[0], maximum_amount[1])  # Set Maximum Amount
                     time.sleep(0.25)
-                    pyautogui.click(minus_one_copper[0], minus_one_copper[1])  # Minus One Copper
-                    time.sleep(0.25)
+                    # pyautogui.click(minus_one_copper[0], minus_one_copper[1])  # Minus One Copper
+                    # time.sleep(0.25)
                     pyautogui.click(list_item[0], list_item[1])  # List the item for sale
                     time.sleep(5)  # Wait for the transaction to process
                     break  # Break after processing the first valid charm
@@ -953,13 +973,34 @@ def click_game():
     time.sleep(0.5)
 
 def main():
-    click_game()
-    # manage_charms()
+    # click_game()
+    manage_charms()
     # sell_all_items()
     # salvage_restant_exotics()
     # take_all_and_storage(2)
 
-    for i in range(1, 121):  
+    # walk_and_center_npc()
+    # open_menus()
+
+    # consume_purple_luck()
+    # consume_purple_luck_click_button()
+    # handle_errors()
+
+    # manage_ectos() 
+    # consume_purple_luck()  
+    # consume_purple_luck_click_button()
+    # handle_errors()
+
+    # consume_luck()
+    # handle_errors()
+
+    # delete_dark_matter()
+    # manage_cristallyne_dust()
+    # handle_errors()
+
+    # buy_10_orders()
+
+    for i in range(1, 31):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -974,9 +1015,11 @@ def main():
             consume_purple_luck()
             consume_purple_luck_click_button()
             handle_errors()
+            # consume_purple_luck()
+            # consume_purple_luck_click_button() #? Here add normal corrdinates instead
+            # handle_errors()
 
             consume_luck()
-            handle_errors()
 
             sell_mithril_ore() 
             handle_errors() 
@@ -988,7 +1031,7 @@ def main():
             sell_thick_leather_sections() 
 
         if i % 10 == 0:  
-            # manage_ectos() 
+            manage_ectos() 
             consume_purple_luck()  
             consume_purple_luck_click_button()
             handle_errors()
@@ -1001,10 +1044,14 @@ def main():
             handle_errors()
 
             manage_charms()
+            manage_charms()
+            manage_charms()
+            manage_charms()
             sell_all_items()
             handle_errors()
 
-            place_10_orders()
+            # place_10_orders()
+            # buy_10_orders()
 
         if i % 24 == 0:
             consume_purple_luck()  
@@ -1013,6 +1060,7 @@ def main():
 
             consume_luck()
             handle_errors()
+
             take_all_and_storage(1)
         
         if i % 30 == 0:  
