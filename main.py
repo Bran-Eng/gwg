@@ -50,7 +50,7 @@ minus_one_copper = (3240, 423)
 list_item = (3002, 556)
 
 mistlock = (744, 1535)
-dragon_fall = (837, 1535)
+portal_scroll = (837, 1535)
 
 
 def capture_game_screen():
@@ -259,42 +259,6 @@ def consume_luck():
         pyautogui.click()
         time.sleep(0.25)
 
-def sell_all_items():
-    sell_items_coords_list = [
-        (1717, 1620),
-        (1812, 1620),
-        (1897, 1620),
-        (1985, 1620),
-        (2077, 1620),
-        (2163, 1620),
-        (2250, 1620),
-        (124, 1712),
-        (215, 1712),
-        (305, 1712),
-        (392, 1712),
-        (482, 1712),
-        (570, 1712),
-        (658, 1712),
-        (744, 1712),
-        (833, 1712),
-        (924, 1712)
-    ]
-
-    for coords in sell_items_coords_list:
-        pyautogui.moveTo(coords[0], coords[1])
-        pyautogui.rightClick()
-        time.sleep(0.25)
-        pyautogui.move(16, 88) 
-        pyautogui.click()
-        time.sleep(3)        
-
-        pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
-        time.sleep(0.25)
-        pyautogui.click(maximum_amount[0], maximum_amount[1]) # Maximum Amount
-        time.sleep(0.25)
-        pyautogui.click(list_item[0], list_item[1]) # List
-        time.sleep(5) # Time after sell
-
 def delete_dark_matter():
     # Identify dark matter
     image_path = './items-to-sell/globs_of_dark_matter.png'  
@@ -487,25 +451,23 @@ def restart_game():
     time.sleep(1)
     pyautogui.click(141, 2040)
 
-    # pyautogui.hotkey('alt', 'f4')
-    # time.sleep(0.5)  # Short delay to ensure the first press is registered
-    # pyautogui.hotkey('alt', 'f4')
-    # time.sleep(3)  # Wait for the game to close
-
     # Click on the game icon to start the game
     time.sleep(2)
     pyautogui.click(game_icon_coords[0], game_icon_coords[1])
-    time.sleep(10)  # Wait for the game to load.
+    # time.sleep(10)  # Wait for the game to load.
+    can_continue('./canContinue/Game_client.png')
 
     # Click on the login button
     pyautogui.click(login_button_coords[0], login_button_coords[1])
     time.sleep(.5)
     pyautogui.click(login_button_coords[0], login_button_coords[1])
-    time.sleep(14)  # Wait for login to process and auto start game
+    # time.sleep(14)  # Wait for login to process and auto start game
+    can_continue('./canContinue/select_character.png')
 
     # Double-click on the character to start playing
     pyautogui.doubleClick(character_coords[0], character_coords[1])
-    time.sleep(22)  # Wait for the game to enter into playing mode
+    # time.sleep(22)  # Wait for the game to enter into playing mode
+    can_continue('./canContinue/playing_mode.png')
 
 def press_and_hold(key, hold_time=0.1):
     keyboard.press(key)
@@ -537,38 +499,46 @@ def handle_direction(direction):
 
     elif direction == 'right':
         press_and_hold('w', hold_time=1)
+        
         press_and_hold('k', hold_time=.78)   
-
+        
         press_and_hold('3', hold_time=4.5)
 
     elif direction == 'left':
-        press_and_hold('w', hold_time=1)
-        press_and_hold('l', hold_time=.75)
-
+        press_and_hold('w', hold_time=1) 
+        press_and_hold('l', hold_time=.75) 
         press_and_hold('3', hold_time=4.5) 
         press_and_hold('q', hold_time=.15)
 
     elif direction == 'bot':
-        press_and_hold('w', hold_time=1.1)
-        press_and_hold('o')
-
+        press_and_hold('w', hold_time=1.1) 
+        press_and_hold('o') 
         press_and_hold('3', hold_time=4.5)
 
 def reset_position():
     # Make sure Inventory is Open
     inventory_close = (2289, 110)
+
+    time.sleep(3)
+    pyautogui.click(inventory_close[0], inventory_close[1])
+    time.sleep(3)
+    keyboard.press_and_release('ctrl+z')
+    time.sleep(2)
+  
+    pyautogui.doubleClick(portal_scroll[0], portal_scroll[1])
+    # time.sleep(25)
+    time.sleep(5)
+    can_continue('./canContinue/playing_mode.png')
+    time.sleep(1)
+
     pyautogui.click(inventory_close[0], inventory_close[1])
     time.sleep(1)
     keyboard.press_and_release('ctrl+z')
     time.sleep(1)
-  
-    pyautogui.doubleClick(dragon_fall[0], dragon_fall[1])
-    time.sleep(25)
-
-    keyboard.press_and_release('ctrl+z')
-    time.sleep(1)
     pyautogui.doubleClick(mistlock[0], mistlock[1])
-    time.sleep(20)
+    time.sleep(3)
+    # time.sleep(10)
+    can_continue('./canContinue/playing_mode.png')
 
 def walk_and_center_npc():
     # Reset Position by clicking Mistlock pass
@@ -600,26 +570,6 @@ def walk_and_center_npc():
               
         restart_game()
         reset_position()
-            
-
-# def does_it_match_menus(image_paths, similarity_threshold=0.7):
-#     screen = capture_game_screen()  # Capture a screenshot of the current game screen
-#     matches_found = 0  # Counter for the number of matches found
-
-#     for image_path in image_paths:
-#         template_color = cv2.imread(image_path)  # Read the image in color
-#         template = cv2.cvtColor(template_color, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
-
-#         # Perform template matching
-#         result = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
-#         _, max_val, _, _ = cv2.minMaxLoc(result)
-
-#         # Check if the maximum match value is greater than the similarity threshold
-#         if max_val >= similarity_threshold:
-#             matches_found += 1
-
-#     # Return True only if all provided images are matched successfully
-#     return matches_found == len(image_paths)   
 
 def open_menus():
     # menus_confirm = ['./center_character/correct_inventory.png', './center_character/correct_tpbank.png']
@@ -808,6 +758,8 @@ def take_all_and_storage(storage_number = 1):
         time.sleep(1)
 
         # Make Sure is Scrolled Down by clicking
+        pyautogui.click(2817, 1991)
+        time.sleep(3)
         pyautogui.click(2817, 1991)
         time.sleep(3)
         pyautogui.click(2817, 1991)  
@@ -1011,7 +963,7 @@ def sell_all():
     ]
 
     for image_path in charm_images:
-        loc, w, h = search_for_item(image_path, 0.91)
+        loc, w, h = search_for_item(image_path, 0.8)
         if loc is not None:
             for pt in zip(*loc[::-1]):
                 center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
@@ -1050,10 +1002,11 @@ def main():
     # sell_item('./items-to-sell/lucent_motes.png')
     # manage_ectos()
 
-    place_10_orders()
-
-
-    for i in range(1, 1):  
+    # place_10_orders()
+    # salvage_restant_exotics()
+    # sell_all()
+    
+    for i in range(1, 91):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -1075,6 +1028,7 @@ def main():
             # handle_errors()
 
             consume_luck()
+            handle_errors() 
 
             sell_item('./items-to-sell/mithril_ore.png')
             # sell_mithril_ore() 
@@ -1111,8 +1065,7 @@ def main():
             sell_all()
             handle_errors()
 
-            # place_10_orders()
-            # buy_10_orders() 
+            place_10_orders()
 
         if i % 20 == 0:
             # place_10_orders()
@@ -1130,6 +1083,8 @@ def main():
             sell_most_expensive_exotics(5)
             salvage_restant_exotics()
 
+        if i % 40 == 0:  
+            # check_volunteer_message() #! Create this one and restart only in this case
             restart_game() #! Add here and there, plenty of can_continue
             walk_and_center_npc()
             open_menus()
