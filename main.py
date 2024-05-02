@@ -14,6 +14,7 @@ inventory_area = (0, 0, 2350, 2160)
 bank_area = (2840, 1125, 3840, 2160)
 tp_area = (2430, 60, 3840, 1090)
 sell_search_area = (76, 1219, 2829, 2075)
+item_tp_area = (2758, 202, 2842, 284)
 
 compact = (2240, 184)
 take_all = (2615, 1025)
@@ -159,7 +160,7 @@ def use_salvage_kits():
     pyautogui.click(silver_fed_confirm_button_3[0], silver_fed_confirm_button_3[1])
     pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_4[1])
     pyautogui.moveTo(1200, 170)
-    time.sleep(2.2)    
+    time.sleep(1.5)    
     pyautogui.click(compact[0], compact[1])
     
 def manage_ectos():
@@ -212,6 +213,8 @@ def manage_cristallyne_dust():
                 time.sleep(0.25)
                 pyautogui.click(list_item[0], list_item[1]) # List
                 time.sleep(5) # Time after sell
+
+                # can_continue('./canContinue/Success.png')
                 break 
         
 def consume_purple_luck():
@@ -332,7 +335,9 @@ def sell_lucent_motes():
                 pyautogui.click(maximum_amount[0], maximum_amount[1])  # Click to set maximum amount
                 time.sleep(0.25)
                 pyautogui.click(list_item[0], list_item[1])  # Click to list the item for sale
-                time.sleep(5)  # Wait for the transaction to process
+                # time.sleep(5)  # Wait for the transaction to process
+
+                can_continue('./canContinue/Success.png')
 
                 break  # Exit after processing the first valid item
 
@@ -361,6 +366,7 @@ def sell_mithril_ore():
                 time.sleep(0.25)
                 pyautogui.click(list_item[0], list_item[1]) # List
                 handle_errors()
+                pyautogui.click(2117, 1155) # List
                 time.sleep(5) # Time after sell
                 break
 
@@ -730,7 +736,9 @@ def sell_most_expensive_exotics(iterations):
         # Sell
         pyautogui.click(3007, 555)
         pyautogui.click(3007, 595)
-        time.sleep(7)
+        # time.sleep(7)
+        can_continue('./canContinue/Success.png') #! same success window? lol
+
         # Close last sell
         pyautogui.click(3517, 186)
         time.sleep(1.5)
@@ -954,16 +962,109 @@ def manage_charms():
                     time.sleep(0.5)
                     pyautogui.move(16, 88)  # Move to "Sell" option
                     pyautogui.click()
-                    time.sleep(4) 
+                    can_continue('./canContinue/menus_setup.png') 
 
-                    # pyautogui.click(sellers_list[0], sellers_list[1])  # Add to sell list
-                    # time.sleep(0.25)
+                    pyautogui.click(sellers_list[0], sellers_list[1])  # Add to sell list
+                    time.sleep(0.25)
+                    pyautogui.click(maximum_amount[0], maximum_amount[1])  # Set Maximum Amount
+                    time.sleep(0.25)
+                    pyautogui.click(minus_one_copper[0], minus_one_copper[1])  # Minus One Copper
+                    time.sleep(0.25)
+                    pyautogui.click(list_item[0], list_item[1])  # List the item for sale
+
+                    can_continue('./canContinue/Success.png')
+                    break  # Break after processing the first valid charm
+
+            time.sleep(1)  # Sleep between processing different charms to manage screen updates and avoid rapid-fire actions
+
+def can_continue(image_path, timeout=9):
+    # Load the image to find in grayscale
+    template_color = cv2.imread(image_path)
+    template = cv2.cvtColor(template_color, cv2.COLOR_BGR2GRAY)
+    start_time = time.time()
+
+    while time.time() - start_time < timeout:
+        screen = capture_game_screen()
+        # Perform template matching
+        result = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
+        _, max_val, _, _ = cv2.minMaxLoc(result)
+
+        # If the image is found with a high enough confidence, return True
+        if max_val >= 0.8:
+            return True
+
+        time.sleep(.4)  # Check every second
+
+    # If the loop exits without finding the image, return False
+    return False
+
+def sell_item(image_path):
+    # Load the image of the item to sell and search for it on screen
+    loc, w, h = search_for_item(image_path, 0.8)
+
+    # Proceed if there are matches found
+    if loc is not None:
+        for pt in zip(*loc[::-1]):
+            center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
+            
+            # Check if the center of the found item is within the defined area
+            if sell_search_area[0] <= center_x <= sell_search_area[0] + sell_search_area[2] and sell_search_area[1] <= center_y <= sell_search_area[1] + sell_search_area[3]:
+                pyautogui.rightClick(center_x, center_y)  # Right-click on the identified item
+                time.sleep(0.5)
+                pyautogui.move(16, 88)  # Move cursor to "Sell" option
+                pyautogui.click()
+
+                can_continue('./canContinue/menus_setup.png') 
+                # time.sleep(3)  # Delay to allow UI to respond
+
+                # Interact with the selling interface
+                pyautogui.click(sellers_list[0], sellers_list[1])  # Click on add to sell list
+                time.sleep(0.25)
+                pyautogui.click(maximum_amount[0], maximum_amount[1])  # Click to set maximum amount
+                time.sleep(0.25)
+                pyautogui.click(list_item[0], list_item[1])  # Click to list the item for sale
+
+                # Wait for confirmation that the sale was successful
+                can_continue('./canContinue/Success.png')
+
+                break  # Exit after processing the first valid item
+            
+def sell_all(): 
+    # List of image paths for different charms
+    charm_images = [
+        './items-to-sell/ancient_wood_logs.png',
+        './items-to-sell/elder_wood_logs.png',
+        './items-to-sell/gossamer_Scraps.png',
+        './items-to-sell/hardened_leather_sections.png',
+        './items-to-sell/mithril_ore.png',
+        './items-to-sell/orichalcum_ore.png',
+        './items-to-sell/silk_scraps.png',
+        './items-to-sell/thick_leather_sections.png',
+    ]
+
+    for image_path in charm_images:
+        loc, w, h = search_for_item(image_path, 0.91)
+        if loc is not None:
+            for pt in zip(*loc[::-1]):
+                center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
+                
+                # Check if the center of the found item is within the defined area
+                if sell_search_area[0] <= center_x <= sell_search_area[0] + sell_search_area[2] and sell_search_area[1] <= center_y <= sell_search_area[1] + sell_search_area[3]:
+                    pyautogui.rightClick(center_x, center_y)  # Click on the identified charm
+                    time.sleep(0.5)
+                    pyautogui.move(16, 88)  # Move to "Sell" option
+                    pyautogui.click()
+                    can_continue('./canContinue/menus_setup.png') 
+
+                    pyautogui.click(sellers_list[0], sellers_list[1])  # Add to sell list
+                    time.sleep(0.25)
                     pyautogui.click(maximum_amount[0], maximum_amount[1])  # Set Maximum Amount
                     time.sleep(0.25)
                     # pyautogui.click(minus_one_copper[0], minus_one_copper[1])  # Minus One Copper
                     # time.sleep(0.25)
                     pyautogui.click(list_item[0], list_item[1])  # List the item for sale
-                    time.sleep(5)  # Wait for the transaction to process
+
+                    can_continue('./canContinue/Success.png')
                     break  # Break after processing the first valid charm
 
             time.sleep(1)  # Sleep between processing different charms to manage screen updates and avoid rapid-fire actions
@@ -973,43 +1074,30 @@ def click_game():
     time.sleep(0.5)
 
 def main():
-    # click_game()
-    manage_charms()
-    # sell_all_items()
-    # salvage_restant_exotics()
-    # take_all_and_storage(2)
+    click_game()
 
-    # walk_and_center_npc()
-    # open_menus()
+    #! I will need to add more can_continue to improve times
+    # sell_lucent_motes()
 
-    # consume_purple_luck()
-    # consume_purple_luck_click_button()
-    # handle_errors()
+    # sell_item('./items-to-sell/lucent_motes.png')
+    # manage_ectos()
 
-    # manage_ectos() 
-    # consume_purple_luck()  
-    # consume_purple_luck_click_button()
-    # handle_errors()
 
-    # consume_luck()
-    # handle_errors()
-
-    # delete_dark_matter()
-    # manage_cristallyne_dust()
-    # handle_errors()
-
-    # buy_10_orders()
-
-    for i in range(1, 31):  
+    for i in range(1, 2):  
         print(f"Starting iteration {i}")
 
-        handle_errors()
-        manage_unidentified_gear()
-        time.sleep(11)
-        use_salvage_kits()
-        sell_lucent_motes()
+        # handle_errors()
+        # manage_unidentified_gear()
+        # time.sleep(10)
+        # use_salvage_kits()
 
-        manage_cristallyne_dust()
+        sell_all()
+        sell_all()
+    
+        # sell_item('./items-to-sell/lucent_motes.png')
+        # sell_lucent_motes()
+
+        # manage_cristallyne_dust() #? When second can_continue is added
 
         if i % 2 == 0: 
             consume_purple_luck()
@@ -1021,14 +1109,18 @@ def main():
 
             consume_luck()
 
-            sell_mithril_ore() 
+            sell_item('./items-to-sell/mithril_ore.png')
+            # sell_mithril_ore() 
             handle_errors() 
 
-            sell_elder_wood_logs() 
+            sell_item('./items-to-sell/elder_wood_logs.png')
+            # sell_elder_wood_logs() 
 
         if i % 3 == 0:  
-            sell_silk_scraps() 
-            sell_thick_leather_sections() 
+            sell_item('./items-to-sell/silk_scraps.png')
+            # sell_silk_scraps() 
+            sell_item('./items-to-sell/thick_leather_sections.png')
+            # sell_thick_leather_sections() 
 
         if i % 10 == 0:  
             manage_ectos() 
@@ -1047,13 +1139,15 @@ def main():
             manage_charms()
             manage_charms()
             manage_charms()
-            sell_all_items()
+            sell_all_items() #! Too slow, just execute varius times a version of manage charms for all items
             handle_errors()
 
-            # place_10_orders()
-            # buy_10_orders()
+            place_10_orders()
+            # buy_10_orders() 
 
-        if i % 24 == 0:
+        if i % 20 == 0:
+            # place_10_orders()
+            
             consume_purple_luck()  
             consume_purple_luck_click_button()
             handle_errors()
@@ -1067,7 +1161,7 @@ def main():
             sell_most_expensive_exotics(5)
             salvage_restant_exotics()
 
-            restart_game()
+            restart_game() #! Add here and there, plenty of can_continue
             walk_and_center_npc()
             open_menus()
         
