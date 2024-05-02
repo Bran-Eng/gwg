@@ -890,11 +890,11 @@ def place_10_orders():
 
     # Click gear
     pyautogui.click(2873, 356)
-    time.sleep(5)
+    can_continue('./canContinue/menus_setup.png') 
 
     # Click on order
     pyautogui.click(2733, 746)
-    time.sleep(3)
+    time.sleep(1)
 
     # 250
     pyautogui.click(3284, 356)
@@ -903,41 +903,9 @@ def place_10_orders():
     # Place order
     for _ in range(10):
         pyautogui.click(3007, 555)
-        time.sleep(1.5)
-        pyautogui.click(3007, 555)  
-        time.sleep(5)
-
-def buy_10_orders():
-    # Close last sell
-    pyautogui.click(3517, 186)
-    time.sleep(2.5)
-
-    # Click Home
-    pyautogui.click(2948, 136)
-    time.sleep(2)
-  
-    # Click search
-    pyautogui.click(2498, 242)
-    time.sleep(0.5)
-
-    # Type piece of unidentified gear
-    pyautogui.write('piece of unidentified gear', interval=0.1)
-    time.sleep(2)
-
-    # Click gear
-    pyautogui.click(2873, 356)
-    time.sleep(5)
-
-    # 250
-    pyautogui.click(3284, 356)
-    time.sleep(1)
-    
-    # Place order
-    for _ in range(10):
+        can_continue('./canContinue/Success_green.png')
         pyautogui.click(3007, 555)
-        time.sleep(1.5)
-        pyautogui.click(3007, 555)  
-        time.sleep(5)
+        time.sleep(.3)
             
 def manage_charms(): 
     # List of image paths for different charms
@@ -1082,22 +1050,21 @@ def main():
     # sell_item('./items-to-sell/lucent_motes.png')
     # manage_ectos()
 
+    place_10_orders()
 
-    for i in range(1, 2):  
+
+    for i in range(1, 1):  
         print(f"Starting iteration {i}")
 
-        # handle_errors()
-        # manage_unidentified_gear()
-        # time.sleep(10)
-        # use_salvage_kits()
-
-        sell_all()
-        sell_all()
+        handle_errors()
+        manage_unidentified_gear()
+        time.sleep(10)
+        use_salvage_kits()
     
-        # sell_item('./items-to-sell/lucent_motes.png')
+        sell_item('./items-to-sell/lucent_motes.png')
         # sell_lucent_motes()
 
-        # manage_cristallyne_dust() #? When second can_continue is added
+        manage_cristallyne_dust() #? When second can_continue is added
 
         if i % 2 == 0: 
             consume_purple_luck()
@@ -1139,10 +1106,12 @@ def main():
             manage_charms()
             manage_charms()
             manage_charms()
-            sell_all_items() #! Too slow, just execute varius times a version of manage charms for all items
+            sell_all()
+            sell_all()
+            sell_all()
             handle_errors()
 
-            place_10_orders()
+            # place_10_orders()
             # buy_10_orders() 
 
         if i % 20 == 0:
