@@ -163,7 +163,7 @@ def use_salvage_kits():
     time.sleep(1.5)    
     pyautogui.click(compact[0], compact[1])
     
-def manage_ectos():
+def salvage_ectos():
     # Identify ectos by image to salvage
     image_path = './items-to-sell/globs_of_ectoplasm.png'  
     loc, w, h = search_for_item(image_path, 0.7)
@@ -186,6 +186,39 @@ def manage_ectos():
                 pyautogui.click(silver_fed_salvage_stack_accept[0], silver_fed_salvage_stack_accept[1])
                 time.sleep(9)
                 break  
+            
+def sell_ectos():
+    # Identify ectos by image to salvage
+    image_path = './items-to-sell/globs_of_ectoplasm.png'  
+    loc, w, h = search_for_item(image_path, 0.7)
+
+    if loc is not None:
+        for pt in zip(*loc[::-1]):
+            center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
+
+            # Check if the center of the found item is within the defined area
+            if inventory_area[0] <= center_x <= inventory_area[0] + inventory_area[2] and inventory_area[1] <= center_y <= inventory_area[1] + inventory_area[3]:
+                pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified Ecto
+                pyautogui.rightClick()
+                time.sleep(0.5)
+                pyautogui.move(53, 125) # Move cursor to "Sell" option
+                pyautogui.click()
+
+                can_continue('./canContinue/menus_setup.png') 
+                # time.sleep(4) 
+
+                pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
+                time.sleep(0.25)
+                pyautogui.click(maximum_amount[0], maximum_amount[1]) # Maximum Amount
+                time.sleep(0.25)
+                pyautogui.click(minus_one_copper[0], minus_one_copper[1])  # Minus One Copper
+                time.sleep(0.25)
+                pyautogui.click(list_item[0], list_item[1]) # List
+                # Wait for confirmation that the sale was successful
+                can_continue('./canContinue/Success.png')
+
+                break 
+              
         
 def manage_cristallyne_dust():   
     # Identify drystalline dust by image to sell
@@ -201,9 +234,10 @@ def manage_cristallyne_dust():
                 pyautogui.click(pt[0] + w/2, pt[1] + h/2)  # Click on the identified crystallyne
                 pyautogui.rightClick()
                 time.sleep(0.5)
-                pyautogui.move(53, 125) 
+                pyautogui.move(53, 125) # Move cursor to "Sell" option
                 pyautogui.click()
-                time.sleep(4) 
+                # time.sleep(4) 
+                can_continue('./canContinue/menus_setup.png') 
 
                 pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
                 time.sleep(0.25)
@@ -212,9 +246,10 @@ def manage_cristallyne_dust():
                 pyautogui.click(minus_one_copper[0], minus_one_copper[1])  # Minus One Copper
                 time.sleep(0.25)
                 pyautogui.click(list_item[0], list_item[1]) # List
-                time.sleep(5) # Time after sell
+                
+                # Wait for confirmation that the sale was successful
+                can_continue('./canContinue/Success.png')
 
-                # can_continue('./canContinue/Success.png')
                 break 
         
 def consume_purple_luck():
@@ -463,6 +498,7 @@ def restart_game():
     pyautogui.click(login_button_coords[0], login_button_coords[1])
     # time.sleep(14)  # Wait for login to process and auto start game
     can_continue('./canContinue/select_character.png')
+    time.sleep(2)
 
     # Double-click on the character to start playing
     pyautogui.doubleClick(character_coords[0], character_coords[1])
@@ -996,17 +1032,31 @@ def click_game():
 def main():
     click_game()
 
+    # restart_game() #! Add here and there, plenty of can_continue
+    # walk_and_center_npc()
+    # open_menus()
+        
+
     #! I will need to add more can_continue to improve times
     # sell_lucent_motes()
 
     # sell_item('./items-to-sell/lucent_motes.png')
-    # manage_ectos()
+    
 
     # place_10_orders()
     # salvage_restant_exotics()
-    # sell_all()
     
-    for i in range(1, 91):  
+
+    # sell_ectos()
+    # manage_cristallyne_dust()
+
+    # manage_charms()
+    # sell_all()
+    # sell_all()
+
+    # take_all_and_storage(2)
+    
+    for i in range(1, 1):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -1016,8 +1066,6 @@ def main():
     
         sell_item('./items-to-sell/lucent_motes.png')
         # sell_lucent_motes()
-
-        manage_cristallyne_dust() #? When second can_continue is added
 
         if i % 2 == 0: 
             consume_purple_luck()
@@ -1044,7 +1092,7 @@ def main():
             # sell_thick_leather_sections() 
 
         if i % 10 == 0:  
-            manage_ectos() 
+            sell_ectos() 
             consume_purple_luck()  
             consume_purple_luck_click_button()
             handle_errors()
@@ -1083,7 +1131,6 @@ def main():
             sell_most_expensive_exotics(5)
             salvage_restant_exotics()
 
-        if i % 40 == 0:  
             # check_volunteer_message() #! Create this one and restart only in this case
             restart_game() #! Add here and there, plenty of can_continue
             walk_and_center_npc()
