@@ -1032,20 +1032,18 @@ def click_game():
 def main():
     click_game()
 
-    # restart_game() #! Add here and there, plenty of can_continue
-    # walk_and_center_npc()
-    # open_menus()
-        
-
-    #! I will need to add more can_continue to improve times
-    # sell_lucent_motes()
-
     # sell_item('./items-to-sell/lucent_motes.png')
-    
 
     # place_10_orders()
     # salvage_restant_exotics()
-    
+
+    # salvage_restant_exotics()
+    # consume_purple_luck()
+    # consume_purple_luck_click_button()
+    # handle_errors()
+
+    # consume_luck()
+    # handle_errors() 
 
     # sell_ectos()
     # manage_cristallyne_dust()
@@ -1056,7 +1054,7 @@ def main():
 
     # take_all_and_storage(2)
     
-    for i in range(1, 1):  
+    for i in range(1, 151):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -1071,9 +1069,6 @@ def main():
             consume_purple_luck()
             consume_purple_luck_click_button()
             handle_errors()
-            # consume_purple_luck()
-            # consume_purple_luck_click_button() #? Here add normal corrdinates instead
-            # handle_errors()
 
             consume_luck()
             handle_errors() 
@@ -1093,6 +1088,7 @@ def main():
 
         if i % 10 == 0:  
             sell_ectos() 
+            manage_cristallyne_dust()
             consume_purple_luck()  
             consume_purple_luck_click_button()
             handle_errors()
@@ -1115,7 +1111,7 @@ def main():
 
             place_10_orders()
 
-        if i % 20 == 0:
+        if i % 10 == 0:
             # place_10_orders()
             
             consume_purple_luck()  
@@ -1130,6 +1126,7 @@ def main():
         if i % 30 == 0:  
             sell_most_expensive_exotics(5)
             salvage_restant_exotics()
+            manage_cristallyne_dust()
 
             # check_volunteer_message() #! Create this one and restart only in this case
             restart_game() #! Add here and there, plenty of can_continue
