@@ -478,18 +478,22 @@ def restart_game():
     pyautogui.click(volunteer[0], volunteer[1])
     time.sleep(0.25)
     pyautogui.click(volunteer[0], volunteer[1])
+    time.sleep(0.35)
 
     # Close the game through icon
-    keyboard.press_and_release('win')
-    time.sleep(4)
-    pyautogui.rightClick(180, 2123)
-    time.sleep(1)
-    pyautogui.click(141, 2040)
+    # keyboard.press_and_release('win')
+    # time.sleep(4)
+    # pyautogui.rightClick(180, 2123)
+    # time.sleep(1)
+    # pyautogui.click(141, 2040)
+
+    keyboard.press_and_release('alt+f4')
+    time.sleep(.3)
+    keyboard.press_and_release('alt+f4')
+    time.sleep(3)
 
     # Click on the game icon to start the game
-    time.sleep(2)
     pyautogui.click(game_icon_coords[0], game_icon_coords[1])
-    # time.sleep(10)  # Wait for the game to load.
     can_continue('./canContinue/Game_client.png')
 
     # Click on the login button
@@ -799,7 +803,7 @@ def take_all_and_storage(storage_number = 1):
         pyautogui.click(2817, 1991)
         time.sleep(3)
         pyautogui.click(2817, 1991)  
-        time.sleep(1)
+        time.sleep(3)
 
         # Scroll Up by Clicking
         pyautogui.click(2816, 1725)
@@ -1029,15 +1033,61 @@ def click_game():
     pyautogui.click(78, 700)
     time.sleep(0.5)
 
+    # Scroll completely for better image recognition
+    pyautogui.moveTo(2622, 1640)        
+    
+    pyautogui.scroll(-500)  
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)   
+    time.sleep(0.25)
+
+    pyautogui.scroll(-500)  
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    time.sleep(0.25) 
+
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    time.sleep(0.25)
+
+    pyautogui.scroll(-500)  
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)   
+    time.sleep(0.25)
+
+    pyautogui.scroll(-500)  
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    time.sleep(0.25) 
+
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    time.sleep(0.25)
+
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    time.sleep(0.25)
+
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    pyautogui.scroll(-500)
+    time.sleep(0.25)
+
 def main():
     click_game()
 
-    # sell_item('./items-to-sell/lucent_motes.png')
+    sell_item('./items-to-sell/lucent_motes.png')
 
-    # place_10_orders()
-    # salvage_restant_exotics()
-
-    # salvage_restant_exotics()
     # consume_purple_luck()
     # consume_purple_luck_click_button()
     # handle_errors()
@@ -1050,11 +1100,17 @@ def main():
 
     # manage_charms()
     # sell_all()
-    # sell_all()
 
-    # take_all_and_storage(2)
+    # place_10_orders()
+    # salvage_restant_exotics()
+
+    # take_all_and_storage(1)
+
+    # restart_game() 
+    # walk_and_center_npc()
+    # open_menus()
     
-    for i in range(1, 151):  
+    for i in range(1, 301):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -1123,7 +1179,7 @@ def main():
 
             take_all_and_storage(1)
         
-        if i % 30 == 0:  
+        if i % 26 == 0:  
             sell_most_expensive_exotics(5)
             salvage_restant_exotics()
             manage_cristallyne_dust()
