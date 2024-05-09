@@ -898,6 +898,13 @@ def place_10_orders():
         can_continue('./canContinue/Success_green.png')
         pyautogui.click(3007, 555)
         time.sleep(.3)
+    
+    # Open "Sell Items"
+    # Close last sell
+    pyautogui.click(3517, 186)
+    time.sleep(1)
+    pyautogui.click(3517, 186)
+
             
 def manage_charms(): 
     # List of image paths for different charms
