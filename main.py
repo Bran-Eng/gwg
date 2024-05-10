@@ -30,16 +30,19 @@ rune_crafter_confirm_button_4 = (1811, 1326) # Row 4
 rune_crafter_confirm_button_5 = (1811, 1363) # Row 5
 rune_crafter_confirm_button_6 = (1811, 1400) # Row 6
 
-
 silver_fed = (1017, 1542)
 silver_fed_use = (1040, 1558)
 silver_fed_salvage_rare = (1040, 1670) 
 silver_fed_salvage_stack = (1040, 1706)
 
 silver_fed_confirm_button = (1811, 1247)
-silver_fed_confirm_button_2 = (1811, 1219)
-silver_fed_confirm_button_3 = (1811, 1286)
-silver_fed_confirm_button_4 = (1811, 1327)
+silver_fed_confirm_button_1 = (1811, 1219) # Row 1
+silver_fed_confirm_button_2 = (1811, 1286) # Row 2
+silver_fed_confirm_button_3 = (1811, 1327) # Row 3
+silver_fed_confirm_button_4 = (1811, 1326) # Row 4
+silver_fed_confirm_button_5 = (1811, 1363) # Row 5
+silver_fed_confirm_button_6 = (1811, 1400) # Row 6
+
 silver_fed_salvage_stack_accept = (1900, 1155) 
 
 # Trading Post Sell Areas
@@ -127,9 +130,73 @@ def manage_unidentified_gear():
             if not find_and_click(step=3):
                 pass    
             
-# ---------------------------------------------------------------------------- #
-#                                    Part 2                                    #
-# ---------------------------------------------------------------------------- #
+def manage_rare_gear():    
+    if not find_and_click_rare(step=1):
+        if not find_and_click_rare(step=2):
+            pass
+
+
+def use_all_rare_gear(center_x, center_y):    
+    pyautogui.moveTo(center_x, center_y)
+    pyautogui.rightClick()
+    time.sleep(0.25)
+    pyautogui.move(85, 205)  # Move to "Use All"
+    pyautogui.click()    
+
+    time.sleep(10)
+    use_silverfed()
+
+def find_and_click_rare(step=0):
+    image_path = './items-to-sell/yellow.png'
+    threshold=0.8
+    
+    if step == 1 or step == 2:
+        loc, w, h = search_for_item(image_path, threshold)
+        if loc is not None:
+            for pt in zip(*loc[::-1]):
+                center_x, center_y = pt[0] + w/2, pt[1] + h/2
+                
+                if step == 1 and  inventory_area[0] <= center_x <= inventory_area[0] + inventory_area[2] and inventory_area[1] <= center_y <= inventory_area[1] + inventory_area[3]:
+                    use_all_rare_gear(center_x, center_y)
+                    return True
+                
+                elif step == 2 and bank_area[0] <= center_x <= bank_area[0] + bank_area[2] and bank_area[1] <= center_y <= bank_area[1] + bank_area[3]:
+                    pyautogui.moveTo(center_x, center_y)
+                    pyautogui.doubleClick()
+                    time.sleep(0.25)
+                    find_and_click_rare(step=1)
+                    return True       
+
+def use_silverfed():
+    # Use Silver Fed for salvaging rares
+    pyautogui.moveTo(silver_fed[0], silver_fed[1])
+    pyautogui.rightClick()
+    time.sleep(0.5)
+    pyautogui.click(silver_fed_salvage_rare[0], silver_fed_salvage_rare[1])
+    time.sleep(0.5)
+    # Press confirm button using 3 coordinates for tackling possible placements
+    pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1])
+    pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_1[1])
+    pyautogui.click(silver_fed_confirm_button_2[0], silver_fed_confirm_button_2[1])
+    pyautogui.click(silver_fed_confirm_button_3[0], silver_fed_confirm_button_3[1])
+    pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_4[1])
+    pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_5[1])
+    pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_6[1])
+    time.sleep(26)
+    pyautogui.moveTo(1200, 170)
+    time.sleep(1.5)    
+    pyautogui.click(compact[0], compact[1])
+
+    sell_ectos()
+    
+    sell_item('./items-to-sell/lucent_motes.png')
+    handle_errors() 
+    sell_all()
+    sell_all()
+    handle_errors() 
+
+    #! salvage exotics and sell, manage seals as well
+    
             
 def use_salvage_kits():
     # Use Runecrafter for salvaging greens
@@ -138,6 +205,16 @@ def use_salvage_kits():
     time.sleep(0.5)
     pyautogui.click(rune_crafter_salvage_green[0], rune_crafter_salvage_green[1])
     time.sleep(0.5)
+
+    handle_errors()
+    time.sleep(0.5)
+
+    pyautogui.moveTo(rune_crafter[0], rune_crafter[1])
+    pyautogui.rightClick() 
+    time.sleep(0.5)
+    pyautogui.click(rune_crafter_salvage_green[0], rune_crafter_salvage_green[1])
+    time.sleep(0.5)
+
     pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1])
     pyautogui.click(rune_crafter_confirm_button_1[0], rune_crafter_confirm_button_1[1])
     pyautogui.click(rune_crafter_confirm_button_2[0], rune_crafter_confirm_button_2[1])
@@ -145,7 +222,6 @@ def use_salvage_kits():
     pyautogui.click(rune_crafter_confirm_button_4[0], rune_crafter_confirm_button_4[1])
     pyautogui.click(rune_crafter_confirm_button_5[0], rune_crafter_confirm_button_5[1])
     pyautogui.click(rune_crafter_confirm_button_6[0], rune_crafter_confirm_button_6[1])
-    pyautogui.moveTo(1200, 170)
     time.sleep(24)
 
     # Use Silver Fed for salvaging rares
@@ -309,141 +385,6 @@ def delete_dark_matter():
             pyautogui.click(1939, 1153) # Accept
             time.sleep(0.25) 
             break    
-
-def sell_lucent_motes():
-    # Identify lucent motes by image to sell
-    image_path = './items-to-sell/lucent_motes.png'
-    loc, w, h = search_for_item(image_path, 0.8)
-
-    # Proceed if there are matches found
-    if loc is not None:
-        for pt in zip(*loc[::-1]):
-            center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
-            
-            # Check if the center of the found item is within the defined area
-            if sell_search_area[0] <= center_x <= sell_search_area[0] + sell_search_area[2] and sell_search_area[1] <= center_y <= sell_search_area[1] + sell_search_area[3]:
-                pyautogui.rightClick(center_x, center_y)  # Right-click on the identified lucent mote
-                time.sleep(0.5)
-                pyautogui.move(16, 88)  # Move cursor to "Sell" option
-                pyautogui.click()
-                time.sleep(3)  # Delay to allow UI to respond
-
-                # Interact with the selling interface
-                pyautogui.click(sellers_list[0], sellers_list[1])  # Click on add to sell list
-                time.sleep(0.25)
-                pyautogui.click(maximum_amount[0], maximum_amount[1])  # Click to set maximum amount
-                time.sleep(0.25)
-                pyautogui.click(list_item[0], list_item[1])  # Click to list the item for sale
-                # time.sleep(5)  # Wait for the transaction to process
-
-                can_continue('./canContinue/Success.png')
-
-                break  # Exit after processing the first valid item
-
-
-
-def sell_mithril_ore():
-    # Identify mithril ore by image to sell
-    image_path = './items-to-sell/mithril_ore.png'
-    loc, w, h = search_for_item(image_path, 0.85)
-    
-    if loc is not None:
-        for pt in zip(*loc[::-1]):
-            center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
-
-            # Check if the center of the found item is within the defined area
-            if sell_search_area[0] <= center_x <= sell_search_area[0] + sell_search_area[2] and sell_search_area[1] <= center_y <= sell_search_area[1] + sell_search_area[3]:
-                pyautogui.rightClick(pt[0] + w/2, pt[1] + h/2)  # Click on the identified crystallyne
-                time.sleep(0.4)
-                pyautogui.move(16, 88)
-                pyautogui.click()
-                time.sleep(2.6) 
-
-                pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
-                time.sleep(0.25)
-                pyautogui.click(maximum_amount[0], maximum_amount[1]) # Maximum Amount
-                time.sleep(0.25)
-                pyautogui.click(list_item[0], list_item[1]) # List
-                handle_errors()
-                pyautogui.click(2117, 1155) # List
-                time.sleep(5) # Time after sell
-                break
-
-def sell_elder_wood_logs():
-    # Identify elder wood logs by image to sell
-    image_path = './items-to-sell/elder_wood_logs.png'
-    loc, w, h = search_for_item(image_path, 0.7)
-
-    if loc is not None:
-        for pt in zip(*loc[::-1]):
-            center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
-
-            # Check if the center of the found item is within the defined area
-            if sell_search_area[0] <= center_x <= sell_search_area[0] + sell_search_area[2] and sell_search_area[1] <= center_y <= sell_search_area[1] + sell_search_area[3]:
-                pyautogui.rightClick(pt[0] + w/2, pt[1] + h/2)  # Click on the identified crystallyne
-                time.sleep(0.25)
-                pyautogui.move(16, 88)
-                pyautogui.click()
-                time.sleep(2.6) 
-
-                pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
-                time.sleep(0.25)
-                pyautogui.click(maximum_amount[0], maximum_amount[1]) # Maximum Amount
-                time.sleep(0.25)
-                pyautogui.click(list_item[0], list_item[1]) # List
-                time.sleep(5) # Time after sell
-                break
-
-def sell_thick_leather_sections():
-    # Identify thick leather sections by image to sell
-    image_path = './items-to-sell/thick_leather_sections.png'
-    loc, w, h = search_for_item(image_path, 0.7)
-
-    if loc is not None:
-        for pt in zip(*loc[::-1]):
-            center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
-
-            # Check if the center of the found item is within the defined area
-            if sell_search_area[0] <= center_x <= sell_search_area[0] + sell_search_area[2] and sell_search_area[1] <= center_y <= sell_search_area[1] + sell_search_area[3]:
-                pyautogui.rightClick(pt[0] + w/2, pt[1] + h/2)  # Click on the identified crystallyne
-                time.sleep(0.25)
-                pyautogui.move(16, 88)
-                pyautogui.click()
-                time.sleep(2.6) 
-
-                pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
-                time.sleep(0.25)
-                pyautogui.click(maximum_amount[0], maximum_amount[1]) # Maximum Amount
-                time.sleep(0.25)
-                pyautogui.click(list_item[0], list_item[1]) # List
-                time.sleep(5) # Time after sell
-                break
-
-def sell_silk_scraps():
-    # Identify silk scraps by image to sell
-    image_path = './items-to-sell/silk_scraps.png'
-    loc, w, h = search_for_item(image_path, 0.7)
-
-
-    if loc is not None:
-        for pt in zip(*loc[::-1]):
-            center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
-
-            # Check if the center of the found item is within the defined area
-            if sell_search_area[0] <= center_x <= sell_search_area[0] + sell_search_area[2] and sell_search_area[1] <= center_y <= sell_search_area[1] + sell_search_area[3]:
-                pyautogui.rightClick(pt[0] + w/2, pt[1] + h/2)  # Click on the identified crystallyne
-                time.sleep(0.25)
-                pyautogui.move(16, 88)
-                pyautogui.click()
-                time.sleep(2.6) 
-
-                pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
-                time.sleep(0.25)
-                pyautogui.click(maximum_amount[0], maximum_amount[1]) # Maximum Amount
-                time.sleep(0.25)
-                pyautogui.click(list_item[0], list_item[1]) # List
-                time.sleep(5) # Time after sell
-                break
         
 def handle_errors():
     # Press cancel buttons
@@ -478,14 +419,7 @@ def restart_game():
     pyautogui.click(volunteer[0], volunteer[1])
     time.sleep(0.25)
     pyautogui.click(volunteer[0], volunteer[1])
-    time.sleep(0.35)
-
-    # Close the game through icon
-    # keyboard.press_and_release('win')
-    # time.sleep(4)
-    # pyautogui.rightClick(180, 2123)
-    # time.sleep(1)
-    # pyautogui.click(141, 2040)
+    time.sleep(15)
 
     keyboard.press_and_release('alt+f4')
     time.sleep(.3)
@@ -627,6 +561,8 @@ def open_menus():
     # Open Trading Post with Tab (assuming the NPC is in front)
     keyboard.press_and_release('tab')
     time.sleep(1)
+
+    #! Check if is the other menu walk to the right slightly
 
     # Walk slightly to the right to the bank NPC and open it
     press_and_hold('e', hold_time=1)  # Adjust hold_time as needed for walking duration
@@ -899,10 +835,56 @@ def place_10_orders():
         pyautogui.click(3007, 555)
         time.sleep(.3)
     
-    # Open "Sell Items"
     # Close last sell
     pyautogui.click(3517, 186)
     time.sleep(1)
+    # Open "Sell Items"
+    pyautogui.click(3517, 186)
+
+def place_1_order_rare():
+    # Close last sell
+    pyautogui.click(3517, 186)
+    time.sleep(2.5)
+
+    # Click Home
+    pyautogui.click(2948, 136)
+    time.sleep(2)
+  
+    # Click search
+    pyautogui.doubleClick(2498, 242)
+    time.sleep(0.5)
+
+    # Delete last search
+    keyboard.press_and_release('del')
+    time.sleep(0.5)
+
+    # Type piece of unidentified gear
+    pyautogui.write('piece of rare unidentified gea', interval=0.1)
+    time.sleep(2)
+
+    # Click gear
+    pyautogui.click(2873, 356)
+    can_continue('./canContinue/menus_setup.png') 
+
+    # Click on order
+    pyautogui.click(2733, 746)
+    time.sleep(1)
+
+    # 250
+    pyautogui.click(3284, 356)
+    time.sleep(1)
+    
+    # Place order
+    for _ in range(1):
+        pyautogui.click(3007, 555)
+        can_continue('./canContinue/Success_green.png')
+        pyautogui.click(3007, 555)
+        time.sleep(.3)
+    
+    # Close last sell
+    pyautogui.click(3517, 186)
+    time.sleep(1)
+    # Open "Sell Items"
     pyautogui.click(3517, 186)
 
             
@@ -1093,7 +1075,7 @@ def click_game():
 def main():
     click_game()
 
-    sell_item('./items-to-sell/lucent_motes.png')
+    # sell_item('./items-to-sell/lucent_motes.png')
 
     # consume_purple_luck()
     # consume_purple_luck_click_button()
@@ -1116,9 +1098,14 @@ def main():
     # restart_game() 
     # walk_and_center_npc()
     # open_menus()
+
+    # manage_rare_gear()
     
     for i in range(1, 301):  
         print(f"Starting iteration {i}")
+
+        handle_errors()
+        manage_rare_gear()
 
         handle_errors()
         manage_unidentified_gear()
@@ -1126,7 +1113,6 @@ def main():
         use_salvage_kits()
     
         sell_item('./items-to-sell/lucent_motes.png')
-        # sell_lucent_motes()
 
         if i % 2 == 0: 
             consume_purple_luck()
@@ -1137,17 +1123,13 @@ def main():
             handle_errors() 
 
             sell_item('./items-to-sell/mithril_ore.png')
-            # sell_mithril_ore() 
             handle_errors() 
 
             sell_item('./items-to-sell/elder_wood_logs.png')
-            # sell_elder_wood_logs() 
 
         if i % 3 == 0:  
             sell_item('./items-to-sell/silk_scraps.png')
-            # sell_silk_scraps() 
             sell_item('./items-to-sell/thick_leather_sections.png')
-            # sell_thick_leather_sections() 
 
         if i % 10 == 0:  
             sell_ectos() 
@@ -1173,6 +1155,7 @@ def main():
             handle_errors()
 
             place_10_orders()
+            # place_1_order_rare() #! En caso de implementar agregar seguridad al hacer salvage para evitar error justo en esa parte
 
         if i % 10 == 0:
             # place_10_orders()
@@ -1187,6 +1170,16 @@ def main():
             take_all_and_storage(1)
         
         if i % 26 == 0:  
+            manage_charms()
+            manage_charms()
+            manage_charms()
+            manage_charms()
+            sell_all()
+            sell_all()
+            sell_all()
+            handle_errors()
+            sell_ectos()
+
             sell_most_expensive_exotics(5)
             salvage_restant_exotics()
             manage_cristallyne_dust()
