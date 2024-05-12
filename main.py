@@ -85,7 +85,7 @@ def use_all_green_gear(center_x, center_y):
 
 def find_and_click(step=0):
     image_path = './items-to-sell/green.png'
-    threshold=0.55
+    threshold=0.7
     
     if step == 1 or step == 2:
         loc, w, h = search_for_item(image_path, threshold)
@@ -174,6 +174,16 @@ def use_silverfed():
     time.sleep(0.5)
     pyautogui.click(silver_fed_salvage_rare[0], silver_fed_salvage_rare[1])
     time.sleep(0.5)
+
+    handle_errors()
+    time.sleep(0.5)
+
+    pyautogui.moveTo(silver_fed[0], silver_fed[1])
+    pyautogui.rightClick()
+    time.sleep(0.5)
+    pyautogui.click(silver_fed_salvage_rare[0], silver_fed_salvage_rare[1])
+    time.sleep(0.5)
+
     # Press confirm button using 3 coordinates for tackling possible placements
     pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1])
     pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_1[1])
@@ -188,15 +198,37 @@ def use_silverfed():
     pyautogui.click(compact[0], compact[1])
 
     sell_ectos()
+    sell_ectos()
     
     sell_item('./items-to-sell/lucent_motes.png')
-    handle_errors() 
-    sell_all()
-    sell_all()
+    sell_item('./items-to-sell/lucent_motes.png')
     handle_errors() 
 
-    #! salvage exotics and sell, manage seals as well
-    
+    sell_item('./items-to-sell/mithril_ore.png')
+    sell_item('./items-to-sell/mithril_ore.png')
+    handle_errors()
+
+    sell_item('./items-to-sell/elder_wood_logs.png')
+    sell_item('./items-to-sell/elder_wood_logs.png')
+    handle_errors()
+
+    sell_item('./items-to-sell/silk_scraps.png')
+    sell_item('./items-to-sell/silk_scraps.png')
+    handle_errors()
+
+    sell_item('./items-to-sell/thick_leather_sections.png')
+    sell_item('./items-to-sell/thick_leather_sections.png')
+    handle_errors()
+
+    manage_charms()
+    manage_charms()
+    handle_errors()
+
+    sell_most_expensive_exotics(3)
+    salvage_restant_exotics_few()
+    manage_cristallyne_dust()
+    delete_dark_matter()
+    handle_errors()
             
 def use_salvage_kits():
     # Use Runecrafter for salvaging greens
@@ -227,11 +259,22 @@ def use_salvage_kits():
     # Use Silver Fed for salvaging rares
     pyautogui.moveTo(silver_fed[0], silver_fed[1])
     pyautogui.rightClick()
-    time.sleep(0.25)
+    time.sleep(0.5)
     pyautogui.click(silver_fed_salvage_rare[0], silver_fed_salvage_rare[1])
     time.sleep(0.5)
+
+    handle_errors()
+    time.sleep(0.5)
+
+    pyautogui.moveTo(silver_fed[0], silver_fed[1])
+    pyautogui.rightClick()
+    time.sleep(0.5)
+    pyautogui.click(silver_fed_salvage_rare[0], silver_fed_salvage_rare[1])
+    time.sleep(0.5)
+
     # Press confirm button using 3 coordinates for tackling possible placements
     pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1])
+    pyautogui.click(silver_fed_confirm_button_1[0], silver_fed_confirm_button_1[1])
     pyautogui.click(silver_fed_confirm_button_2[0], silver_fed_confirm_button_2[1])
     pyautogui.click(silver_fed_confirm_button_3[0], silver_fed_confirm_button_3[1])
     pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_4[1])
@@ -723,6 +766,41 @@ def salvage_restant_exotics():
         pyautogui.click(accept_button[0], accept_button[1]) # Accept salvage
         time.sleep(0.25)
 
+def salvage_restant_exotics_few():    
+    # Compact Inventory
+    pyautogui.click(compact[0], compact[1])
+    time.sleep(0.25)
+
+    accept_button = (1896, 1156)    
+
+    # Setup Silver Fed
+    pyautogui.moveTo(silver_fed[0], silver_fed[1])
+    pyautogui.rightClick()
+    time.sleep(0.25)
+    pyautogui.click(silver_fed_use[0], silver_fed_use[1]) 
+    time.sleep(0.5)
+
+    # Consume All Luck from multiple locations
+    salvage_exotics_coords_list = [
+        (126, 385),  
+        (216, 385),  
+        (305, 385),
+        (391, 385),
+        (482, 385),
+        (569, 385),
+        (657, 385),
+        (746, 385),
+        (837, 385),
+        (918, 385),        
+    ]
+
+    for coords in salvage_exotics_coords_list:
+        pyautogui.moveTo(coords[0], coords[1])
+        pyautogui.click()
+        time.sleep(0.25)
+        pyautogui.click(accept_button[0], accept_button[1]) # Accept salvage
+        time.sleep(0.25)
+
 def take_all_and_storage(storage_number = 1):    
     for _ in range(storage_number):
         # Close last sell
@@ -841,7 +919,7 @@ def place_10_orders():
     # Open "Sell Items"
     pyautogui.click(3517, 186)
 
-def place_1_order_rare():
+def place_orders_rare(iterations=1):
     # Close last sell
     pyautogui.click(3517, 186)
     time.sleep(2.5)
@@ -851,19 +929,15 @@ def place_1_order_rare():
     time.sleep(2)
   
     # Click search
-    pyautogui.doubleClick(2498, 242)
-    time.sleep(0.5)
-
-    # Delete last search
-    keyboard.press_and_release('del')
+    pyautogui.click(2498, 242)
     time.sleep(0.5)
 
     # Type piece of unidentified gear
-    pyautogui.write('piece of rare unidentified gea', interval=0.1)
+    pyautogui.write('piece of unidentified gear', interval=0.1)
     time.sleep(2)
 
     # Click gear
-    pyautogui.click(2873, 356)
+    pyautogui.click(2873, 449)
     can_continue('./canContinue/menus_setup.png') 
 
     # Click on order
@@ -875,7 +949,7 @@ def place_1_order_rare():
     time.sleep(1)
     
     # Place order
-    for _ in range(1):
+    for _ in range(iterations):
         pyautogui.click(3007, 555)
         can_continue('./canContinue/Success_green.png')
         pyautogui.click(3007, 555)
@@ -1072,8 +1146,27 @@ def click_game():
     pyautogui.scroll(-500)
     time.sleep(0.25)
 
+def calculate_ecto_profit(ecto_price, dust_price):
+    # 1.85 supposed average
+    dust_yield = 1.85  # units of dust per ecto
+    silver_cost_per_use = 0.006  # cost per use in gold
+    ecto_count = 220  # number of ectos to process
+    
+    total_silver_cost = silver_cost_per_use * ecto_count  # total cost of using the Silver-fed Salvage-o-Matic
+    dust_income = (dust_yield * dust_price - silver_cost_per_use) * ecto_count  # income from selling the dust
+    ecto_cost = ecto_price * ecto_count  # total cost of buying the ectos
+    net_profit = dust_income - ecto_cost - total_silver_cost  # corrected net profit calculation
+    
+    print(f"The net profit for processing {ecto_count} ectos is {net_profit:.2f} gold.")
+
+
+# 165
+# 177
+# 188
+
 def main():
-    click_game()
+    # click_game()
+    calculate_ecto_profit(0.3290, 0.1934)
 
     # sell_item('./items-to-sell/lucent_motes.png')
 
@@ -1101,7 +1194,7 @@ def main():
 
     # manage_rare_gear()
     
-    for i in range(1, 301):  
+    for i in range(1, 1):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -1154,8 +1247,8 @@ def main():
             sell_all()
             handle_errors()
 
+            # place_orders_rare(2) 
             place_10_orders()
-            # place_1_order_rare() #! En caso de implementar agregar seguridad al hacer salvage para evitar error justo en esa parte
 
         if i % 10 == 0:
             # place_10_orders()
