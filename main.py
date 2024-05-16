@@ -79,13 +79,13 @@ def search_for_item(image_path, threshold):
 def use_all_green_gear(center_x, center_y):    
     pyautogui.moveTo(center_x, center_y)
     pyautogui.rightClick()
-    time.sleep(0.25)
+    time.sleep(0.35)
     pyautogui.move(85, 205)  # Move to "Use All"
     pyautogui.click()    
 
 def find_and_click(step=0):
     image_path = './items-to-sell/green.png'
-    threshold=0.7
+    threshold=0.60
     
     if step == 1 or step == 2:
         loc, w, h = search_for_item(image_path, threshold)
@@ -464,8 +464,6 @@ def restart_game():
     pyautogui.click(volunteer[0], volunteer[1])
     time.sleep(15)
 
-    keyboard.press_and_release('alt+f4')
-    time.sleep(.3)
     keyboard.press_and_release('alt+f4')
     time.sleep(3)
 
@@ -877,7 +875,7 @@ def take_all_and_storage(storage_number = 1):
         time.sleep(3)
         pyautogui.click(2817, 1991)  
 
-def place_10_orders():
+def place_10_orders(orders=10):
     # Close last sell
     pyautogui.click(3517, 186)
     time.sleep(2.5)
@@ -907,7 +905,7 @@ def place_10_orders():
     time.sleep(1)
     
     # Place order
-    for _ in range(10):
+    for _ in range(orders):
         pyautogui.click(3007, 555)
         can_continue('./canContinue/Success_green.png')
         pyautogui.click(3007, 555)
@@ -1147,54 +1145,57 @@ def click_game():
     time.sleep(0.25)
 
 def calculate_ecto_profit(ecto_price, dust_price):
-    # 1.85 supposed average
-    dust_yield = 1.85  # units of dust per ecto
-    silver_cost_per_use = 0.006  # cost per use in gold
-    ecto_count = 220  # number of ectos to process
-    
-    total_silver_cost = silver_cost_per_use * ecto_count  # total cost of using the Silver-fed Salvage-o-Matic
-    dust_income = (dust_yield * dust_price - silver_cost_per_use) * ecto_count  # income from selling the dust
-    ecto_cost = ecto_price * ecto_count  # total cost of buying the ectos
-    net_profit = dust_income - ecto_cost - total_silver_cost  # corrected net profit calculation
-    
-    print(f"The net profit for processing {ecto_count} ectos is {net_profit:.2f} gold.")
+    dust_yield = 1.85
+    silver_cost_per_use = 0.006
+    ecto_count = 7.45
+    tp_fee_factor = 0.85
 
+    # Calculating the total revenue from direct sale of ectos after TP fee
+    direct_sale_revenue = ecto_price * ecto_count * tp_fee_factor
 
-# 165
-# 177
-# 188
+    # Calculating the total revenue from selling dust after salvage and TP fee
+    total_silver_cost = silver_cost_per_use * ecto_count
+    dust_revenue = ((dust_yield * dust_price * ecto_count) - total_silver_cost) * tp_fee_factor
+
+    print(f"Total revenue from selling {ecto_count} ectos directly is {direct_sale_revenue:.2f} gold.")
+    print(f"Total revenue from salvaging {ecto_count} ectos and selling the dust is {dust_revenue:.2f} gold.")
+
+    # Calculating the revenue difference and printing the more profitable option
+    revenue_difference = abs(dust_revenue - direct_sale_revenue)
+
+    if dust_revenue > direct_sale_revenue:
+        print(f"Salvage Ectos: +{revenue_difference:.2f}")
+        # salvage_ectos()
+    else:
+        print(f"Sell Ectos Directly: +{revenue_difference:.2f}")
+        # sell_ectos()
 
 def main():
-    # click_game()
-    calculate_ecto_profit(0.3290, 0.1934)
+    click_game()
+    sell_item('./items-to-sell/lucent_motes.png')
+    # manage_charms()
+    sell_all()
 
-    # sell_item('./items-to-sell/lucent_motes.png')
+    # calculate_ecto_profit(0.3370, 0.1902)
+    # place_10_orders()
 
     # consume_purple_luck()
     # consume_purple_luck_click_button()
     # handle_errors()
 
     # consume_luck()
-    # handle_errors() 
+    # handle_errors()    
 
-    # sell_ectos()
-    # manage_cristallyne_dust()
-
-    # manage_charms()
-    # sell_all()
-
-    # place_10_orders()
     # salvage_restant_exotics()
-
+    # manage_cristallyne_dust()
     # take_all_and_storage(1)
 
-    # restart_game() 
-    # walk_and_center_npc()
-    # open_menus()
-
     # manage_rare_gear()
+
+    # consume_luck()
+    # handle_errors()
     
-    for i in range(1, 1):  
+    for i in range(1, 401):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -1226,10 +1227,11 @@ def main():
 
         if i % 10 == 0:  
             sell_ectos() 
-            manage_cristallyne_dust()
-            consume_purple_luck()  
-            consume_purple_luck_click_button()
-            handle_errors()
+            # salvage_ectos()
+            # manage_cristallyne_dust()
+            # consume_purple_luck()  
+            # consume_purple_luck_click_button()
+            # handle_errors()
 
             consume_luck()
             handle_errors()
@@ -1248,7 +1250,7 @@ def main():
             handle_errors()
 
             # place_orders_rare(2) 
-            place_10_orders()
+            place_10_orders(11)
 
         if i % 10 == 0:
             # place_10_orders()
@@ -1271,7 +1273,13 @@ def main():
             sell_all()
             sell_all()
             handle_errors()
-            sell_ectos()
+
+            sell_ectos() 
+            # salvage_ectos()
+            # manage_cristallyne_dust()
+            # consume_purple_luck()  
+            # consume_purple_luck_click_button()
+            # handle_errors()
 
             sell_most_expensive_exotics(5)
             salvage_restant_exotics()
