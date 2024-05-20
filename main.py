@@ -469,6 +469,7 @@ def restart_game():
 
     # Click on the game icon to start the game
     pyautogui.click(game_icon_coords[0], game_icon_coords[1])
+    time.sleep(6)
     can_continue('./canContinue/Game_client.png')
 
     # Click on the login button
@@ -1173,8 +1174,9 @@ def calculate_ecto_profit(ecto_price, dust_price):
 def main():
     click_game()
     sell_item('./items-to-sell/lucent_motes.png')
+    # take_all_and_storage(2)
     # manage_charms()
-    sell_all()
+    # sell_all()
 
     # calculate_ecto_profit(0.3370, 0.1902)
     # place_10_orders()
@@ -1182,7 +1184,6 @@ def main():
     # consume_purple_luck()
     # consume_purple_luck_click_button()
     # handle_errors()
-
     # consume_luck()
     # handle_errors()    
 
@@ -1195,7 +1196,7 @@ def main():
     # consume_luck()
     # handle_errors()
     
-    for i in range(1, 401):  
+    for i in range(1, 501):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -1250,7 +1251,7 @@ def main():
             handle_errors()
 
             # place_orders_rare(2) 
-            place_10_orders(11)
+            place_10_orders(12)
 
         if i % 10 == 0:
             # place_10_orders()
