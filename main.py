@@ -50,6 +50,7 @@ sellers_list = (3163, 746)
 maximum_amount = (3280, 358)
 minus_one = (2986, 362)
 minus_one_copper = (3240, 423)
+plus_one_copper = (3240, 406)
 list_item = (3002, 556)
 
 mistlock = (744, 1535)
@@ -966,6 +967,30 @@ def place_orders_rare(iterations=1):
     # 250
     pyautogui.click(3284, 356)
     time.sleep(1)
+
+    # Plus One Copper
+    pyautogui.click(plus_one_copper[0], plus_one_copper[1])  
+    time.sleep(0.25)
+
+    if is_item_present('./canContinue/correct_order.png', 0.7):
+        # Volunteer before closing
+        pyautogui.click(volunteer[0], volunteer[1])
+        time.sleep(0.25)
+        pyautogui.click(volunteer[0], volunteer[1])
+        time.sleep(13)
+
+        keyboard.press_and_release('alt+f4')
+        time.sleep(3)
+
+        print("Vounteer is on, restarting")
+        restart_game()
+        walk_and_center_npc()
+        open_menus()
+    
+    else:
+        # Minus One Copper
+        pyautogui.click(minus_one_copper[0], minus_one_copper[1])  
+        time.sleep(0.25)
     
     # Place order
     for _ in range(iterations):
