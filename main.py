@@ -307,6 +307,13 @@ def salvage_ectos():
                 time.sleep(0.5)
                 pyautogui.click(silver_fed_salvage_stack_accept[0], silver_fed_salvage_stack_accept[1])
                 time.sleep(9)
+
+                manage_cristallyne_dust()
+                consume_purple_luck()  
+                consume_purple_luck_click_button()
+                handle_errors()
+                consume_luck()
+                handle_errors()
                 break  
             
 def sell_ectos():
@@ -970,34 +977,26 @@ def place_orders_rare(iterations=1):
 
     # Plus One Copper
     pyautogui.click(plus_one_copper[0], plus_one_copper[1])  
-    time.sleep(0.25)
+    time.sleep(0.7)
 
     if is_item_present('./canContinue/correct_order.png', 0.7):
-        # Volunteer before closing
-        pyautogui.click(volunteer[0], volunteer[1])
-        time.sleep(0.25)
-        pyautogui.click(volunteer[0], volunteer[1])
-        time.sleep(13)
+        # Place order
+        for _ in range(iterations):
+            pyautogui.click(3007, 555)
+            can_continue('./canContinue/Success_green.png')
+            pyautogui.click(3007, 555)
+            time.sleep(.3)
 
-        keyboard.press_and_release('alt+f4')
-        time.sleep(3)
-
-        print("Vounteer is on, restarting")
-        restart_game()
-        walk_and_center_npc()
-        open_menus()
-    
     else:
         # Minus One Copper
         pyautogui.click(minus_one_copper[0], minus_one_copper[1])  
-        time.sleep(0.25)
-    
-    # Place order
-    for _ in range(iterations):
-        pyautogui.click(3007, 555)
-        can_continue('./canContinue/Success_green.png')
-        pyautogui.click(3007, 555)
-        time.sleep(.3)
+        time.sleep(0.4)
+
+        for _ in range(iterations):
+            pyautogui.click(3007, 555)
+            can_continue('./canContinue/Success_green.png')
+            pyautogui.click(3007, 555)
+            time.sleep(.3)
     
     # Close last sell
     pyautogui.click(3517, 186)
@@ -1273,16 +1272,13 @@ def main():
             sell_item('./items-to-sell/silk_scraps.png')
             sell_item('./items-to-sell/thick_leather_sections.png')
 
+        if i % 5 == 0:
+            place_orders_rare(4) 
+
         if i % 10 == 0:  
+            #! Checkers that watch and reload online prices 
             sell_ectos() 
             # salvage_ectos()
-            # manage_cristallyne_dust()
-            # consume_purple_luck()  
-            # consume_purple_luck_click_button()
-            # handle_errors()
-
-            consume_luck()
-            handle_errors()
 
             delete_dark_matter()
             manage_cristallyne_dust()
@@ -1297,22 +1293,22 @@ def main():
             sell_all()
             handle_errors()
 
-            place_orders_rare(4) 
+            # place_orders_rare(4) 
             place_10_orders(8)
 
-        if i % 10 == 0:
-            # place_10_orders()
-            
+        if i % 10 == 0:            
             consume_purple_luck()  
             consume_purple_luck_click_button()
             handle_errors()
 
+            #! Checkers to avoid losing time
             consume_luck()
             handle_errors()
 
+            #! Checkers to avoid losing time
             take_all_and_storage(1)
         
-        if i % 26 == 0:  
+        if i % 25 == 0:  
             manage_charms()
             manage_charms()
             manage_charms()
@@ -1322,21 +1318,15 @@ def main():
             sell_all()
             handle_errors()
 
+            #! x2 Checkers that watch and reload online prices 
             sell_ectos() 
             # salvage_ectos()
-            # manage_cristallyne_dust()
-            # consume_purple_luck()  
-            # consume_purple_luck_click_button()
-            # handle_errors()
 
             sell_most_expensive_exotics(5)
             salvage_restant_exotics()
             manage_cristallyne_dust()
 
             restart_or_not()
-            # restart_game() #! Add here and there, plenty of can_continue
-            # walk_and_center_npc()
-            # open_menus()
         
         # Add a short sleep time if needed between iterations to avoid overwhelming the application
         time.sleep(2)
