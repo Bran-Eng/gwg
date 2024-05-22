@@ -1139,6 +1139,10 @@ def click_game():
     pyautogui.click(78, 700)
     time.sleep(0.5)
 
+    # Sell items section
+    pyautogui.click(3450, 125)
+    time.sleep(1.5)
+
     # Scroll completely for better image recognition
     pyautogui.moveTo(2622, 1640)        
     
@@ -1220,7 +1224,7 @@ def main():
     sell_item('./items-to-sell/lucent_motes.png')
     # take_all_and_storage(2)
     # manage_charms()
-    sell_all()
+    # sell_all()
 
     # restart_or_not()
 
@@ -1237,12 +1241,13 @@ def main():
     # manage_cristallyne_dust()
     # take_all_and_storage(1)
 
+    # place_orders_rare(2) 
     # manage_rare_gear()
 
     # consume_luck()
     # handle_errors()
     
-    for i in range(1, 61):  
+    for i in range(1, 301):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -1273,7 +1278,7 @@ def main():
             sell_item('./items-to-sell/thick_leather_sections.png')
 
         if i % 5 == 0:
-            place_orders_rare(4) 
+            place_orders_rare(1) 
 
         if i % 10 == 0:  
             #! Checkers that watch and reload online prices 
@@ -1294,7 +1299,7 @@ def main():
             handle_errors()
 
             # place_orders_rare(4) 
-            place_10_orders(8)
+            place_10_orders(10)
 
         if i % 10 == 0:            
             consume_purple_luck()  
