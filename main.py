@@ -55,6 +55,8 @@ list_item = (3002, 556)
 mistlock = (744, 1535)
 portal_scroll = (837, 1535)
 
+volunteer = (78, 1176)
+
 
 def capture_game_screen():
     monitor_1_region = (0, 0, 3840, 2160)
@@ -440,15 +442,14 @@ def handle_errors():
         pyautogui.click(coords[0], coords[1])
         time.sleep(0.25)
 
-def restart_game():
-    pyautogui.click(1800, 500)
+def is_item_present(image_path, threshold):
+    screenshot_gray = capture_game_screen() 
+    itemImage = cv2.imread(image_path, 0)
+    w, h = itemImage.shape[::-1]
+    res = cv2.matchTemplate(screenshot_gray, itemImage, cv2.TM_CCOEFF_NORMED)
+    return np.any(res >= threshold)
 
-    # Coordinates for game icon, login, start game, and character selection
-    game_icon_coords = (180, 2122)
-    login_button_coords = (1203, 1327)
-    character_coords = (1600, 2015)
-    volunteer = (78, 1176)
-
+def restart_or_not():
     # Close windows to volunteer    
     keyboard.press_and_release('esc')
     time.sleep(0.25)
@@ -458,15 +459,34 @@ def restart_game():
     time.sleep(0.25)
     keyboard.press_and_release('esc')
     time.sleep(0.7)
-    # Volunteer before closing
-    pyautogui.click(volunteer[0], volunteer[1])
-    time.sleep(0.25)
-    pyautogui.click(volunteer[0], volunteer[1])
-    time.sleep(15)
 
-    keyboard.press_and_release('alt+f4')
-    time.sleep(3)
+    if is_item_present('./canContinue/volunteer.png', 0.7):
+        # Volunteer before closing
+        pyautogui.click(volunteer[0], volunteer[1])
+        time.sleep(0.25)
+        pyautogui.click(volunteer[0], volunteer[1])
+        time.sleep(13)
 
+        keyboard.press_and_release('alt+f4')
+        time.sleep(3)
+
+        print("Vounteer is on, restarting")
+        restart_game()
+        walk_and_center_npc()
+        open_menus()
+    
+    else:
+        print("No volunteer message, reopen menus")
+        open_menus()
+
+def restart_game():
+    pyautogui.click(1800, 500)
+
+    # Coordinates for game icon, login, start game, and character selection
+    game_icon_coords = (180, 2122)
+    login_button_coords = (1203, 1327)
+    character_coords = (1600, 2015)
+    
     # Click on the game icon to start the game
     pyautogui.click(game_icon_coords[0], game_icon_coords[1])
     time.sleep(6)
@@ -1176,7 +1196,9 @@ def main():
     sell_item('./items-to-sell/lucent_motes.png')
     # take_all_and_storage(2)
     # manage_charms()
-    # sell_all()
+    sell_all()
+
+    # restart_or_not()
 
     # calculate_ecto_profit(0.3370, 0.1902)
     # place_10_orders()
@@ -1196,7 +1218,7 @@ def main():
     # consume_luck()
     # handle_errors()
     
-    for i in range(1, 501):  
+    for i in range(1, 61):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -1250,8 +1272,8 @@ def main():
             sell_all()
             handle_errors()
 
-            # place_orders_rare(2) 
-            place_10_orders(12)
+            place_orders_rare(4) 
+            place_10_orders(8)
 
         if i % 10 == 0:
             # place_10_orders()
@@ -1286,10 +1308,10 @@ def main():
             salvage_restant_exotics()
             manage_cristallyne_dust()
 
-            # check_volunteer_message() #! Create this one and restart only in this case
-            restart_game() #! Add here and there, plenty of can_continue
-            walk_and_center_npc()
-            open_menus()
+            restart_or_not()
+            # restart_game() #! Add here and there, plenty of can_continue
+            # walk_and_center_npc()
+            # open_menus()
         
         # Add a short sleep time if needed between iterations to avoid overwhelming the application
         time.sleep(2)
