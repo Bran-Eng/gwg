@@ -439,6 +439,18 @@ def delete_dark_matter():
             time.sleep(0.25) 
             break    
         
+
+def handle_errors_2():
+    # Press cancel buttons
+    err_buttons_coords_list = [
+        (2119, 1156),  
+        (2129, 1181),        
+    ]
+
+    for coords in err_buttons_coords_list:
+        pyautogui.click(coords[0], coords[1])
+        time.sleep(0.25)
+        
 def handle_errors():
     # Press cancel buttons
     err_buttons_coords_list = [
@@ -449,6 +461,30 @@ def handle_errors():
     for coords in err_buttons_coords_list:
         pyautogui.click(coords[0], coords[1])
         time.sleep(0.25)
+
+    if is_item_present('./canContinue/ERR.png', 0.8):
+        print("ERR, restarting")
+        restart_game()
+        walk_and_center_npc()
+        open_menus()
+
+        sell_item('./items-to-sell/lucent_motes.png')
+        sell_all()
+
+        consume_purple_luck()
+        consume_purple_luck_click_button()
+        handle_errors_2()
+        consume_luck()
+        handle_errors_2()
+
+        handle_errors_2()
+        manage_rare_gear()
+
+        handle_errors_2()
+        manage_unidentified_gear()
+        time.sleep(10)
+        use_salvage_kits()
+
 
 def is_item_present(image_path, threshold):
     screenshot_gray = capture_game_screen() 
@@ -495,6 +531,8 @@ def restart_game():
     # Close Game
     keyboard.press_and_release('alt+f4')
     time.sleep(3)
+
+    #! Maybe here err check and click yes 
     
     # Click on the game icon to start the game
     pyautogui.click(game_icon_coords[0], game_icon_coords[1])
@@ -1243,9 +1281,6 @@ def main():
     # place_10_orders()
     # place_orders_rare(2) 
     # manage_rare_gear()
-
-    # consume_luck()
-    # handle_errors()
     
     for i in range(1, 501):  
         print(f"Starting iteration {i}")
