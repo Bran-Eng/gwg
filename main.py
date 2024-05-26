@@ -469,15 +469,6 @@ def restart_or_not():
     time.sleep(0.7)
 
     if is_item_present('./canContinue/volunteer.png', 0.7):
-        # Volunteer before closing
-        pyautogui.click(volunteer[0], volunteer[1])
-        time.sleep(0.25)
-        pyautogui.click(volunteer[0], volunteer[1])
-        time.sleep(13)
-
-        keyboard.press_and_release('alt+f4')
-        time.sleep(3)
-
         print("Vounteer is on, restarting")
         restart_game()
         walk_and_center_npc()
@@ -494,6 +485,16 @@ def restart_game():
     game_icon_coords = (180, 2122)
     login_button_coords = (1203, 1327)
     character_coords = (1600, 2015)
+
+    # Volunteer before closing
+    pyautogui.click(volunteer[0], volunteer[1])
+    time.sleep(0.25)
+    pyautogui.click(volunteer[0], volunteer[1])
+    time.sleep(10)
+
+    # Close Game
+    keyboard.press_and_release('alt+f4')
+    time.sleep(3)
     
     # Click on the game icon to start the game
     pyautogui.click(game_icon_coords[0], game_icon_coords[1])
@@ -1221,33 +1222,32 @@ def calculate_ecto_profit(ecto_price, dust_price):
 
 def main():
     click_game()
+    # calculate_ecto_profit(0.38, 0.22)
+
     sell_item('./items-to-sell/lucent_motes.png')
-    # take_all_and_storage(2)
+    sell_all()
     # manage_charms()
-    # sell_all()
 
-    # restart_or_not()
-
-    # calculate_ecto_profit(0.3370, 0.1902)
-    # place_10_orders()
+    # take_all_and_storage(2)
 
     # consume_purple_luck()
     # consume_purple_luck_click_button()
     # handle_errors()
     # consume_luck()
-    # handle_errors()    
+    # handle_errors()
 
     # salvage_restant_exotics()
     # manage_cristallyne_dust()
     # take_all_and_storage(1)
 
+    # place_10_orders()
     # place_orders_rare(2) 
     # manage_rare_gear()
 
     # consume_luck()
     # handle_errors()
     
-    for i in range(1, 301):  
+    for i in range(1, 501):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -1277,8 +1277,8 @@ def main():
             sell_item('./items-to-sell/silk_scraps.png')
             sell_item('./items-to-sell/thick_leather_sections.png')
 
-        if i % 5 == 0:
-            place_orders_rare(1) 
+        # if i % 5 == 0:
+            # place_orders_rare(1) 
 
         if i % 10 == 0:  
             #! Checkers that watch and reload online prices 
@@ -1298,7 +1298,7 @@ def main():
             sell_all()
             handle_errors()
 
-            # place_orders_rare(4) 
+            # place_orders_rare(1) 
             place_10_orders(10)
 
         if i % 10 == 0:            
