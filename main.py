@@ -463,8 +463,14 @@ def handle_errors():
         time.sleep(0.25)
 
     if is_item_present('./canContinue/ERR.png', 0.8):
+        err_coo = (2367, 885)
+
         print("ERR, restarting")
-        restart_game()
+        pyautogui.click(err_coo[0], err_coo[1])
+        pyautogui.click(err_coo[0], err_coo[1])
+        time.sleep(2)
+
+        open_game()
         walk_and_center_npc()
         open_menus()
 
@@ -506,6 +512,8 @@ def restart_or_not():
 
     if is_item_present('./canContinue/volunteer.png', 0.7):
         print("Vounteer is on, restarting")
+        time.sleep(3)
+
         restart_game()
         walk_and_center_npc()
         open_menus()
@@ -513,6 +521,30 @@ def restart_or_not():
     else:
         print("No volunteer message, reopen menus")
         open_menus()
+
+def open_game(): 
+    game_icon_coords = (180, 2122)
+    login_button_coords = (1203, 1327)
+    character_coords = (1600, 2015)
+
+    # Click on the game icon to start the game
+    pyautogui.click(game_icon_coords[0], game_icon_coords[1])
+    time.sleep(6)
+    can_continue('./canContinue/Game_client.png')
+
+    # Click on the login button
+    pyautogui.click(login_button_coords[0], login_button_coords[1])
+    time.sleep(.5)
+    pyautogui.click(login_button_coords[0], login_button_coords[1])
+    # time.sleep(14)  # Wait for login to process and auto start game
+    can_continue('./canContinue/select_character.png')
+    time.sleep(2)
+
+    # Double-click on the character to start playing
+    pyautogui.doubleClick(character_coords[0], character_coords[1])
+    # time.sleep(22)  # Wait for the game to enter into playing mode
+    can_continue('./canContinue/playing_mode.png')
+
 
 def restart_game():
     pyautogui.click(1800, 500)
@@ -1282,7 +1314,7 @@ def main():
     # place_orders_rare(2) 
     # manage_rare_gear()
     
-    for i in range(1, 501):  
+    for i in range(1, 701):  
         print(f"Starting iteration {i}")
 
         handle_errors()
