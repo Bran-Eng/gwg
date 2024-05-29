@@ -488,6 +488,27 @@ def handle_errors():
         sell_item('./items-to-sell/lucent_motes.png')
         sell_all()
 
+    if is_item_present('./canContinue/ERR_2.png', 0.7):
+        print("ERR_2, closing ERR_2")
+
+        while is_item_present('./canContinue/ERR_2.png', 0.7):
+            handle_errors_2()
+            time.sleep(2)
+
+        use_salvage_kits()
+
+        handle_errors_2()
+        manage_rare_gear()
+
+        consume_purple_luck()
+        consume_purple_luck_click_button()
+        handle_errors_2()
+        consume_luck()
+        handle_errors_2()
+
+        sell_item('./items-to-sell/lucent_motes.png')
+        sell_all()
+
 def is_item_present(image_path, threshold):
     screenshot_gray = capture_game_screen() 
     itemImage = cv2.imread(image_path, 0)
