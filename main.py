@@ -474,8 +474,10 @@ def handle_errors():
         walk_and_center_npc()
         open_menus()
 
-        sell_item('./items-to-sell/lucent_motes.png')
-        sell_all()
+        use_salvage_kits()
+
+        handle_errors_2()
+        manage_rare_gear()
 
         consume_purple_luck()
         consume_purple_luck_click_button()
@@ -483,16 +485,8 @@ def handle_errors():
         consume_luck()
         handle_errors_2()
 
-        use_salvage_kits()
-
-        handle_errors_2()
-        manage_rare_gear()
-
-        handle_errors_2()
-        manage_unidentified_gear()
-        time.sleep(10)
-        use_salvage_kits()
-
+        sell_item('./items-to-sell/lucent_motes.png')
+        sell_all()
 
 def is_item_present(image_path, threshold):
     screenshot_gray = capture_game_screen() 
@@ -1293,20 +1287,20 @@ def calculate_ecto_profit(ecto_price, dust_price):
         # sell_ectos()
 
 def main():
-    click_game()
-    # calculate_ecto_profit(0.38, 0.22)
+    # click_game()
+    # calculate_ecto_profit(0.3821, 0.2174)
 
     sell_item('./items-to-sell/lucent_motes.png')
     sell_all()
-    # manage_charms()
+    manage_charms()
+
+    # consume_purple_luck()
+    # consume_purple_luck_click_button()
+    # handle_errors()
+    # consume_luck()
+    # handle_errors()
 
     # take_all_and_storage(2)
-
-    consume_purple_luck()
-    consume_purple_luck_click_button()
-    handle_errors()
-    consume_luck()
-    handle_errors()
 
     # salvage_restant_exotics()
     # manage_cristallyne_dust()
@@ -1325,8 +1319,11 @@ def main():
         handle_errors()
         manage_unidentified_gear()
         time.sleep(10)
+
+        handle_errors()
         use_salvage_kits()
-    
+        handle_errors()
+
         sell_item('./items-to-sell/lucent_motes.png')
 
         if i % 2 == 0: 
@@ -1368,7 +1365,7 @@ def main():
             handle_errors()
 
             # place_orders_rare(1) 
-            place_10_orders(11)
+            place_10_orders()
 
         if i % 10 == 0:            
             consume_purple_luck()  
