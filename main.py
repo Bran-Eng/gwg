@@ -483,6 +483,8 @@ def handle_errors():
         consume_luck()
         handle_errors_2()
 
+        use_salvage_kits()
+
         handle_errors_2()
         manage_rare_gear()
 
@@ -1300,11 +1302,11 @@ def main():
 
     # take_all_and_storage(2)
 
-    # consume_purple_luck()
-    # consume_purple_luck_click_button()
-    # handle_errors()
-    # consume_luck()
-    # handle_errors()
+    consume_purple_luck()
+    consume_purple_luck_click_button()
+    handle_errors()
+    consume_luck()
+    handle_errors()
 
     # salvage_restant_exotics()
     # manage_cristallyne_dust()
@@ -1366,7 +1368,7 @@ def main():
             handle_errors()
 
             # place_orders_rare(1) 
-            place_10_orders(10)
+            place_10_orders(11)
 
         if i % 10 == 0:            
             consume_purple_luck()  
