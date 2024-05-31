@@ -999,15 +999,15 @@ def remove_oldest_orders(orders=5):
 
     #? Click My transactions
     pyautogui.click(3700, 128)
-    time.sleep(2)
+    time.sleep(3)
 
     #? Click Buying
     pyautogui.click(2487, 358)
-    time.sleep(1.5)
+    time.sleep(3)
 
-    #? Click Twice on Price
+    #? Click on Price
     pyautogui.click(3558, 290)
-    time.sleep(1.5)
+    time.sleep(.5)
 
     #? Cancel Orders
     for _ in range(orders):
@@ -1017,12 +1017,15 @@ def remove_oldest_orders(orders=5):
         time.sleep(.4)
     
     # Open "Sell Items"
+    time.sleep(.4)
     pyautogui.click(3517, 186)
 
 def place_10_orders(orders=15):
     # Close last sell
     pyautogui.click(3517, 186)
     time.sleep(.7)
+    # Open "Sell Items"
+    pyautogui.click(3517, 186)
 
     # Click Home
     pyautogui.click(2948, 136)
