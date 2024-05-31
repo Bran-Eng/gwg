@@ -1019,7 +1019,7 @@ def remove_oldest_orders(orders=5):
     # Open "Sell Items"
     pyautogui.click(3517, 186)
 
-def place_10_orders(orders=10):
+def place_10_orders(orders=15):
     # Close last sell
     pyautogui.click(3517, 186)
     time.sleep(.7)
@@ -1338,9 +1338,11 @@ def main():
     click_game()
     # calculate_ecto_profit(0.3821, 0.2174)
 
-    sell_item('./items-to-sell/lucent_motes.png')
-    sell_all()
-    manage_charms()
+    remove_oldest_orders()
+
+    # sell_item('./items-to-sell/lucent_motes.png')
+    # sell_all()
+    # manage_charms()
 
     # consume_purple_luck()
     # consume_purple_luck_click_button()
@@ -1358,7 +1360,7 @@ def main():
     # place_orders_rare(2) 
     # manage_rare_gear()
     
-    for i in range(1, 1001):  
+    for i in range(1, 1):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -1413,7 +1415,8 @@ def main():
             handle_errors()
 
             # place_orders_rare(1) 
-            place_10_orders(10)
+            place_10_orders(15)
+            remove_oldest_orders(5)
 
         if i % 10 == 0:            
             consume_purple_luck()  
