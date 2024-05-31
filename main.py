@@ -992,10 +992,37 @@ def take_all_and_storage(storage_number = 1):
         time.sleep(3)
         pyautogui.click(2817, 1991)  
 
+def remove_oldest_orders(orders=5):
+    # Close last sell
+    pyautogui.click(3517, 186)
+    time.sleep(.7)
+
+    #? Click My transactions
+    pyautogui.click(3700, 128)
+    time.sleep(2)
+
+    #? Click Buying
+    pyautogui.click(2487, 358)
+    time.sleep(1.5)
+
+    #? Click Twice on Price
+    pyautogui.click(3558, 290)
+    time.sleep(1.5)
+
+    #? Cancel Orders
+    for _ in range(orders):
+        pyautogui.click(3732, 359)
+        time.sleep(.4)
+        pyautogui.click(3732, 359)
+        time.sleep(.4)
+    
+    # Open "Sell Items"
+    pyautogui.click(3517, 186)
+
 def place_10_orders(orders=10):
     # Close last sell
     pyautogui.click(3517, 186)
-    time.sleep(2.5)
+    time.sleep(.7)
 
     # Click Home
     pyautogui.click(2948, 136)
@@ -1308,7 +1335,7 @@ def calculate_ecto_profit(ecto_price, dust_price):
         # sell_ectos()
 
 def main():
-    # click_game()
+    click_game()
     # calculate_ecto_profit(0.3821, 0.2174)
 
     sell_item('./items-to-sell/lucent_motes.png')
@@ -1331,7 +1358,7 @@ def main():
     # place_orders_rare(2) 
     # manage_rare_gear()
     
-    for i in range(1, 701):  
+    for i in range(1, 1001):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -1386,7 +1413,7 @@ def main():
             handle_errors()
 
             # place_orders_rare(1) 
-            place_10_orders()
+            place_10_orders(10)
 
         if i % 10 == 0:            
             consume_purple_luck()  
