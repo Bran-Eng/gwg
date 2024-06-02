@@ -1001,6 +1001,8 @@ def remove_oldest_orders(orders=5):
     pyautogui.click(3700, 128)
     time.sleep(3)
 
+    #! If is on, proceed, if not click, 
+    #! but is gonna be off in general 
     #? Click Buying
     pyautogui.click(2487, 358)
     time.sleep(3)
@@ -1341,8 +1343,6 @@ def main():
     click_game()
     # calculate_ecto_profit(0.3821, 0.2174)
 
-    remove_oldest_orders()
-
     # sell_item('./items-to-sell/lucent_motes.png')
     # sell_all()
     # manage_charms()
@@ -1359,11 +1359,12 @@ def main():
     # manage_cristallyne_dust()
     # take_all_and_storage(1)
 
-    # place_10_orders()
+    # place_10_orders(15)
+    # remove_oldest_orders(1)
     # place_orders_rare(2) 
     # manage_rare_gear()
     
-    for i in range(1, 1):  
+    for i in range(1, 2001):  
         print(f"Starting iteration {i}")
 
         handle_errors()
@@ -1418,8 +1419,8 @@ def main():
             handle_errors()
 
             # place_orders_rare(1) 
-            place_10_orders(15)
-            remove_oldest_orders(5)
+            place_10_orders(11)
+            remove_oldest_orders(1)
 
         if i % 10 == 0:            
             consume_purple_luck()  
