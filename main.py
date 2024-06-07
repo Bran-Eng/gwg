@@ -121,10 +121,20 @@ def find_and_click(step=0):
                 return True
             attempt += 1  # Increment the attempt counter
 
-        return False  # If after 10 attempts it fails, return False
+        # return False  # If after 10 attempts it fails, return False
+
+    elif step == 4:
+        # Scroll Up
+        pyautogui.moveTo(3280, 1800) # Move to a position to initiate scroll
+        for _ in range(10):
+            pyautogui.scroll(500)
+        time.sleep(0.25)
         
-    # if step == 3: ...
-    # if step == 4: ...
+        # Attempt to execute step 2
+        if find_and_click(step=2):
+            return True
+
+        # return False  # If after 10 attempts it fails, return False
 
 def manage_unidentified_gear():
     # Attempt to find Unidentified Gear Masterwork in the inventory and use all.
@@ -137,8 +147,156 @@ def manage_rare_gear():
     if not find_and_click_rare(step=1):
         if not find_and_click_rare(step=2):
             pass
+        
+def manage_common_gear():    
+    if not find_and_click_common(step=1):
+        if not find_and_click_common(step=2):
+            if not find_and_click_common(step=3):
+                pass
+        
+def find_and_click_common(step=0):
+    #! Add image
+    image_path = './items-to-sell/common.png'
+    threshold=0.8
+    
+    if step == 1 or step == 2:
+        loc, w, h = search_for_item(image_path, threshold)
+        if loc is not None:
+            for pt in zip(*loc[::-1]):
+                center_x, center_y = pt[0] + w/2, pt[1] + h/2
+                
+                if step == 1 and  inventory_area[0] <= center_x <= inventory_area[0] + inventory_area[2] and inventory_area[1] <= center_y <= inventory_area[1] + inventory_area[3]:
+                    use_all_common_gear(center_x, center_y)
+                    return True
+                
+                elif step == 2 and bank_area[0] <= center_x <= bank_area[0] + bank_area[2] and bank_area[1] <= center_y <= bank_area[1] + bank_area[3]:
+                    pyautogui.moveTo(center_x, center_y)
+                    pyautogui.doubleClick()
+                    time.sleep(0.25)
+                    find_and_click_common(step=1)
+                    return True 
 
+    elif step == 3:
+        attempt = 0
+        max_attempts = 10
+        while attempt < max_attempts:
+            pyautogui.moveTo(3280, 1800) # Move to a position to initiate scroll
+            for _ in range(10):
+                pyautogui.scroll(-500)
+            time.sleep(0.25)
+            
+            # Attempt to execute step 2
+            if find_and_click(step=2):
+                return True
+            attempt += 1  # Increment the attempt counter
 
+        return False  # If after 10 attempts it fails, return False
+
+    elif step == 4:
+        # Scroll Up
+        pyautogui.moveTo(3280, 1800) # Move to a position to initiate scroll
+        for _ in range(10):
+            pyautogui.scroll(500)
+        time.sleep(0.25)
+        
+        # Attempt to execute step 2
+        if find_and_click(step=2):
+            return True
+
+        # return False  # If after 10 attempts it fails, return False
+                
+def use_all_common_gear(center_x, center_y):    
+    pyautogui.moveTo(center_x, center_y)
+    pyautogui.rightClick()
+    time.sleep(0.25)
+    pyautogui.move(85, 205)  # Move to "Use All"
+    pyautogui.click()    
+
+    time.sleep(10)
+    use_copperfed()
+
+def use_copperfed():
+    #! Use Copper Fed, adjust
+    pyautogui.moveTo(copper_fed[0], copper_fed[1])
+    pyautogui.rightClick() 
+    time.sleep(0.5)
+    pyautogui.click(copper_fed_salvage_blue[0], copper_fed_salvage_blue[1])
+    time.sleep(0.5)
+
+    handle_errors()
+    time.sleep(0.5)
+
+    pyautogui.moveTo(copper_fed[0], copper_fed[1])
+    pyautogui.rightClick() 
+    time.sleep(0.5)
+    pyautogui.click(rune_crafter_salvage_blue[0], rune_crafter_salvage_blue[1])
+    time.sleep(0.5)
+
+    #! Press confirm button using coordinates for tackling possible placements
+    pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1])
+    pyautogui.click(rune_crafter_confirm_button_1[0], rune_crafter_confirm_button_1[1])
+    pyautogui.click(rune_crafter_confirm_button_2[0], rune_crafter_confirm_button_2[1])
+    pyautogui.click(rune_crafter_confirm_button_3[0], rune_crafter_confirm_button_3[1])
+    pyautogui.click(rune_crafter_confirm_button_4[0], rune_crafter_confirm_button_4[1])
+    pyautogui.click(rune_crafter_confirm_button_5[0], rune_crafter_confirm_button_5[1])
+    pyautogui.click(rune_crafter_confirm_button_6[0], rune_crafter_confirm_button_6[1])
+    time.sleep(24)
+
+    
+    #? Use Runecrafter for salvaging greens
+    pyautogui.moveTo(rune_crafter[0], rune_crafter[1])
+    pyautogui.rightClick() 
+    time.sleep(0.5)
+    pyautogui.click(rune_crafter_salvage_green[0], rune_crafter_salvage_green[1])
+    time.sleep(0.5)
+
+    handle_errors()
+    time.sleep(0.5)
+
+    pyautogui.moveTo(rune_crafter[0], rune_crafter[1])
+    pyautogui.rightClick() 
+    time.sleep(0.5)
+    pyautogui.click(rune_crafter_salvage_green[0], rune_crafter_salvage_green[1])
+    time.sleep(0.5)
+
+    # Press confirm button using coordinates for tackling possible placements
+    pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1])
+    pyautogui.click(rune_crafter_confirm_button_1[0], rune_crafter_confirm_button_1[1])
+    pyautogui.click(rune_crafter_confirm_button_2[0], rune_crafter_confirm_button_2[1])
+    pyautogui.click(rune_crafter_confirm_button_3[0], rune_crafter_confirm_button_3[1])
+    pyautogui.click(rune_crafter_confirm_button_4[0], rune_crafter_confirm_button_4[1])
+    pyautogui.click(rune_crafter_confirm_button_5[0], rune_crafter_confirm_button_5[1])
+    pyautogui.click(rune_crafter_confirm_button_6[0], rune_crafter_confirm_button_6[1])
+    time.sleep(8)
+
+    #? Use Silver Fed for salvaging rares
+    pyautogui.moveTo(silver_fed[0], silver_fed[1])
+    pyautogui.rightClick()
+    time.sleep(0.5)
+    pyautogui.click(silver_fed_salvage_rare[0], silver_fed_salvage_rare[1])
+    time.sleep(0.5)
+
+    handle_errors()
+    time.sleep(0.5)
+
+    pyautogui.moveTo(silver_fed[0], silver_fed[1])
+    pyautogui.rightClick()
+    time.sleep(0.5)
+    pyautogui.click(silver_fed_salvage_rare[0], silver_fed_salvage_rare[1])
+    time.sleep(0.5)
+
+    # Press confirm button using coordinates for tackling possible placements
+    pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1])
+    pyautogui.click(silver_fed_confirm_button_1[0], silver_fed_confirm_button_1[1])
+    pyautogui.click(silver_fed_confirm_button_2[0], silver_fed_confirm_button_2[1])
+    pyautogui.click(silver_fed_confirm_button_3[0], silver_fed_confirm_button_3[1])
+    pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_4[1])
+    pyautogui.moveTo(1200, 170)
+    time.sleep(1.5)    
+    pyautogui.click(compact[0], compact[1])
+
+    
+ 
 def use_all_rare_gear(center_x, center_y):    
     pyautogui.moveTo(center_x, center_y)
     pyautogui.rightClick()
@@ -148,6 +306,7 @@ def use_all_rare_gear(center_x, center_y):
 
     time.sleep(10)
     use_silverfed()
+
 
 def find_and_click_rare(step=0):
     image_path = './items-to-sell/yellow.png'
@@ -250,6 +409,7 @@ def use_salvage_kits():
     pyautogui.click(rune_crafter_salvage_green[0], rune_crafter_salvage_green[1])
     time.sleep(0.5)
 
+    # Press confirm button using coordinates for tackling possible placements
     pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1])
     pyautogui.click(rune_crafter_confirm_button_1[0], rune_crafter_confirm_button_1[1])
     pyautogui.click(rune_crafter_confirm_button_2[0], rune_crafter_confirm_button_2[1])
@@ -275,7 +435,7 @@ def use_salvage_kits():
     pyautogui.click(silver_fed_salvage_rare[0], silver_fed_salvage_rare[1])
     time.sleep(0.5)
 
-    # Press confirm button using 3 coordinates for tackling possible placements
+    # Press confirm button using coordinates for tackling possible placements
     pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1])
     pyautogui.click(silver_fed_confirm_button_1[0], silver_fed_confirm_button_1[1])
     pyautogui.click(silver_fed_confirm_button_2[0], silver_fed_confirm_button_2[1])
@@ -1022,7 +1182,7 @@ def remove_oldest_orders(orders=5):
     time.sleep(.4)
     pyautogui.click(3517, 186)
 
-def place_10_orders(orders=15):
+def place_10_orders(orders=15, blue=False):
     # Close last sell
     pyautogui.click(3517, 186)
     time.sleep(.7)
@@ -1041,9 +1201,14 @@ def place_10_orders(orders=15):
     pyautogui.write('piece of unidentified gear', interval=0.1)
     time.sleep(2)
 
-    # Click gear
-    pyautogui.click(2873, 356)
-    can_continue('./canContinue/menus_setup.png') 
+    if not blue:
+        # If blue is False, click Green
+        pyautogui.click(2873, 356)
+        can_continue('./canContinue/menus_setup.png') 
+    else:
+        # If blue is True, click Blue
+        # pyautogui.click(2873, 556) #! Adjust
+        can_continue('./canContinue/menus_setup.png') 
 
     # Click on order
     pyautogui.click(2733, 746)
@@ -1343,15 +1508,15 @@ def main():
     click_game()
     # calculate_ecto_profit(0.3821, 0.2174)
 
-    # sell_item('./items-to-sell/lucent_motes.png')
-    # sell_all()
+    sell_item('./items-to-sell/lucent_motes.png')
+    sell_all()
     # manage_charms()
 
-    # consume_purple_luck()
-    # consume_purple_luck_click_button()
-    # handle_errors()
-    # consume_luck()
-    # handle_errors()
+    consume_purple_luck()
+    consume_purple_luck_click_button()
+    handle_errors()
+    consume_luck()
+    handle_errors()
 
     # take_all_and_storage(2)
 
@@ -1359,20 +1524,29 @@ def main():
     # manage_cristallyne_dust()
     # take_all_and_storage(1)
 
-    # place_10_orders(15)
+    # place_10_orders(15, blue=False)
     # remove_oldest_orders(1)
     # place_orders_rare(2) 
     # manage_rare_gear()
     
-    for i in range(1, 2001):  
+    for i in range(1, 3001):  
+        while True:
+            if keyboard.is_pressed('shift+p'):
+                print("Script detenido por el usuario")
+                break
+        
         print(f"Starting iteration {i}")
 
-        handle_errors()
+        handle_errors() #! Add canContinue's?
         manage_rare_gear()
 
         handle_errors()
         manage_unidentified_gear()
         time.sleep(10)
+
+        #? In case Blue's are better 
+        # handle_errors()
+        # manage_common_gear()
 
         handle_errors()
         use_salvage_kits()
@@ -1401,7 +1575,7 @@ def main():
             # place_orders_rare(1) 
 
         if i % 10 == 0:  
-            #! Checkers that watch and reload online prices 
+            # Checkers that watch and reload online prices
             sell_ectos() 
             # salvage_ectos()
 
@@ -1419,7 +1593,7 @@ def main():
             handle_errors()
 
             # place_orders_rare(1) 
-            place_10_orders(11)
+            place_10_orders(11, blue=False)
             remove_oldest_orders(1)
 
         if i % 10 == 0:            
@@ -1443,8 +1617,7 @@ def main():
             sell_all()
             sell_all()
             handle_errors()
-
-            #! x2 Checkers that watch and reload online prices 
+ 
             sell_ectos() 
             # salvage_ectos()
 
