@@ -30,7 +30,7 @@ rune_crafter_confirm_button_4 = (1811, 1326) # Row 4
 rune_crafter_confirm_button_5 = (1811, 1363) # Row 5
 rune_crafter_confirm_button_6 = (1811, 1400) # Row 6
 
-silver_fed = (1017, 1542)
+silver_fed = (1017, 1540)
 silver_fed_use = (1040, 1558)
 silver_fed_salvage_rare = (1040, 1670) 
 silver_fed_salvage_stack = (1040, 1706)
@@ -44,6 +44,9 @@ silver_fed_confirm_button_5 = (1811, 1363) # Row 5
 silver_fed_confirm_button_6 = (1811, 1400) # Row 6
 
 silver_fed_salvage_stack_accept = (1900, 1155) 
+
+copper_fed = (132, 1540)
+copper_fed_salvage_common = (150, 1593) 
 
 # Trading Post Sell Areas
 sellers_list = (3163, 746)
@@ -155,8 +158,7 @@ def manage_common_gear():
                 pass
         
 def find_and_click_common(step=0):
-    #! Add image
-    image_path = './items-to-sell/common.png'
+    image_path = './items-to-sell/blue.png'
     threshold=0.8
     
     if step == 1 or step == 2:
@@ -216,11 +218,11 @@ def use_all_common_gear(center_x, center_y):
     use_copperfed()
 
 def use_copperfed():
-    #! Use Copper Fed, adjust
+    #? Use Copper Fed
     pyautogui.moveTo(copper_fed[0], copper_fed[1])
     pyautogui.rightClick() 
     time.sleep(0.5)
-    pyautogui.click(copper_fed_salvage_blue[0], copper_fed_salvage_blue[1])
+    pyautogui.click(copper_fed_salvage_common[0], copper_fed_salvage_common[1])
     time.sleep(0.5)
 
     handle_errors()
@@ -229,10 +231,10 @@ def use_copperfed():
     pyautogui.moveTo(copper_fed[0], copper_fed[1])
     pyautogui.rightClick() 
     time.sleep(0.5)
-    pyautogui.click(rune_crafter_salvage_blue[0], rune_crafter_salvage_blue[1])
+    pyautogui.click(copper_fed_salvage_common[0], copper_fed_salvage_common[1])
     time.sleep(0.5)
 
-    #! Press confirm button using coordinates for tackling possible placements
+    # Press confirm button using coordinates for tackling possible placements
     pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1])
     pyautogui.click(rune_crafter_confirm_button_1[0], rune_crafter_confirm_button_1[1])
     pyautogui.click(rune_crafter_confirm_button_2[0], rune_crafter_confirm_button_2[1])
@@ -240,9 +242,8 @@ def use_copperfed():
     pyautogui.click(rune_crafter_confirm_button_4[0], rune_crafter_confirm_button_4[1])
     pyautogui.click(rune_crafter_confirm_button_5[0], rune_crafter_confirm_button_5[1])
     pyautogui.click(rune_crafter_confirm_button_6[0], rune_crafter_confirm_button_6[1])
-    time.sleep(24)
+    time.sleep(15)
 
-    
     #? Use Runecrafter for salvaging greens
     pyautogui.moveTo(rune_crafter[0], rune_crafter[1])
     pyautogui.rightClick() 
@@ -292,7 +293,8 @@ def use_copperfed():
     pyautogui.click(silver_fed_confirm_button_3[0], silver_fed_confirm_button_3[1])
     pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_4[1])
     pyautogui.moveTo(1200, 170)
-    time.sleep(1.5)    
+    time.sleep(1.5) 
+
     pyautogui.click(compact[0], compact[1])
 
     
@@ -1207,7 +1209,7 @@ def place_10_orders(orders=15, blue=False):
         can_continue('./canContinue/menus_setup.png') 
     else:
         # If blue is True, click Blue
-        # pyautogui.click(2873, 556) #! Adjust
+        pyautogui.click(2873, 545) 
         can_continue('./canContinue/menus_setup.png') 
 
     # Click on order
@@ -1530,27 +1532,29 @@ def main():
     # manage_rare_gear()
     
     for i in range(1, 3001):  
-        while True:
-            if keyboard.is_pressed('shift+p'):
-                print("Script detenido por el usuario")
-                break
+        # while True:
+        #     if keyboard.is_pressed('shift+p'):
+        #         print("Script detenido por el usuario")
+        #         break
         
         print(f"Starting iteration {i}")
 
         handle_errors() #! Add canContinue's?
         manage_rare_gear()
 
+        #? In case Green's are better 
         handle_errors()
         manage_unidentified_gear()
         time.sleep(10)
 
-        #? In case Blue's are better 
-        # handle_errors()
-        # manage_common_gear()
-
         handle_errors()
         use_salvage_kits()
         handle_errors()
+
+        #? In case Blue's are better 
+        # handle_errors()
+        # manage_common_gear()
+        # handle_errors()
 
         sell_item('./items-to-sell/lucent_motes.png')
 
@@ -1593,6 +1597,7 @@ def main():
             handle_errors()
 
             # place_orders_rare(1) 
+            # place_10_orders(11, blue=True)
             place_10_orders(11, blue=False)
             remove_oldest_orders(1)
 
