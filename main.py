@@ -1526,7 +1526,7 @@ def main():
     # manage_cristallyne_dust()
     # take_all_and_storage(1)
 
-    # place_10_orders(15, blue=False)
+    # place_10_orders(15, blue=True)
     # remove_oldest_orders(1)
     # place_orders_rare(2) 
     # manage_rare_gear()
@@ -1548,7 +1548,8 @@ def main():
         time.sleep(10)
 
         handle_errors()
-        use_salvage_kits()
+        use_salvage_kits() #! 640 think on adding, actually do add the logic for the blue ones. Doesn't take that much extra time.
+        #! Add such logic only when there is an error in handle_errors
         handle_errors()
 
         #? In case Blue's are better 
