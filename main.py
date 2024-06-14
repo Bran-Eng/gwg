@@ -61,6 +61,17 @@ portal_scroll = (837, 1535)
 
 volunteer = (78, 1176)
 
+# Paths to images for each direction
+direction_images = [
+    './center_character/Top-1.png',
+    './center_character/Right-1.png',
+    './center_character/Left-1.png',
+    './center_character/Bot-1.png'
+]
+
+# Descriptions for each direction (for logging purposes)
+directions = ['top', 'right', 'left', 'bot']
+
 
 def capture_game_screen():
     monitor_1_region = (0, 0, 3840, 2160)
@@ -738,7 +749,98 @@ def restart_game():
     time.sleep(0.25)
     pyautogui.click(volunteer[0], volunteer[1])
     time.sleep(10)
+    
+    #? Check if we're in the 1 of 4 positions
+    # Continue trying until a match is found
+    while True:
+        for idx, image_path in enumerate(direction_images):
+            if does_it_match(image_path, 0.65):
+                # Execute direction-specific actions
+                handle_direction(directions[idx])
+                return  # Exit after successful handling
+            else:
+                print(f"No match facing {directions[idx]}.")
 
+        # If no matches found after trying all directions
+        print("No directions matched...")
+        
+        #? Try to open menus
+        open_menus()
+
+        # Verify TP and Bank setup
+        tp_bank_correct = does_it_match('./center_character/correct_tpbank.png', 0.8)
+        if tp_bank_correct:
+            print("TP and Bank are correctly set up.")
+        else:
+            print("TP and Bank are not correctly set up. Continue with the restart.")
+        
+        # Verify Inventory setup
+        inventory_correct = does_it_match('./center_character/correct_inventory.png', 0.8)
+        if inventory_correct:
+            print("Inventory is correctly set up. Continue.")
+        else:
+            print("Inventory is not correctly set up. Continue with the restart.")
+
+        # If both are true, skip rest of function logic
+        if tp_bank_correct and inventory_correct:
+            return
+        
+        #? If can't be fast
+        print("Continue complete restart")
+
+        # Close Game
+        keyboard.press_and_release('alt+f4')
+        time.sleep(3)
+
+        #! Maybe here err check and click yes 
+        
+        # Click on the game icon to start the game
+        pyautogui.click(game_icon_coords[0], game_icon_coords[1])
+        time.sleep(6)
+        can_continue('./canContinue/Game_client.png')
+
+        # Click on the login button
+        pyautogui.click(login_button_coords[0], login_button_coords[1])
+        time.sleep(.5)
+        pyautogui.click(login_button_coords[0], login_button_coords[1])
+        time.sleep(.5)
+        pyautogui.click(login_button_coords[0], login_button_coords[1])
+        time.sleep(4)  # Wait for login to process and auto start game
+
+        if is_item_present('./canContinue/Game_client.png', 0.8):
+            pyautogui.click(login_button_coords[0], login_button_coords[1])
+            time.sleep(5)
+
+        if is_item_present('./canContinue/Game_client.png', 0.8):
+            pyautogui.click(login_button_coords[0], login_button_coords[1])
+            time.sleep(5)
+
+        can_continue('./canContinue/select_character.png')
+        time.sleep(3)
+
+        # Double-click on the character to start playing
+        pyautogui.doubleClick(character_coords[0], character_coords[1])
+        time.sleep(.5)
+        pyautogui.doubleClick(character_coords[0], character_coords[1])
+        time.sleep(.5)
+        pyautogui.doubleClick(character_coords[0], character_coords[1])
+        # Wait for the game to enter into playing mode
+        can_continue('./canContinue/playing_mode.png')
+
+def restart_game_simple():
+    pyautogui.click(1800, 500)
+
+    # Coordinates for game icon, login, start game, and character selection
+    game_icon_coords = (180, 2122)
+    login_button_coords = (1203, 1327)
+    character_coords = (1600, 2015)
+
+    # Volunteer before closing
+    pyautogui.click(volunteer[0], volunteer[1])
+    time.sleep(0.25)
+    pyautogui.click(volunteer[0], volunteer[1])
+    time.sleep(10)
+    
     # Close Game
     keyboard.press_and_release('alt+f4')
     time.sleep(3)
@@ -754,13 +856,28 @@ def restart_game():
     pyautogui.click(login_button_coords[0], login_button_coords[1])
     time.sleep(.5)
     pyautogui.click(login_button_coords[0], login_button_coords[1])
-    # time.sleep(14)  # Wait for login to process and auto start game
+    time.sleep(.5)
+    pyautogui.click(login_button_coords[0], login_button_coords[1])
+    time.sleep(4)  # Wait for login to process and auto start game
+
+    if is_item_present('./canContinue/Game_client.png', 0.8):
+        pyautogui.click(login_button_coords[0], login_button_coords[1])
+        time.sleep(5)
+
+    if is_item_present('./canContinue/Game_client.png', 0.8):
+        pyautogui.click(login_button_coords[0], login_button_coords[1])
+        time.sleep(5)
+
     can_continue('./canContinue/select_character.png')
-    time.sleep(2)
+    time.sleep(3)
 
     # Double-click on the character to start playing
     pyautogui.doubleClick(character_coords[0], character_coords[1])
-    # time.sleep(22)  # Wait for the game to enter into playing mode
+    time.sleep(.5)
+    pyautogui.doubleClick(character_coords[0], character_coords[1])
+    time.sleep(.5)
+    pyautogui.doubleClick(character_coords[0], character_coords[1])
+    # Wait for the game to enter into playing mode
     can_continue('./canContinue/playing_mode.png')
 
 def press_and_hold(key, hold_time=0.1):
@@ -838,17 +955,6 @@ def walk_and_center_npc():
     # Reset Position by clicking Mistlock pass
     reset_position() 
 
-    # Paths to images for each direction
-    direction_images = [
-        './center_character/Top-1.png',
-        './center_character/Right-1.png',
-        './center_character/Left-1.png',
-        './center_character/Bot-1.png'
-    ]
-
-    # Descriptions for each direction (for logging purposes)
-    directions = ['top', 'right', 'left', 'bot']
-
     # Continue trying until a match is found
     while True:
         for idx, image_path in enumerate(direction_images):
@@ -862,7 +968,7 @@ def walk_and_center_npc():
         # If no matches found after trying all directions, reset and try again
         print("No directions matched, resetting...")
               
-        restart_game()
+        restart_game_simple()
         reset_position()
 
 def open_menus():
@@ -957,7 +1063,14 @@ def open_menus():
         restart_game()
         walk_and_center_npc()
         open_menus()
-    print("Menus are correctly set up.")
+    print("TP and Bank are correctly set up.")
+
+    while not does_it_match('./center_character/correct_inventory.png', 0.8):
+        print("Menus are not correctly set up, re-centering NPC...")
+        restart_game()
+        walk_and_center_npc()
+        open_menus()
+    print("Inventory is correctly set up. Continue.")
 
 def sell_most_expensive_exotics(iterations): 
     # Close last sell
@@ -1508,6 +1621,7 @@ def calculate_ecto_profit(ecto_price, dust_price):
 
 def main():
     click_game()
+    open_menus()
     # calculate_ecto_profit(0.3821, 0.2174)
 
     sell_item('./items-to-sell/lucent_motes.png')
