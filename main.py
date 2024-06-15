@@ -13,8 +13,8 @@ pyautogui.FAILSAFE = False
 inventory_area = (0, 0, 2350, 2160)
 bank_area = (2840, 1125, 3840, 2160)
 tp_area = (2430, 60, 3840, 1090)
-sell_search_area = (76, 1219, 2829, 2075)
-# sell_search_area = (0, 0, 2350, 2160)
+# sell_search_area = (76, 1219, 2829, 2075)
+sell_search_area = (0, 0, 2350, 2160)
 item_tp_area = (2758, 202, 2842, 284)
 
 compact = (2240, 184)
@@ -309,19 +309,6 @@ def use_copperfed():
 
     pyautogui.click(compact[0], compact[1])
 
-    
- 
-def use_all_rare_gear(center_x, center_y):    
-    pyautogui.moveTo(center_x, center_y)
-    pyautogui.rightClick()
-    time.sleep(0.25)
-    pyautogui.move(85, 205)  # Move to "Use All"
-    pyautogui.click()    
-
-    time.sleep(10)
-    use_silverfed()
-
-
 def find_and_click_rare(step=0):
     image_path = './items-to-sell/yellow.png'
     threshold=0.8
@@ -341,38 +328,69 @@ def find_and_click_rare(step=0):
                     pyautogui.doubleClick()
                     time.sleep(0.25)
                     find_and_click_rare(step=1)
-                    return True       
+                    return True     
+
+def use_all_rare_gear(center_x, center_y):    
+    pyautogui.moveTo(center_x, center_y)
+    pyautogui.rightClick()
+    time.sleep(0.25)
+    pyautogui.move(85, 205)  # Move to "Use All"
+    pyautogui.click()    
+
+    time.sleep(10)
+    use_silverfed()  
 
 def use_silverfed():
-    # Use Silver Fed for salvaging rares
-    pyautogui.moveTo(silver_fed[0], silver_fed[1])
-    pyautogui.rightClick()
-    time.sleep(0.5)
-    pyautogui.click(silver_fed_salvage_rare[0], silver_fed_salvage_rare[1])
-    time.sleep(0.5)
+    # Identify Silver Fed
+    image_path = './.png'  
+    loc, w, h = search_for_item(image_path, 0.7)
 
-    handle_errors()
-    time.sleep(0.5)
+    if loc is not None:
+        for pt in zip(*loc[::-1]):
+            center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
+            
+            # Check if the center of the found item is within the defined area
+            if inventory_area[0] <= center_x <= inventory_area[0] + inventory_area[2] and inventory_area[1] <= center_y <= inventory_area[1] + inventory_area[3]:
+                pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Silver Fed
+                pyautogui.rightClick()
+                time.sleep(0.5)
+                pyautogui.moveTo(53, 125) #! Move cursor to "Salvage" option
+                pyautogui.click()
+                time.sleep(.5) 
+                
+                handle_errors()
+                time.sleep(0.5)
+                
+                pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Silver Fed
+                pyautogui.rightClick()
+                time.sleep(0.5)
+                pyautogui.moveTo(53, 125) #! Move cursor to "Salvage" option
+                pyautogui.click()
+                time.sleep(.5) 
 
-    pyautogui.moveTo(silver_fed[0], silver_fed[1])
-    pyautogui.rightClick()
-    time.sleep(0.5)
-    pyautogui.click(silver_fed_salvage_rare[0], silver_fed_salvage_rare[1])
-    time.sleep(0.5)
+                pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
+                time.sleep(0.25)
+                pyautogui.click(maximum_amount[0], maximum_amount[1]) # Maximum Amount
+                time.sleep(0.25)
+                pyautogui.click(minus_one_copper[0], minus_one_copper[1])  # Minus One Copper
+                time.sleep(0.25)
+                pyautogui.click(list_item[0], list_item[1]) # List
+                
+                # Press confirm button using 3 coordinates for tackling possible placements
+                pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1])
+                pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_1[1])
+                pyautogui.click(silver_fed_confirm_button_2[0], silver_fed_confirm_button_2[1])
+                pyautogui.click(silver_fed_confirm_button_3[0], silver_fed_confirm_button_3[1])
+                pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_4[1])
+                pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_5[1])
+                pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_6[1])
+                time.sleep(26)
+                pyautogui.moveTo(1200, 170)
+                time.sleep(1.5)    
+                pyautogui.click(compact[0], compact[1])
 
-    # Press confirm button using 3 coordinates for tackling possible placements
-    pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1])
-    pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_1[1])
-    pyautogui.click(silver_fed_confirm_button_2[0], silver_fed_confirm_button_2[1])
-    pyautogui.click(silver_fed_confirm_button_3[0], silver_fed_confirm_button_3[1])
-    pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_4[1])
-    pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_5[1])
-    pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_6[1])
-    time.sleep(26)
-    pyautogui.moveTo(1200, 170)
-    time.sleep(1.5)    
-    pyautogui.click(compact[0], compact[1])
-
+                break 
+    
     sell_ectos()
     sell_ectos()
     
@@ -884,6 +902,14 @@ def reset_position():
     can_continue('./canContinue/playing_mode.png')
 
 def walk_and_center_npc():
+    # Close menus
+    while not is_item_present('./canContinue/esc_menu.png', 0.7):
+        keyboard.press_and_release('esc')
+        time.sleep(0.25)
+        
+    keyboard.press_and_release('esc')
+    time.sleep(0.25)
+    
     # Reset Position by clicking Mistlock pass
     reset_position() 
 
@@ -991,12 +1017,14 @@ def open_menus():
     # Check if the menus are set up correctly
     while not does_it_match('./center_character/correct_tpbank.png', 0.8):
         print("Menus are not correctly set up, re-centering NPC...")
+        reset_position()
         walk_and_center_npc()
         open_menus()
     print("TP and Bank are correctly set up.")
 
     while not does_it_match('./center_character/correct_inventory.png', 0.8):
         print("Menus are not correctly set up, re-centering NPC...")
+        reset_position()
         walk_and_center_npc()
         open_menus()
     print("Inventory is correctly set up. Continue.")
