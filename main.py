@@ -354,7 +354,7 @@ def use_silverfed():
                 pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Silver Fed
                 pyautogui.rightClick()
                 time.sleep(0.5)
-                pyautogui.moveTo(53, 125) #! Move cursor to "Salvage" option
+                pyautogui.moveTo(20, 125) #! Move cursor to "Salvage" option
                 pyautogui.click()
                 time.sleep(.5) 
                 
@@ -364,7 +364,7 @@ def use_silverfed():
                 pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Silver Fed
                 pyautogui.rightClick()
                 time.sleep(0.5)
-                pyautogui.moveTo(53, 125) #! Move cursor to "Salvage" option
+                pyautogui.moveTo(20, 125) #! Move cursor to "Salvage" option
                 pyautogui.click()
                 time.sleep(.5) 
 
