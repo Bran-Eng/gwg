@@ -342,7 +342,7 @@ def use_all_rare_gear(center_x, center_y):
 
 def use_silverfed():
     # Identify Silver Fed
-    image_path = './.png'  
+    image_path = './silver.png'  
     loc, w, h = search_for_item(image_path, 0.7)
 
     if loc is not None:
@@ -367,14 +367,6 @@ def use_silverfed():
                 pyautogui.moveTo(20, 125) #! Move cursor to "Salvage" option
                 pyautogui.click()
                 time.sleep(.5) 
-
-                pyautogui.click(sellers_list[0], sellers_list[1]) # Add to sell list
-                time.sleep(0.25)
-                pyautogui.click(maximum_amount[0], maximum_amount[1]) # Maximum Amount
-                time.sleep(0.25)
-                pyautogui.click(minus_one_copper[0], minus_one_copper[1])  # Minus One Copper
-                time.sleep(0.25)
-                pyautogui.click(list_item[0], list_item[1]) # List
                 
                 # Press confirm button using 3 coordinates for tackling possible placements
                 pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1])
@@ -384,6 +376,7 @@ def use_silverfed():
                 pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_4[1])
                 pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_5[1])
                 pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_6[1])
+                
                 time.sleep(26)
                 pyautogui.moveTo(1200, 170)
                 time.sleep(1.5)    
@@ -425,7 +418,7 @@ def use_silverfed():
     handle_errors()
             
 def use_salvage_kits():
-    # Use Runecrafter for salvaging greens
+    #? Use Runecrafter for salvaging greens
     pyautogui.moveTo(rune_crafter[0], rune_crafter[1])
     pyautogui.rightClick() 
     time.sleep(0.5)
@@ -451,31 +444,48 @@ def use_salvage_kits():
     pyautogui.click(rune_crafter_confirm_button_6[0], rune_crafter_confirm_button_6[1])
     time.sleep(24)
 
-    # Use Silver Fed for salvaging rares
-    pyautogui.moveTo(silver_fed[0], silver_fed[1])
-    pyautogui.rightClick()
-    time.sleep(0.5)
-    pyautogui.click(silver_fed_salvage_rare[0], silver_fed_salvage_rare[1])
-    time.sleep(0.5)
+    #? Use Silver Fed for salvaging rares
+    image_path = './silver.png'  
+    loc, w, h = search_for_item(image_path, 0.7)
 
-    handle_errors()
-    time.sleep(0.5)
+    if loc is not None:
+        for pt in zip(*loc[::-1]):
+            center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
+            
+            # Check if the center of the found item is within the defined area
+            if inventory_area[0] <= center_x <= inventory_area[0] + inventory_area[2] and inventory_area[1] <= center_y <= inventory_area[1] + inventory_area[3]:
+                pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Silver Fed
+                pyautogui.rightClick()
+                time.sleep(0.5)
+                pyautogui.moveTo(20, 125) #! Move cursor to "Salvage" option
+                pyautogui.click()
+                time.sleep(.5) 
+                
+                handle_errors()
+                time.sleep(0.5)
+                
+                pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Silver Fed
+                pyautogui.rightClick()
+                time.sleep(0.5)
+                pyautogui.moveTo(20, 125) #! Move cursor to "Salvage" option
+                pyautogui.click()
+                time.sleep(.5) 
+                
+                # Press confirm button using 3 coordinates for tackling possible placements
+                pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1])
+                pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_1[1])
+                pyautogui.click(silver_fed_confirm_button_2[0], silver_fed_confirm_button_2[1])
+                pyautogui.click(silver_fed_confirm_button_3[0], silver_fed_confirm_button_3[1])
+                pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_4[1])
+                pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_5[1])
+                pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_6[1])
+                
+                time.sleep(2)
+                pyautogui.moveTo(1200, 170)
+                time.sleep(1.5)    
+                pyautogui.click(compact[0], compact[1])
 
-    pyautogui.moveTo(silver_fed[0], silver_fed[1])
-    pyautogui.rightClick()
-    time.sleep(0.5)
-    pyautogui.click(silver_fed_salvage_rare[0], silver_fed_salvage_rare[1])
-    time.sleep(0.5)
-
-    # Press confirm button using coordinates for tackling possible placements
-    pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1])
-    pyautogui.click(silver_fed_confirm_button_1[0], silver_fed_confirm_button_1[1])
-    pyautogui.click(silver_fed_confirm_button_2[0], silver_fed_confirm_button_2[1])
-    pyautogui.click(silver_fed_confirm_button_3[0], silver_fed_confirm_button_3[1])
-    pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_4[1])
-    pyautogui.moveTo(1200, 170)
-    time.sleep(1.5)    
-    pyautogui.click(compact[0], compact[1])
+                break 
     
 def salvage_ectos():
     # Identify ectos by image to salvage
