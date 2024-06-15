@@ -644,7 +644,7 @@ def handle_errors():
         pyautogui.click(err_coo[0], err_coo[1])
         time.sleep(2)
 
-        open_game()
+        restart_game()
         reset_position()
         open_menus()
 
@@ -756,6 +756,61 @@ def open_game():
     
     # Wait for the game to enter into playing mode
     can_continue('./canContinue/playing_mode.png')
+    
+def restart_game():
+    pyautogui.click(1800, 500)
+
+    # Coordinates for game icon, login, start game, and character selection
+    game_icon_coords = (180, 2122)
+    login_button_coords = (1203, 1327)
+    character_coords = (1600, 2015)
+
+    # # Volunteer before closing
+    # pyautogui.click(volunteer[0], volunteer[1])
+    # time.sleep(0.25)
+    # pyautogui.click(volunteer[0], volunteer[1])
+    # time.sleep(10)
+
+    # Close Game
+    keyboard.press_and_release('alt+f4')
+    time.sleep(3)
+
+    #! Maybe here err check and click yes 
+
+    # Click on the game icon to start the game
+    pyautogui.click(game_icon_coords[0], game_icon_coords[1])
+    time.sleep(6)
+    can_continue('./canContinue/Game_client.png')
+
+    # Click on the login button
+    pyautogui.click(login_button_coords[0], login_button_coords[1])
+    time.sleep(.5)
+    pyautogui.click(login_button_coords[0], login_button_coords[1])
+    time.sleep(.5)
+    pyautogui.click(login_button_coords[0], login_button_coords[1])
+    time.sleep(4)  # Wait for login to process and auto start game
+
+    if is_item_present('./canContinue/Game_client.png', 0.8):
+        pyautogui.click(login_button_coords[0], login_button_coords[1])
+        time.sleep(5)
+
+    if is_item_present('./canContinue/Game_client.png', 0.8):
+        pyautogui.click(login_button_coords[0], login_button_coords[1])
+        time.sleep(5)
+
+    can_continue('./canContinue/select_character.png')
+    time.sleep(3)
+
+    # Double-click on the character to start playing
+    pyautogui.doubleClick(character_coords[0], character_coords[1])
+    time.sleep(.5)
+    pyautogui.doubleClick(character_coords[0], character_coords[1])
+    time.sleep(.5)
+    pyautogui.doubleClick(character_coords[0], character_coords[1])
+
+    # Wait for the game to enter into playing mode
+    can_continue('./canContinue/playing_mode.png')
+
 
 def press_and_hold(key, hold_time=0.1):
     keyboard.press(key)
