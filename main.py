@@ -13,7 +13,8 @@ pyautogui.FAILSAFE = False
 inventory_area = (0, 0, 2350, 2160)
 bank_area = (2840, 1125, 3840, 2160)
 tp_area = (2430, 60, 3840, 1090)
-sell_search_area = (76, 1219, 2829, 2075)
+# sell_search_area = (76, 1219, 2829, 2075)
+sell_search_area = (0, 0, 2350, 2160)
 item_tp_area = (2758, 202, 2842, 284)
 
 compact = (2240, 184)
@@ -726,13 +727,24 @@ def open_game():
     pyautogui.click(login_button_coords[0], login_button_coords[1])
     time.sleep(.5)
     pyautogui.click(login_button_coords[0], login_button_coords[1])
-    # time.sleep(14)  # Wait for login to process and auto start game
+    
+    if is_item_present('./canContinue/Game_client.png'):
+        pyautogui.click(login_button_coords[0], login_button_coords[1])
+        time.sleep(.5)
+        pyautogui.click(login_button_coords[0], login_button_coords[1])
+        
+    if is_item_present('./canContinue/Game_client.png'):
+        pyautogui.click(login_button_coords[0], login_button_coords[1])
+        time.sleep(.5)
+        pyautogui.click(login_button_coords[0], login_button_coords[1])
+    
+    # Wait for login to process and auto start game
     can_continue('./canContinue/select_character.png')
     time.sleep(2)
 
     # Double-click on the character to start playing
     pyautogui.doubleClick(character_coords[0], character_coords[1])
-    # time.sleep(22)  # Wait for the game to enter into playing mode
+    # Wait for the game to enter into playing mode
     can_continue('./canContinue/playing_mode.png')
 
 
