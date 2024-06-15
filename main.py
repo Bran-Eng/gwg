@@ -342,8 +342,7 @@ def use_all_rare_gear(center_x, center_y):
 
 def use_silverfed():
     # Identify Silver Fed
-    image_path = './items-to-sell/silver.png'  
-    loc, w, h = search_for_item(image_path, 0.7)
+    loc, w, h = search_for_item('./items-to-sell/silver.png', 0.7)
 
     if loc is not None:
         for pt in zip(*loc[::-1]):
@@ -1070,58 +1069,70 @@ def sell_most_expensive_exotics(iterations):
         time.sleep(1.5)
 
 
-def salvage_restant_exotics():    
+def salvage_restant_exotics():
+    accept_button = (1896, 1156) 
+    
     # Compact Inventory
     pyautogui.click(compact[0], compact[1])
-    time.sleep(0.25)
-
-    accept_button = (1896, 1156)    
-
-    # Setup Silver Fed
-    pyautogui.moveTo(silver_fed[0], silver_fed[1])
-    pyautogui.rightClick()
-    time.sleep(0.25)
-    pyautogui.click(silver_fed_use[0], silver_fed_use[1]) 
     time.sleep(0.5)
+    
+    # Identify Silver Fed 
+    loc, w, h = search_for_item('./items-to-sell/silver.png', 0.7)
 
-    # Consume All Luck from multiple locations
-    salvage_exotics_coords_list = [
-        (126, 385),  
-        (216, 385),  
-        (305, 385),
-        (391, 385),
-        (482, 385),
-        (569, 385),
-        (657, 385),
-        (746, 385),
-        (837, 385),
-        (918, 385),
+    if loc is not None:
+        for pt in zip(*loc[::-1]):
+            center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
+            
+            # Check if the center of the found item is within the defined area
+            if inventory_area[0] <= center_x <= inventory_area[0] + inventory_area[2] and inventory_area[1] <= center_y <= inventory_area[1] + inventory_area[3]:
+                # Setup Silver Fed
+                pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Silver Fed
+                pyautogui.rightClick()
+                time.sleep(0.5)
+                pyautogui.move(20, 16) # Move cursor to use
+                pyautogui.click()
+                time.sleep(.5) 
 
-        (1011, 385),
-        (1100, 385),
-        (1188, 385),
-        (1279, 385),
-        (1368, 385),
-        (1451, 385),
-        (1542, 385),
-        (1631, 385),
-        (1720, 385),
-        (1806, 385),
+            # Consume All Luck from multiple locations
+            salvage_exotics_coords_list = [
+                (126, 385),  
+                (216, 385),  
+                (305, 385),
+                (391, 385),
+                (482, 385),
+                (569, 385),
+                (657, 385),
+                (746, 385),
+                (837, 385),
+                (918, 385),
 
-        (1896, 385),
-        (1982, 385),
-        (2073, 385),
-        (2155, 385),
-        (2248, 385)
+                (1011, 385),
+                (1100, 385),
+                (1188, 385),
+                (1279, 385),
+                (1368, 385),
+                (1451, 385),
+                (1542, 385),
+                (1631, 385),
+                (1720, 385),
+                (1806, 385),
+
+                (1896, 385),
+                (1982, 385),
+                (2073, 385),
+                (2155, 385),
+                (2248, 385)
+                
+            ]
+
+            for coords in salvage_exotics_coords_list:
+                pyautogui.moveTo(coords[0], coords[1])
+                pyautogui.click()
+                time.sleep(0.25)
+                pyautogui.click(accept_button[0], accept_button[1]) # Accept salvage
+                time.sleep(0.25)
         
-    ]
-
-    for coords in salvage_exotics_coords_list:
-        pyautogui.moveTo(coords[0], coords[1])
-        pyautogui.click()
-        time.sleep(0.25)
-        pyautogui.click(accept_button[0], accept_button[1]) # Accept salvage
-        time.sleep(0.25)
+            break
 
 def salvage_restant_exotics_few():    
     # Compact Inventory
@@ -1592,14 +1603,14 @@ def main():
     # calculate_ecto_profit(0.3821, 0.2174)
 
     sell_item('./items-to-sell/lucent_motes.png')
-    sell_all()
+    # sell_all()
     # manage_charms()
 
-    consume_purple_luck()
-    consume_purple_luck_click_button()
-    handle_errors()
-    consume_luck()
-    handle_errors()
+    # consume_purple_luck()
+    # consume_purple_luck_click_button()
+    # handle_errors()
+    # consume_luck()
+    # handle_errors()
 
     # take_all_and_storage(2)
 
