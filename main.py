@@ -342,7 +342,7 @@ def use_all_rare_gear(center_x, center_y):
 
 def use_silverfed():
     # Identify Silver Fed
-    image_path = './silver.png'  
+    image_path = './items-to-sell/silver.png'  
     loc, w, h = search_for_item(image_path, 0.7)
 
     if loc is not None:
@@ -354,7 +354,7 @@ def use_silverfed():
                 pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Silver Fed
                 pyautogui.rightClick()
                 time.sleep(0.5)
-                pyautogui.moveTo(20, 125) #! Move cursor to "Salvage" option
+                pyautogui.move(20, 125) #! Move cursor to "Salvage" option
                 pyautogui.click()
                 time.sleep(.5) 
                 
@@ -364,7 +364,7 @@ def use_silverfed():
                 pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Silver Fed
                 pyautogui.rightClick()
                 time.sleep(0.5)
-                pyautogui.moveTo(20, 125) #! Move cursor to "Salvage" option
+                pyautogui.move(20, 125) #! Move cursor to "Salvage" option
                 pyautogui.click()
                 time.sleep(.5) 
                 
@@ -445,7 +445,7 @@ def use_salvage_kits():
     time.sleep(24)
 
     #? Use Silver Fed for salvaging rares
-    image_path = './silver.png'  
+    image_path = './items-to-sell/silver.png'  
     loc, w, h = search_for_item(image_path, 0.7)
 
     if loc is not None:
@@ -457,7 +457,7 @@ def use_salvage_kits():
                 pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Silver Fed
                 pyautogui.rightClick()
                 time.sleep(0.5)
-                pyautogui.moveTo(20, 125) #! Move cursor to "Salvage" option
+                pyautogui.move(20, 125) #! Move cursor to "Salvage" option
                 pyautogui.click()
                 time.sleep(.5) 
                 
@@ -467,7 +467,7 @@ def use_salvage_kits():
                 pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Silver Fed
                 pyautogui.rightClick()
                 time.sleep(0.5)
-                pyautogui.moveTo(20, 125) #! Move cursor to "Salvage" option
+                pyautogui.move(20, 125) #! Move cursor to "Salvage" option
                 pyautogui.click()
                 time.sleep(.5) 
                 
@@ -1588,7 +1588,7 @@ def calculate_ecto_profit(ecto_price, dust_price):
 
 def main():
     click_game()
-    open_menus()
+    # open_menus()
     # calculate_ecto_profit(0.3821, 0.2174)
 
     sell_item('./items-to-sell/lucent_motes.png')
@@ -1680,8 +1680,8 @@ def main():
 
             # place_orders_rare(1) 
             # place_10_orders(11, blue=True)
-            place_10_orders(11, blue=False)
-            remove_oldest_orders(1)
+            place_10_orders(13, blue=False)
+            remove_oldest_orders(3)
 
         if i % 10 == 0:            
             consume_purple_luck()  
