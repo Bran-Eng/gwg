@@ -639,10 +639,7 @@ def consume_luck():
                         time.sleep(0.5)
                         pyautogui.move(20, 125) # Move cursor to consume option
                         pyautogui.click()
-                        time.sleep(.5) 
-                        
-                        handle_errors()
-                        time.sleep(0.5)
+                        # time.sleep(.5) 
 
                         break 
 
@@ -667,6 +664,16 @@ def handle_errors_2():
     # Press cancel buttons
     err_buttons_coords_list = [
         (2119, 1156),  
+        (2129, 1181), 
+        (2119, 1156),  
+        (2129, 1181), 
+        (2119, 1156),  
+        (2129, 1181), 
+        (2119, 1156),  
+        (2129, 1181), 
+        (2119, 1156),  
+        (2129, 1181), 
+        (2119, 1156),  
         (2129, 1181),        
     ]
 
@@ -675,16 +682,7 @@ def handle_errors_2():
         time.sleep(0.25)
         
 def handle_errors():
-    # Press cancel buttons
-    err_buttons_coords_list = [
-        (2119, 1156),  
-        (2129, 1181),        
-    ]
-
-    for coords in err_buttons_coords_list:
-        pyautogui.click(coords[0], coords[1])
-        time.sleep(0.25)
-
+    #? Fatal Error
     if is_item_present('./canContinue/ERR.png', 0.8):
         err_coo = (2367, 885)
 
@@ -707,6 +705,7 @@ def handle_errors():
         sell_item('./items-to-sell/lucent_motes.png')
         sell_all()
 
+    #? Blacker Screen
     if is_item_present('./canContinue/ERR_2.png', 0.7):
         print("ERR_2, closing ERR_2")
 
@@ -724,6 +723,37 @@ def handle_errors():
 
         sell_item('./items-to-sell/lucent_motes.png')
         sell_all()
+    
+    #? Black Screen Fatal
+    if is_item_present('./canContinue/select_character.png', 0.8):
+        restart_game()
+        reset_position()
+        open_menus()
+
+        use_salvage_kits()
+
+        handle_errors_2()
+        manage_rare_gear()
+
+        consume_luck()
+
+        sell_item('./items-to-sell/lucent_motes.png')
+        sell_all()
+
+    if is_item_present('./canContinue/windows_desktop.png', 0.8): #! Adjust
+        restart_game()
+        reset_position()
+        open_menus()
+
+        use_salvage_kits()
+
+        handle_errors_2()
+        manage_rare_gear()
+
+        consume_luck()
+
+        sell_item('./items-to-sell/lucent_motes.png')
+        sell_all()
 
 def is_item_present(image_path, threshold):
     screenshot_gray = capture_game_screen() 
@@ -733,20 +763,15 @@ def is_item_present(image_path, threshold):
     return np.any(res >= threshold)
 
 def restart_or_not():
-    # Close windows to volunteer    
-    keyboard.press_and_release('esc')
-    time.sleep(0.25)
-    keyboard.press_and_release('esc')
-    time.sleep(0.25)
-    keyboard.press_and_release('esc')
-    time.sleep(0.25)
-    keyboard.press_and_release('esc')
+    # Check Volunteer    
+    pyautogui.click(volunteer[0], volunteer[1]) #! Adjust | click to check
     time.sleep(0.7)
 
     if is_item_present('./canContinue/volunteer.png', 0.7):
         print("Vounteer is on, restarting")
         time.sleep(3)
 
+        # Volunteer
         pyautogui.click(volunteer[0], volunteer[1])
         time.sleep(10)
 
@@ -807,17 +832,13 @@ def restart_game():
     login_button_coords = (1203, 1327)
     character_coords = (1600, 2015)
 
-    # # Volunteer before closing
-    # pyautogui.click(volunteer[0], volunteer[1])
-    # time.sleep(0.25)
-    # pyautogui.click(volunteer[0], volunteer[1])
-    # time.sleep(10)
-
     # Close Game
     keyboard.press_and_release('alt+f4')
     time.sleep(3)
 
-    #! Maybe here err check and click yes 
+    if is_item_present('./canContinue/shut_down_windows.png', 0.8): #! Adjust
+        keyboard.press_and_release('alt+f4')
+        time.sleep(1)
 
     # Click on the game icon to start the game
     pyautogui.click(game_icon_coords[0], game_icon_coords[1])
@@ -828,17 +849,15 @@ def restart_game():
     pyautogui.click(login_button_coords[0], login_button_coords[1])
     time.sleep(.5)
     pyautogui.click(login_button_coords[0], login_button_coords[1])
-    time.sleep(.5)
-    pyautogui.click(login_button_coords[0], login_button_coords[1])
-    time.sleep(4)  # Wait for login to process and auto start game
+    time.sleep(7)  # Wait for login to process and auto start game
 
-    if is_item_present('./canContinue/Game_client.png', 0.8):
+    if is_item_present('./canContinue/client_open.png', 0.8): #! Adjust
         pyautogui.click(login_button_coords[0], login_button_coords[1])
-        time.sleep(5)
+        time.sleep(7)
 
-    if is_item_present('./canContinue/Game_client.png', 0.8):
+    if is_item_present('./canContinue/client_open.png', 0.8):
         pyautogui.click(login_button_coords[0], login_button_coords[1])
-        time.sleep(5)
+        time.sleep(7)
 
     can_continue('./canContinue/select_character.png')
     time.sleep(3)
@@ -852,7 +871,6 @@ def restart_game():
 
     # Wait for the game to enter into playing mode
     can_continue('./canContinue/playing_mode.png')
-
 
 def press_and_hold(key, hold_time=0.1):
     keyboard.press(key)
@@ -972,12 +990,12 @@ def open_menus():
     #! Check if is the other menu walk to the right slightly
 
     # Walk slightly to the right to the bank NPC and open it
-    press_and_hold('e', hold_time=1)  # Adjust hold_time as needed for walking duration
+    press_and_hold('e', hold_time=1) 
     keyboard.press_and_release('tab')
     time.sleep(1)
 
     # Walk back to the initial place
-    press_and_hold('q', hold_time=1)  # Match the hold time with 'e' to walk back
+    press_and_hold('q', hold_time=1)  #
 
     # Drag Bank tab to a specific coordinate
     start_coords = (1960, 544)
