@@ -1130,13 +1130,6 @@ def salvage_restant_exotics():
                 (1631, 385),
                 (1720, 385),
                 (1806, 385),
-
-                (1896, 385),
-                (1982, 385),
-                (2073, 385),
-                (2155, 385),
-                (2248, 385)
-                
             ]
 
             for coords in salvage_exotics_coords_list:
@@ -1631,7 +1624,7 @@ def main():
 
     sell_item('./items-to-sell/lucent_motes.png')
     sell_all()
-    manage_charms()
+    # manage_charms()
 
     consume_luck()
 
@@ -1710,8 +1703,8 @@ def main():
 
             # place_orders_rare(1) 
             # place_10_orders(11, blue=True)
-            place_10_orders(13, blue=False)
-            remove_oldest_orders(3)
+            place_10_orders(14, blue=False)
+            remove_oldest_orders(4)
 
         if i % 10 == 0:            
             consume_luck()
@@ -1732,7 +1725,7 @@ def main():
             sell_ectos() 
             # salvage_ectos()
 
-            sell_most_expensive_exotics(5)
+            sell_most_expensive_exotics(4)
             salvage_restant_exotics()
             manage_cristallyne_dust()
 
