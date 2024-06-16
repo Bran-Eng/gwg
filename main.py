@@ -740,7 +740,7 @@ def handle_errors():
         sell_item('./items-to-sell/lucent_motes.png')
         sell_all()
 
-    if is_item_present('./canContinue/windows_desktop.png', 0.8): #! Adjust
+    if is_item_present('./canContinue/windows_desktop.png', 0.8):
         restart_game()
         reset_position()
         open_menus()
@@ -764,7 +764,7 @@ def is_item_present(image_path, threshold):
 
 def restart_or_not():
     # Check Volunteer    
-    pyautogui.click(volunteer[0], volunteer[1]) #! Adjust | click to check
+    pyautogui.click(2, 1176)
     time.sleep(0.7)
 
     if is_item_present('./canContinue/volunteer.png', 0.7):
@@ -836,7 +836,7 @@ def restart_game():
     keyboard.press_and_release('alt+f4')
     time.sleep(3)
 
-    if is_item_present('./canContinue/shut_down_windows.png', 0.8): #! Adjust
+    if is_item_present('./canContinue/shut_down_windows.png', 0.8):
         keyboard.press_and_release('alt+f4')
         time.sleep(1)
 
@@ -851,7 +851,7 @@ def restart_game():
     pyautogui.click(login_button_coords[0], login_button_coords[1])
     time.sleep(7)  # Wait for login to process and auto start game
 
-    if is_item_present('./canContinue/client_open.png', 0.8): #! Adjust
+    if is_item_present('./canContinue/client_open.png', 0.8):
         pyautogui.click(login_button_coords[0], login_button_coords[1])
         time.sleep(7)
 
@@ -1658,15 +1658,15 @@ def main():
     # place_orders_rare(2) 
     # manage_rare_gear()
     
-    for i in range(1, 11):  
+    for i in range(1, 10001):  
         # while True:
         #     if keyboard.is_pressed('shift+p'):
         #         print("Script detenido por el usuario")
         #         break
         
-        print(f"Starting iteration {i}")
+        print(f"Iteration {i}")
 
-        handle_errors() #! Add canContinue's?
+        handle_errors()
         manage_rare_gear()
 
         #? In case Green's are better 
@@ -1722,14 +1722,14 @@ def main():
 
             # place_orders_rare(1) 
             # place_10_orders(11, blue=True)
-            # place_10_orders(14, blue=False)
-            # remove_oldest_orders(4)
+            place_10_orders(15, blue=False)
+            remove_oldest_orders(5)
 
         if i % 10 == 0:            
             consume_luck()
 
             #! Checkers to avoid losing time
-            # take_all_and_storage(1)
+            take_all_and_storage(1)
         
         if i % 25 == 0:  
             manage_charms()
