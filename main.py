@@ -418,34 +418,45 @@ def use_silverfed():
             
 def use_salvage_kits():
     #? Use Runecrafter for salvaging greens
-    pyautogui.moveTo(rune_crafter[0], rune_crafter[1])
-    pyautogui.rightClick() 
-    time.sleep(0.5)
-    pyautogui.click(rune_crafter_salvage_green[0], rune_crafter_salvage_green[1])
-    time.sleep(0.5)
+    loc, w, h = search_for_item('./items-to-sell/rune_crafter.png', 0.7)
 
-    handle_errors()
-    time.sleep(0.5)
-
-    pyautogui.moveTo(rune_crafter[0], rune_crafter[1])
-    pyautogui.rightClick() 
-    time.sleep(0.5)
-    pyautogui.click(rune_crafter_salvage_green[0], rune_crafter_salvage_green[1])
-    time.sleep(0.5)
-
-    # Press confirm button using coordinates for tackling possible placements
-    pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1])
-    pyautogui.click(rune_crafter_confirm_button_1[0], rune_crafter_confirm_button_1[1])
-    pyautogui.click(rune_crafter_confirm_button_2[0], rune_crafter_confirm_button_2[1])
-    pyautogui.click(rune_crafter_confirm_button_3[0], rune_crafter_confirm_button_3[1])
-    pyautogui.click(rune_crafter_confirm_button_4[0], rune_crafter_confirm_button_4[1])
-    pyautogui.click(rune_crafter_confirm_button_5[0], rune_crafter_confirm_button_5[1])
-    pyautogui.click(rune_crafter_confirm_button_6[0], rune_crafter_confirm_button_6[1])
-    time.sleep(24)
+    if loc is not None:
+        for pt in zip(*loc[::-1]):
+            center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
+            
+            # Check if the center of the found item is within the defined area
+            if inventory_area[0] <= center_x <= inventory_area[0] + inventory_area[2] and inventory_area[1] <= center_y <= inventory_area[1] + inventory_area[3]:
+                pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Rune Crafter
+                pyautogui.rightClick()
+                time.sleep(0.5)
+                pyautogui.move(20, 90) # Move cursor to "Salvage" option
+                pyautogui.click()
+                time.sleep(.5) 
+                
+                handle_errors()
+                time.sleep(0.5)
+                
+                pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Rune Crafter
+                pyautogui.rightClick()
+                time.sleep(0.5)
+                pyautogui.move(20, 90) # Move cursor to "Salvage" option
+                pyautogui.click()
+                time.sleep(.5) 
+    
+                # Press confirm button using coordinates for tackling possible placements
+                pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1])
+                pyautogui.click(rune_crafter_confirm_button_1[0], rune_crafter_confirm_button_1[1])
+                pyautogui.click(rune_crafter_confirm_button_2[0], rune_crafter_confirm_button_2[1])
+                pyautogui.click(rune_crafter_confirm_button_3[0], rune_crafter_confirm_button_3[1])
+                pyautogui.click(rune_crafter_confirm_button_4[0], rune_crafter_confirm_button_4[1])
+                pyautogui.click(rune_crafter_confirm_button_5[0], rune_crafter_confirm_button_5[1])
+                pyautogui.click(rune_crafter_confirm_button_6[0], rune_crafter_confirm_button_6[1])
+                time.sleep(24)
+                
+                break
 
     #? Use Silver Fed for salvaging rares
-    image_path = './items-to-sell/silver.png'  
-    loc, w, h = search_for_item(image_path, 0.7)
+    loc, w, h = search_for_item('./items-to-sell/silver.png', 0.7)
 
     if loc is not None:
         for pt in zip(*loc[::-1]):
@@ -456,7 +467,7 @@ def use_salvage_kits():
                 pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Silver Fed
                 pyautogui.rightClick()
                 time.sleep(0.5)
-                pyautogui.move(20, 125) #! Move cursor to "Salvage" option
+                pyautogui.move(20, 125) # Move cursor to "Salvage" option
                 pyautogui.click()
                 time.sleep(.5) 
                 
@@ -466,7 +477,7 @@ def use_salvage_kits():
                 pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Silver Fed
                 pyautogui.rightClick()
                 time.sleep(0.5)
-                pyautogui.move(20, 125) #! Move cursor to "Salvage" option
+                pyautogui.move(20, 125) #1s Move cursor to "Salvage" option
                 pyautogui.click()
                 time.sleep(.5) 
                 
@@ -509,12 +520,8 @@ def salvage_ectos():
                 pyautogui.click(silver_fed_salvage_stack_accept[0], silver_fed_salvage_stack_accept[1])
                 time.sleep(9)
 
-                manage_cristallyne_dust()
-                consume_purple_luck()  
-                consume_purple_luck_click_button()
-                handle_errors()
                 consume_luck()
-                handle_errors()
+
                 break  
             
 def sell_ectos():
@@ -604,25 +611,39 @@ def consume_purple_luck_click_button():
             break
 
 def consume_luck():
-    # Consume All Luck from multiple locations
-    consume_luck_coords_list = [
-        (1101, 1535),  
-        (1191, 1535),  
-        (1278, 1535),
-        (1366, 1535),
-        (1453, 1535),
-        (1547, 1535),
-        (1631, 1535)
-    ]
+     if is_item_present('./items-to-sell/blue_luck.png', 0.7):
+        consume_purple_luck()
+        consume_purple_luck_click_button()
+        handle_errors()
+        
+        # List of image paths for different charms
+        luck_images = [
+            './items-to-sell/blue_luck.png',
+            './items-to-sell/green_luck.png',
+            './items-to-sell/yellow_luck.png',
+        ]
 
-    for coords in consume_luck_coords_list:
-        pyautogui.moveTo(coords[0], coords[1])
-        pyautogui.rightClick()
-        time.sleep(0.25)
-        pyautogui.move(16, 125) # Consume All
-        # pyautogui.move(16, 164) # purple one
-        pyautogui.click()
-        time.sleep(0.25)
+        for image_path in luck_images:
+            # Identify All Luck
+            loc, w, h = search_for_item(image_path, 0.9)
+
+            if loc is not None:
+                for pt in zip(*loc[::-1]):
+                    center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
+                    
+                    # Check if the center of the found item is within the defined area
+                    if inventory_area[0] <= center_x <= inventory_area[0] + inventory_area[2] and inventory_area[1] <= center_y <= inventory_area[1] + inventory_area[3]:
+                        pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Luck
+                        pyautogui.rightClick()
+                        time.sleep(0.5)
+                        pyautogui.move(20, 125) # Move cursor to consume option
+                        pyautogui.click()
+                        time.sleep(.5) 
+                        
+                        handle_errors()
+                        time.sleep(0.5)
+
+                        break 
 
 def delete_dark_matter():
     # Identify dark matter
@@ -680,11 +701,7 @@ def handle_errors():
         handle_errors_2()
         manage_rare_gear()
 
-        consume_purple_luck()
-        consume_purple_luck_click_button()
-        handle_errors_2()
         consume_luck()
-        handle_errors_2()
 
         sell_item('./items-to-sell/lucent_motes.png')
         sell_all()
@@ -701,11 +718,8 @@ def handle_errors():
         handle_errors_2()
         manage_rare_gear()
 
-        consume_purple_luck()
-        consume_purple_luck_click_button()
-        handle_errors_2()
         consume_luck()
-        handle_errors_2()
+
 
         sell_item('./items-to-sell/lucent_motes.png')
         sell_all()
@@ -1135,39 +1149,51 @@ def salvage_restant_exotics():
             break
 
 def salvage_restant_exotics_few():    
+    accept_button = (1896, 1156) 
+    
     # Compact Inventory
     pyautogui.click(compact[0], compact[1])
-    time.sleep(0.25)
-
-    accept_button = (1896, 1156)    
-
-    # Setup Silver Fed
-    pyautogui.moveTo(silver_fed[0], silver_fed[1])
-    pyautogui.rightClick()
-    time.sleep(0.25)
-    pyautogui.click(silver_fed_use[0], silver_fed_use[1]) 
     time.sleep(0.5)
+    
+    # Identify Silver Fed 
+    loc, w, h = search_for_item('./items-to-sell/silver.png', 0.7)
 
-    # Consume All Luck from multiple locations
-    salvage_exotics_coords_list = [
-        (126, 385),  
-        (216, 385),  
-        (305, 385),
-        (391, 385),
-        (482, 385),
-        (569, 385),
-        (657, 385),
-        (746, 385),
-        (837, 385),
-        (918, 385),        
-    ]
+    if loc is not None:
+        for pt in zip(*loc[::-1]):
+            center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
+            
+            # Check if the center of the found item is within the defined area
+            if inventory_area[0] <= center_x <= inventory_area[0] + inventory_area[2] and inventory_area[1] <= center_y <= inventory_area[1] + inventory_area[3]:
+                # Setup Silver Fed
+                pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Silver Fed
+                pyautogui.rightClick()
+                time.sleep(0.5)
+                pyautogui.move(20, 16) # Move cursor to use
+                pyautogui.click()
+                time.sleep(.5) 
 
-    for coords in salvage_exotics_coords_list:
-        pyautogui.moveTo(coords[0], coords[1])
-        pyautogui.click()
-        time.sleep(0.25)
-        pyautogui.click(accept_button[0], accept_button[1]) # Accept salvage
-        time.sleep(0.25)
+            # Consume All Luck from multiple locations
+            salvage_exotics_coords_list = [
+                (126, 385),  
+                (216, 385),  
+                (305, 385),
+                (391, 385),
+                (482, 385),
+                (569, 385),
+                (657, 385),
+                (746, 385),
+                (837, 385),
+                (918, 385),
+            ]
+
+            for coords in salvage_exotics_coords_list:
+                pyautogui.moveTo(coords[0], coords[1])
+                pyautogui.click()
+                time.sleep(0.25)
+                pyautogui.click(accept_button[0], accept_button[1]) # Accept salvage
+                time.sleep(0.25)
+        
+            break
 
 def take_all_and_storage(storage_number = 1):    
     for _ in range(storage_number):
@@ -1488,6 +1514,7 @@ def sell_all():
 
     for image_path in charm_images:
         loc, w, h = search_for_item(image_path, 0.8)
+        
         if loc is not None:
             for pt in zip(*loc[::-1]):
                 center_x, center_y = pt[0] + w//2, pt[1] + h//2  # Calculate the center of the found template
@@ -1603,14 +1630,10 @@ def main():
     # calculate_ecto_profit(0.3821, 0.2174)
 
     sell_item('./items-to-sell/lucent_motes.png')
-    # sell_all()
-    # manage_charms()
+    sell_all()
+    manage_charms()
 
-    # consume_purple_luck()
-    # consume_purple_luck_click_button()
-    # handle_errors()
-    # consume_luck()
-    # handle_errors()
+    consume_luck()
 
     # take_all_and_storage(2)
 
@@ -1623,7 +1646,7 @@ def main():
     # place_orders_rare(2) 
     # manage_rare_gear()
     
-    for i in range(1, 3001):  
+    for i in range(1, 10001):  
         # while True:
         #     if keyboard.is_pressed('shift+p'):
         #         print("Script detenido por el usuario")
@@ -1640,8 +1663,7 @@ def main():
         time.sleep(10)
 
         handle_errors()
-        use_salvage_kits() #! 640 think on adding, actually do add the logic for the blue ones. Doesn't take that much extra time.
-        #! Add such logic only when there is an error in handle_errors
+        use_salvage_kits() 
         handle_errors()
 
         #? In case Blue's are better 
@@ -1650,14 +1672,11 @@ def main():
         # handle_errors()
 
         sell_item('./items-to-sell/lucent_motes.png')
+        consume_luck()
+        
 
         if i % 2 == 0: 
-            consume_purple_luck()
-            consume_purple_luck_click_button()
-            handle_errors()
-
-            consume_luck()
-            handle_errors() 
+            # consume_luck()
 
             sell_item('./items-to-sell/mithril_ore.png')
             handle_errors() 
@@ -1695,13 +1714,7 @@ def main():
             remove_oldest_orders(3)
 
         if i % 10 == 0:            
-            consume_purple_luck()  
-            consume_purple_luck_click_button()
-            handle_errors()
-
-            #! Checkers to avoid losing time
             consume_luck()
-            handle_errors()
 
             #! Checkers to avoid losing time
             take_all_and_storage(1)
