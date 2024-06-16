@@ -619,6 +619,7 @@ def consume_luck():
         # List of image paths for different charms
         luck_images = [
             './items-to-sell/blue_luck.png',
+            './items-to-sell/blue_luck.png',
             './items-to-sell/green_luck.png',
             './items-to-sell/yellow_luck.png',
         ]
@@ -1639,7 +1640,7 @@ def main():
     # place_orders_rare(2) 
     # manage_rare_gear()
     
-    for i in range(1, 10001):  
+    for i in range(1, 11):  
         # while True:
         #     if keyboard.is_pressed('shift+p'):
         #         print("Script detenido por el usuario")
@@ -1703,14 +1704,14 @@ def main():
 
             # place_orders_rare(1) 
             # place_10_orders(11, blue=True)
-            place_10_orders(14, blue=False)
-            remove_oldest_orders(4)
+            # place_10_orders(14, blue=False)
+            # remove_oldest_orders(4)
 
         if i % 10 == 0:            
             consume_luck()
 
             #! Checkers to avoid losing time
-            take_all_and_storage(1)
+            # take_all_and_storage(1)
         
         if i % 25 == 0:  
             manage_charms()
