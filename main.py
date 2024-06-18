@@ -97,13 +97,13 @@ def search_for_item(image_path, threshold):
 def use_all_green_gear(center_x, center_y):    
     pyautogui.moveTo(center_x, center_y)
     pyautogui.rightClick()
-    time.sleep(0.35)
+    time.sleep(0.45)
     pyautogui.move(85, 205)  # Move to "Use All"
     pyautogui.click()    
 
 def find_and_click(step=0):
     image_path = './items-to-sell/green.png'
-    threshold=0.60
+    threshold=0.70
     
     if step == 1 or step == 2:
         loc, w, h = search_for_item(image_path, threshold)
@@ -619,9 +619,9 @@ def consume_luck():
         # List of image paths for different charms
         luck_images = [
             './items-to-sell/blue_luck.png',
-            './items-to-sell/blue_luck.png',
             './items-to-sell/green_luck.png',
             './items-to-sell/yellow_luck.png',
+            './items-to-sell/blue_luck.png',
         ]
 
         for image_path in luck_images:
@@ -1152,7 +1152,8 @@ def salvage_restant_exotics():
                 time.sleep(0.25)
                 pyautogui.click(accept_button[0], accept_button[1]) # Accept salvage
                 time.sleep(0.25)
-        
+
+            manage_cristallyne_dust()
             break
 
 def salvage_restant_exotics_few():    
@@ -1633,8 +1634,9 @@ def calculate_ecto_profit(ecto_price, dust_price):
 
 def main():
     click_game()
-    # open_menus()
     # calculate_ecto_profit(0.3821, 0.2174)
+    
+    # open_menus()
 
     sell_item('./items-to-sell/lucent_motes.png')
     sell_all()
@@ -1645,13 +1647,9 @@ def main():
     # take_all_and_storage(2)
 
     # salvage_restant_exotics()
-    # manage_cristallyne_dust()
-    # take_all_and_storage(1)
 
-    # place_10_orders(15, blue=True)
-    # remove_oldest_orders(1)
-    # place_orders_rare(2) 
-    # manage_rare_gear()
+    # place_10_orders(15, blue=False)
+    # remove_oldest_orders(5)
     
     for i in range(1, 10001):  
         # while True:
@@ -1717,8 +1715,8 @@ def main():
 
             # place_orders_rare(1) 
             # place_10_orders(11, blue=True)
-            place_10_orders(13, blue=False)
-            remove_oldest_orders(3)
+            place_10_orders(11, blue=False)
+            remove_oldest_orders(1)
 
         if i % 10 == 0:            
             consume_luck()
