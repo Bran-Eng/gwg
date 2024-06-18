@@ -122,34 +122,34 @@ def find_and_click(step=0):
                     find_and_click(step=1)
                     return True   
     
-    elif step == 3:
-        attempt = 0
-        max_attempts = 10
-        while attempt < max_attempts:
-            pyautogui.moveTo(3280, 1800) # Move to a position to initiate scroll
-            for _ in range(10):
-                pyautogui.scroll(-500)
-            time.sleep(0.25)
-            
-            # Attempt to execute step 2
-            if find_and_click(step=2):
-                return True
-            attempt += 1  # Increment the attempt counter
+                elif step == 3:
+                    attempt = 0
+                    max_attempts = 10
+                    while attempt < max_attempts:
+                        pyautogui.moveTo(3280, 1800) # Move to a position to initiate scroll
+                        for _ in range(10):
+                            pyautogui.scroll(-500)
+                        time.sleep(0.25)
+                        
+                        # Attempt to execute step 2
+                        if find_and_click(step=2):
+                            return True
+                        attempt += 1  # Increment the attempt counter
 
-        # return False  # If after 10 attempts it fails, return False
+                # If after 10 attempts it fails, return False
 
-    elif step == 4:
-        # Scroll Up
-        pyautogui.moveTo(3280, 1800) # Move to a position to initiate scroll
-        for _ in range(10):
-            pyautogui.scroll(500)
-        time.sleep(0.25)
-        
-        # Attempt to execute step 2
-        if find_and_click(step=2):
-            return True
+                elif step == 4:
+                    # Scroll Up
+                    pyautogui.moveTo(3280, 1800) # Move to a position to initiate scroll
+                    for _ in range(10):
+                        pyautogui.scroll(500)
+                    time.sleep(0.25)
+                    
+                    # Attempt to execute step 2
+                    if find_and_click(step=2):
+                        return True
 
-        # return False  # If after 10 attempts it fails, return False
+                    # If after 10 attempts it fails, return False
 
 def manage_unidentified_gear():
     # Attempt to find Unidentified Gear Masterwork in the inventory and use all.
@@ -687,7 +687,8 @@ def handle_errors():
         err_coo = (2367, 885)
 
         print("ERR, restarting")
-        pyautogui.click(err_coo[0], err_coo[1])
+        pyautogui.click(err_coo[0], err_coo[1]) #! Adjust Img Recognition
+        time.sleep(.5)
         pyautogui.click(err_coo[0], err_coo[1])
         time.sleep(2)
 
@@ -763,7 +764,7 @@ def is_item_present(image_path, threshold):
     return np.any(res >= threshold)
 
 def restart_or_not():
-    # Check Volunteer    
+    # Check Volunteer  
     pyautogui.click(2, 1176)
     time.sleep(0.7)
 
@@ -781,7 +782,6 @@ def restart_or_not():
     
     else:
         print("No volunteer message, reopen menus")
-        open_menus()
 
 def open_game(): 
     game_icon_coords = (180, 2122)
@@ -921,26 +921,21 @@ def handle_direction(direction):
 def reset_position():
     # Make sure Inventory is Open
     inventory_close = (2289, 110)
-
-    time.sleep(3)
-    pyautogui.click(inventory_close[0], inventory_close[1])
-    time.sleep(3)
-    keyboard.press_and_release('ctrl+z')
-    time.sleep(2)
   
-    pyautogui.doubleClick(portal_scroll[0], portal_scroll[1])
-    # time.sleep(25)
+    pyautogui.doubleClick(portal_scroll[0], portal_scroll[1]) #! Adjust Img Recognition
     time.sleep(5)
+
     can_continue('./canContinue/playing_mode.png')
     time.sleep(1)
 
-    pyautogui.click(inventory_close[0], inventory_close[1])
+    pyautogui.click(inventory_close[0], inventory_close[1]) #! Adjust Img Recognition
     time.sleep(1)
+
     keyboard.press_and_release('ctrl+z')
     time.sleep(1)
-    pyautogui.doubleClick(mistlock[0], mistlock[1])
+
+    pyautogui.doubleClick(mistlock[0], mistlock[1]) #! Adjust Img Recognition
     time.sleep(3)
-    # time.sleep(10)
     can_continue('./canContinue/playing_mode.png')
 
 def walk_and_center_npc():
@@ -1722,8 +1717,8 @@ def main():
 
             # place_orders_rare(1) 
             # place_10_orders(11, blue=True)
-            place_10_orders(15, blue=False)
-            remove_oldest_orders(5)
+            place_10_orders(13, blue=False)
+            remove_oldest_orders(3)
 
         if i % 10 == 0:            
             consume_luck()
@@ -1751,7 +1746,7 @@ def main():
             restart_or_not()
         
         # Add a short sleep time if needed between iterations to avoid overwhelming the application
-        time.sleep(2)
+        # time.sleep(2)
 
 if __name__ == "__main__":
     main()
