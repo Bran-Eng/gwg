@@ -96,10 +96,12 @@ def search_for_item(image_path, threshold):
     
 def use_all_green_gear(center_x, center_y):    
     pyautogui.moveTo(center_x, center_y)
+    time.sleep(0.25)
     pyautogui.rightClick()
     time.sleep(0.45)
     pyautogui.move(85, 205)  # Move to "Use All"
-    pyautogui.click()    
+    time.sleep(0.25)
+    pyautogui.click()  
 
 def find_and_click(step=0):
     image_path = './items-to-sell/green.png'
@@ -118,7 +120,7 @@ def find_and_click(step=0):
                 elif step == 2 and bank_area[0] <= center_x <= bank_area[0] + bank_area[2] and bank_area[1] <= center_y <= bank_area[1] + bank_area[3]:
                     pyautogui.moveTo(center_x, center_y)
                     pyautogui.doubleClick()
-                    time.sleep(0.25)
+                    time.sleep(1)
                     find_and_click(step=1)
                     return True   
     
@@ -434,14 +436,6 @@ def use_salvage_kits():
                 time.sleep(.5) 
                 
                 handle_errors()
-                time.sleep(0.5)
-                
-                pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Rune Crafter
-                pyautogui.rightClick()
-                time.sleep(0.5)
-                pyautogui.move(20, 90) # Move cursor to "Salvage" option
-                pyautogui.click()
-                time.sleep(.5) 
     
                 # Press confirm button using coordinates for tackling possible placements
                 pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1])
@@ -451,7 +445,7 @@ def use_salvage_kits():
                 pyautogui.click(rune_crafter_confirm_button_4[0], rune_crafter_confirm_button_4[1])
                 pyautogui.click(rune_crafter_confirm_button_5[0], rune_crafter_confirm_button_5[1])
                 pyautogui.click(rune_crafter_confirm_button_6[0], rune_crafter_confirm_button_6[1])
-                time.sleep(20)
+                time.sleep(22)
                 
                 break
 
@@ -1651,7 +1645,7 @@ def main():
     # place_10_orders(15, blue=False)
     # remove_oldest_orders(5)
     
-    for i in range(1, 51):  
+    for i in range(1, 20001):  
         # while True:
         #     if keyboard.is_pressed('shift+p'):
         #         print("Script detenido por el usuario")
@@ -1665,7 +1659,7 @@ def main():
         #? In case Green's are better 
         handle_errors()
         manage_unidentified_gear()
-        time.sleep(10)
+        time.sleep(8.5)
 
         handle_errors()
         use_salvage_kits() 
