@@ -451,7 +451,7 @@ def use_salvage_kits():
                 pyautogui.click(rune_crafter_confirm_button_4[0], rune_crafter_confirm_button_4[1])
                 pyautogui.click(rune_crafter_confirm_button_5[0], rune_crafter_confirm_button_5[1])
                 pyautogui.click(rune_crafter_confirm_button_6[0], rune_crafter_confirm_button_6[1])
-                time.sleep(24)
+                time.sleep(20)
                 
                 break
 
@@ -1651,7 +1651,7 @@ def main():
     # place_10_orders(15, blue=False)
     # remove_oldest_orders(5)
     
-    for i in range(1, 10001):  
+    for i in range(1, 51):  
         # while True:
         #     if keyboard.is_pressed('shift+p'):
         #         print("Script detenido por el usuario")
