@@ -436,6 +436,7 @@ def use_salvage_kits():
                 time.sleep(.5) 
                 
                 handle_errors()
+                time.sleep(.5)
     
                 # Press confirm button using coordinates for tackling possible placements
                 pyautogui.click(rune_crafter_confirm_button[0], rune_crafter_confirm_button[1])
@@ -445,8 +446,7 @@ def use_salvage_kits():
                 pyautogui.click(rune_crafter_confirm_button_4[0], rune_crafter_confirm_button_4[1])
                 pyautogui.click(rune_crafter_confirm_button_5[0], rune_crafter_confirm_button_5[1])
                 pyautogui.click(rune_crafter_confirm_button_6[0], rune_crafter_confirm_button_6[1])
-                time.sleep(22)
-                
+                time.sleep(20)
                 break
 
     #? Use Silver Fed for salvaging rares
@@ -468,13 +468,6 @@ def use_salvage_kits():
                 handle_errors()
                 time.sleep(0.5)
                 
-                pyautogui.moveTo(pt[0] + w/2, pt[1] + h/2)  # Click on Silver Fed
-                pyautogui.rightClick()
-                time.sleep(0.5)
-                pyautogui.move(20, 125) #1s Move cursor to "Salvage" option
-                pyautogui.click()
-                time.sleep(.5) 
-                
                 # Press confirm button using 3 coordinates for tackling possible placements
                 pyautogui.click(silver_fed_confirm_button[0], silver_fed_confirm_button[1])
                 pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_1[1])
@@ -483,10 +476,10 @@ def use_salvage_kits():
                 pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_4[1])
                 pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_5[1])
                 pyautogui.click(silver_fed_confirm_button_4[0], silver_fed_confirm_button_6[1])
-                
-                time.sleep(2)
+
+                handle_errors()
+                time.sleep(3)
                 pyautogui.moveTo(1200, 170)
-                time.sleep(1.5)    
                 pyautogui.click(compact[0], compact[1])
 
                 break 
@@ -735,6 +728,7 @@ def handle_errors():
         sell_item('./items-to-sell/lucent_motes.png')
         sell_all()
 
+    #? Desktop
     if is_item_present('./canContinue/windows_desktop.png', 0.8):
         restart_game()
         reset_position()
@@ -913,19 +907,32 @@ def handle_direction(direction):
         press_and_hold('3', hold_time=4.5)
 
 def reset_position():
-    # Make sure Inventory is Open
-    inventory_close = (2289, 110)
-  
+    #? Close all menus
+    while not is_item_present('./canContinue/esc_menu.png', 0.7):
+        keyboard.press_and_release('esc')
+        time.sleep(0.5)     
+    keyboard.press_and_release('esc')
+    time.sleep(0.25)
+
+    #! Adjust | Check for 1 of 4 positions. return 
+
+    #! Adjust | Try to open NPC Menus. return
+
+    #? Close all menus
+    # while not is_item_present('./canContinue/esc_menu.png', 0.7):
+    #     keyboard.press_and_release('esc')
+    #     time.sleep(0.5)     
+    # keyboard.press_and_release('esc')
+    # time.sleep(0.25)
+
+    #? Continue Restart
+    # Open Inventory  
+    keyboard.press_and_release('ctrl+z')
+    time.sleep(1)
+
     pyautogui.doubleClick(portal_scroll[0], portal_scroll[1]) #! Adjust Img Recognition
     time.sleep(5)
-
     can_continue('./canContinue/playing_mode.png')
-    time.sleep(1)
-
-    pyautogui.click(inventory_close[0], inventory_close[1]) #! Adjust Img Recognition
-    time.sleep(1)
-
-    keyboard.press_and_release('ctrl+z')
     time.sleep(1)
 
     pyautogui.doubleClick(mistlock[0], mistlock[1]) #! Adjust Img Recognition
@@ -933,18 +940,7 @@ def reset_position():
     can_continue('./canContinue/playing_mode.png')
 
 def walk_and_center_npc():
-    # Close menus
-    while not is_item_present('./canContinue/esc_menu.png', 0.7):
-        keyboard.press_and_release('esc')
-        time.sleep(0.25)
-        
-    keyboard.press_and_release('esc')
-    time.sleep(0.25)
-    
-    # Reset Position by clicking Mistlock pass
-    reset_position() 
-
-    # Continue trying until a match is found
+    # Search 1 of 4 match
     while True:
         for idx, image_path in enumerate(direction_images):
             if does_it_match(image_path, 0.65):
